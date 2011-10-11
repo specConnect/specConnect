@@ -16,7 +16,7 @@
 	if ($thread == NULL):
 	?>
 	<tr>
-		<td colspan="5"><h4><b><div align="center">NO POSTS IN THIS FORUM</div></b></h4></td>
+		<td colspan="5"><h4><b><div align="center">NO THREADS IN THIS FORUM</div></b></h4></td>
 	</tr>
 	<?php
 	else:
