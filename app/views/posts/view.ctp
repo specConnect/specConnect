@@ -6,8 +6,13 @@
     </tr>
     <tr>
         <td style="border-right: 1px solid #bbb;">
-            <?php echo $thread_user['User']['username']; ?> <br />
-            <?php echo $thread_user['User']['email']; ?>
+            <div align="center">
+            <?php echo $html->image($thread_user['User']['avatar']); ?> <br /><br />
+            <div style="background:#AAA; border:1px solid #000; padding:5px;">
+                <?php echo $thread_user['User']['username']; ?> <br />
+                <?php echo $thread_user['User']['email']; ?>
+            </div>
+            </div>
         </td>
         <td width="70%">
             <b><?php echo $title; ?></b>
