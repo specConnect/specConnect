@@ -10,6 +10,12 @@
             return ($user['User']['roles'] == 'admin' || $user['User']['roles'] == 'sadmin');
         }
         
+        function __isSuperAdmin() {
+           $this->loadModel('User');
+           $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+           return ($user['User']['roles'] == 'sadmin');
+        }
+        
 		function beforeFilter() {
 			parent::beforeFilter();
 			$this->Auth->allow('view');
@@ -91,6 +97,7 @@
 		function view($id = NULL) {
             $this->set('loggedUser', $this->Auth->user('username'));
             $this->set('admin', $this->__isAdmin());
+            $this->set('sadmin', $this->__isSuperAdmin());
 			if($id == NULL) {
 				$this->redirect(array('controller' => 'forums', 'action' => 'view'));
 			}
@@ -123,5 +130,32 @@
 				$this->set('thread', $thread);
 			}
 		}
+        
+        function sticky($id = NULL, $f_id = NULL) {
+            $this->autoRender = false;
+            if($this->__isSuperAdmin() || $this->__isAdmin()) {
+                if($id != NULL && $f_id != NULL) {
+                    $sticky = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                    $sticky = $sticky['Thread']['sticky'];
+                    $sticky = $sticky ? 0 : 1;
+                    if($this->Thread->save(array('id' => $id, 'sticky' => $sticky), false)) {
+                        $this->Session->setFlash('Thread has been updated.');
+                        $this->redirect("/threads/view/$f_id/");
+                    }
+                    else {
+                        $this->Session->setFlash('Sorry, this task cannot be performed.');
+                        $this->redirect("/forums/view");
+                    }
+                }
+                else {
+                    $this->Session->setFlash('Sorry, request was not understood.');
+                    $this->redirect('/forums/view');
+                }
+            }
+            else {
+                $this->Session->setFlash('Sorry, you do not have appropriate permissions.');
+                $this->redirect("/forums/view/");
+            }
+        }
 	}
 ?>

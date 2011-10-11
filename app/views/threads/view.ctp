@@ -2,7 +2,7 @@
 <div align="right"><?php echo $html->link("+ New Thread","/threads/add/".$forum['Forum']['id']."/"); ?></div>
 <br /><br />
 <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
-<?php echo $this->Paginator->numbers(); ?>
+<div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
 <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
 <table>
 	<tr>
@@ -35,9 +35,13 @@
 			<h1>Pages: 1, 2, 3, ..., Last</h1>
 			<h1>by <b><?php echo $row['Thread']['username']; ?></b> </h1>
             <?php 
-            if($loggedUser == $row['Thread']['username'] || $admin) {
-                echo $html->link('Delete', "delete/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/"); 
-            }
+            if($loggedUser == $row['Thread']['username'] || $admin) :
+                echo $html->link('Delete', "delete/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+            ?>
+                &nbsp; &nbsp;
+            <?php
+                echo $html->link('Toggle Sticky', "sticky/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+            endif;
             ?>
 		</td>
 		<td><div class="modified" align="center"> 	
