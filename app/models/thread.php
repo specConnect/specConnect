@@ -5,7 +5,7 @@
         var $hasMany = array(
 			'Post' => array(
 				'className' => 'Post',
-				'order' => array('modified DESC')
+				'order' => array('modified ASC')
 			)
 		);
         

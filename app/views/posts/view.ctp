@@ -1,7 +1,9 @@
 <?php $html->addCrumb($title); ?>
+<?php echo $html->link('+New Post', "/posts/add/".$thread['Thread']['id']."/"); ?>
+
 <table>
     <tr>
-        <th><?php echo $time->timeAgoInWords($thread['Thread']['modified']); ?></th>
+        <th><?php echo $time->timeAgoInWords($thread['Thread']['created']); ?></th>
         <th><div align="right">#1</div></th>
     </tr>
     <tr>
@@ -26,7 +28,10 @@
         foreach ($posts as $row): 
     ?>
     <tr>
-        <th><?php echo $time->timeAgoInWords($row['modified']); ?></th>
+        <th>
+            <?php echo $time->timeAgoInWords($row['modified']); ?>
+            <a name="<?php echo "post".$row['id']; ?>"></a>
+        </th>
         <th><div align="right">#<?php echo $count; ?></div></th>
     </tr>
     <tr>
