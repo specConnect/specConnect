@@ -18,18 +18,18 @@
         function add($id = NULL) {
             $this->layout = 'forum';
             $this->set('title_for_layout', 'specConnect - Add Post');
-                
+            $this->loadModel('Thread');
+            $this->loadModel('Forum');
+            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'fields' => array('thread_name'), 'recursive' => 0)); 
             //Title above Breadcrumb
-            $this->set('title', 'Add New Post');	
+            $this->set('title', "POST TO: ".$thread['Thread']['thread_name']);	
             
             if(!empty($this->data) && $id != NULL) {
                 //Adding a thread
                 $this->data['Post']['username'] = $this->Auth->user('username');
                 $this->data['Post']['thread_id'] = $id;
+                $this->Post->create(); //Gets ready to create new entry in database
                 if($this->Post->save($this->data)) {
-                    $this->loadModel('Forum');
-                    $this->loadModel('Thread');
-
                     //Update number of posts in thread
                     $posts = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                     $forum_id = $posts['Thread']['forum_id'];
@@ -60,20 +60,30 @@
         
         function view($id = NULL) {
             if($id != NULL) {
+                //Set pagination parameters
+                $this->paginate = array(
+                            'Post' => array(
+                                'limit' => 10, 
+                                'conditions' => array('thread_id' => $id),
+                                'recursive' => 0, 
+                                'order' => array('modified ASC')
+                            )
+                        );
                 $this->layout = 'forum';
                 $this->set('title_for_layout', 'specConnect - Threads');
                 $this->loadModel('Thread');
                 $this->loadModel('User');
-                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id)));
+                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                 $thread_user = $this->User->find('first', array('conditions' => array('username' => $thread['Thread']['username'])));
-                $posts = $thread['Post'];
+                $posts = $this->paginate('Post');
                 
                 $index = 0;
                 foreach ($posts as $row) {
-                    $post_user = $this->User->find('first', array('conditions' => array('username' => $posts[$index]['username']), 'recursive' => 0));
-                    $posts[$index]['Post'] = $post_user;
+                    $post_user = $this->User->find('first', array('conditions' => array('username' => $row['Post']['username']), 'recursive' => 0));
+                    $posts[$index]['User'] = $post_user['User'];
                     $index++;
                 }
+                
                 $this->set('title', $thread['Thread']['thread_name']);
                 $this->set('thread', $thread);
                 $this->set('thread_user', $thread_user);

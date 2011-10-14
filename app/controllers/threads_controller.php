@@ -104,7 +104,7 @@
                 //Set pagination parameters
                 $this->paginate = array(
                             'Thread' => array(
-                                'limit' => 8, 
+                                'limit' => 10, 
                                 'conditions' => array('forum_id' => $id),
                                 'recursive' => 0, 
                                 'order' => array('sticky DESC','modified DESC')
@@ -121,7 +121,7 @@
                 
 				$forum = $this->Forum->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
 				$thread = $this->paginate('Thread');
-			           
+			    
 				//Title above Breadcrumb
 				$this->set('title', $forum['Forum']['name']);
 				

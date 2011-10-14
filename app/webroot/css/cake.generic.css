@@ -30,6 +30,11 @@ body {
 	font-size:90%;
 	margin: 0;
 }
+
+hr {
+    border:1px dotted #000;
+}
+
 a {
 	color: #003d4c;
 	text-decoration: underline;
