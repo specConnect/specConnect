@@ -6,7 +6,7 @@
 <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
 <table>
 <?php 
-    if ($this->Paginator->current() == 1): 
+    if ($this->Paginator->current() == 1 || $this->Paginator->current() == 0): 
 ?>
         <tr>
             <th><?php echo $time->timeAgoInWords($thread['Thread']['created']); ?></th>
