@@ -1,5 +1,6 @@
 <?php
     class PostsController extends AppController {
+        var $paginate;
         var $name = 'Posts';
         var $helpers = array('Form', 'Html', 'Javascript', 'Time');
         
@@ -20,6 +21,7 @@
             $this->set('title_for_layout', 'specConnect - Add Post');
             $this->loadModel('Thread');
             $this->loadModel('Forum');
+            $this->loadModel('User');
             $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'fields' => array('thread_name'), 'recursive' => 0)); 
             //Title above Breadcrumb
             $this->set('title', "POST TO: ".$thread['Thread']['thread_name']);	
@@ -45,11 +47,20 @@
                         $page = 1;
                     }
                     
-                    //Update number for posts in forum and last posting user
+                    //Update number for posts in forum
                     $posts = $this->Forum->find('first', array('conditions' => array('id' => $forum_id), 'fields' => array('posts'), 'recursive' => 0));
                     $posts = $posts['Forum']['posts'];
                     $posts = $posts + 1;
-                    $this->Forum->save(array('id' => $forum_id, 'posts' => $posts), false);
+                    
+                    //User just added a post
+                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    $user['User']['posts'] = $user['User']['posts'] + 1;
+                    $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
+                    'fieldList' => array('posts'), 'callbacks' => false));
+             
+                    
+                    $this->Forum->save(array('id' => $forum_id, 'posts' => $posts), array('validate' => false,
+                        'fieldList' => array('posts')));
                     $this->Session->setFlash("Post added successfully");
                     $post_id = $this->Post->id;
 
@@ -75,6 +86,7 @@
                 if($id != NULL) {
                     $this->loadModel('Thread');
                     $this->loadModel('Forum');
+                    $this->loadModel('User');
                     
                     //Delete post
                     $this->Post->delete($id, false);
@@ -82,13 +94,23 @@
                     $thread = $this->Thread->find('first', array('conditions' => array('id' => $t_id), 'recursive' => 0));
                     if($thread['Thread']['posts'] > 0) {
                         $thread['Thread']['posts'] = $thread['Thread']['posts'] - 1;
-                        $this->Thread->save(array('id' => $t_id, 'posts' => $thread['Thread']['posts']), false);
+                        $this->Thread->save(array('id' => $t_id, 'posts' => $thread['Thread']['posts']), array('validate' => false,
+                        'fieldList' => array('posts')));
                     }
                     
-                    $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['id']), 'recursive' => 0));
+                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    if($user['User']['posts'] > 0) {
+                        $user['User']['posts'] = $user['User']['posts'] - 1;
+                        $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
+                        'fieldList' => array('posts'), 'callbacks' => false));
+                    }
+                    
+                    $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id']), 'recursive' => 0));
+                    debug($forum);
                     if($forum['Forum']['posts'] > 0) {
                         $forum['Forum']['posts'] = $forum['Forum']['posts'] - 1;
-                        $this->Forum->save(array('id' => $thread['Thread']['forum_id'], 'posts' => $forum['Forum']['posts']), false);
+                        $this->Forum->save(array('id' => $forum['Forum']['id'], 'posts' => $forum['Forum']['posts']), array('validate' => false,
+                        'fieldList' => array('posts')));
                     }
                     
                     

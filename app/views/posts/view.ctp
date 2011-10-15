@@ -19,7 +19,9 @@
                     <div style="background:#AAA; border:1px solid #000; padding:5px;">
                         <?php echo $thread_user['User']['username']; ?> <br />
                         <?php echo $thread_user['User']['email']; ?>
-                    </div> <br /><br />
+                    </div> 
+                    Posts: <i><?php echo $thread_user['User']['posts']; ?></i>
+                    <br /><br />
                 </div>
             </td>
             <td width="70%">
@@ -46,7 +48,9 @@
                 <div style="background:#AAA; border:1px solid #000; padding:5px;">
                     <?php echo $row['User']['username']; ?> <br />
                     <?php echo $row['User']['email']; ?> 
-                </div> <br /><br />
+                </div>
+                Posts: <i><?php echo $row['User']['posts']; ?></i>
+                <br /><br />
                 <?php
                     if($loggedUser == $row['Post']['username'] || $admin):
                         echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");

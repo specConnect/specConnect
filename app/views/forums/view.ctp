@@ -28,7 +28,7 @@
 				<?php 
 					//GRAB THE ID FROM LAST POST MADE TO POSTS DATABASE
                     if($row['Forum']['threads'] == 0):
-                        echo "<b>No threads in this forum</b>&nbsp; <br />";
+                        echo "<b>No threads in this forum</b><br />";
                         echo $html->link('Add a Thread Now', "/threads/add/".$row['Forum']['id']."/"); 
                     elseif($row['Thread'] == NULL):
                         $numPosts = $row['Post']['posts'];

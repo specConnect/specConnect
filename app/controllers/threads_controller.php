@@ -24,6 +24,7 @@
                 if($id != NULL) {
                     $this->loadModel('Post');
                     $this->loadModel('Forum');
+                    $this->loadModel('User');
                     
                     //Delete all Threads, and Posts attached to Threads
                     $this->Thread->delete($id, false);
@@ -31,8 +32,22 @@
                     
                     $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
                     if($forum['Forum']['threads'] > 0) {
-                        $forum['Forum']['threads'] = $forum['Forum']['threads'] - 1;
-                        $this->Forum->save(array('id' => $f_id, 'threads' => $forum['Forum']['threads']), false);
+                        $forum['Forum']['threads'] = $forum['Forum']['threads'];
+                    }
+                    if($forum['Forum']['posts'] > 0) {
+                        
+                        $forum['Forum']['posts'] = $forum['Forum']['posts'] - $thread['Thread']['posts'] - 1;
+                    }
+                    
+                    $this->Forum->save(array('id' => $f_id, 'threads' => $forum['Forum']['threads'], 'posts' => $forum['Forum']['posts']),
+                    array('validate' => false, 'fieldList' => array('threads', 'posts')));
+                    
+                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    if($user['User']['posts'] > 0) {
+                        //The minus 1 is for the 1 thread we are deleting as that also counts as a post
+                        $user['User']['posts'] = $user['User']['posts'] - $thread['Thread']['posts'] - 1;
+                        $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
+                        'fieldList' => array('posts'), 'callbacks' => false));
                     }
                     
                     $this->Session->setFlash('Thread deleted successfully.');
@@ -62,11 +77,20 @@
                     $this->data['Thread']['forum_id'] = $id;
 					if($this->Thread->save($this->data)) {
                         $this->loadModel('Forum');
+                        $this->loadModel('User');
                         //Update number for threads in forum and last posting user
                         $threads = $this->Forum->find('first', array('conditions' => array('id' => $id), 'fields' => array('threads'), 'recursive' => 0));
                         $threads = $threads['Forum']['threads'];
                         $threads = $threads + 1;
-                        $this->Forum->save(array('id' => $id, 'threads' => $threads), false);
+                        $this->Forum->save(array('id' => $id, 'threads' => $threads), array('validate' => false,
+                        'fieldList' => array('threads')));
+                        
+                        //User just added a thread
+                        $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                        $user['User']['posts'] = $user['User']['posts'] + 1;
+                        $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
+                        'fieldList' => array('posts'), 'callbacks' => false));
+                        
                         $this->Session->setFlash("Thread added successfully");
                         $this->redirect(array('controller' => 'threads', 'action' => "view/".$id."#thread".$this->Thread->id.""));
                     }
@@ -134,7 +158,8 @@
                     $sticky = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                     $sticky = $sticky['Thread']['sticky'];
                     $sticky = $sticky ? 0 : 1;
-                    if($this->Thread->save(array('id' => $id, 'sticky' => $sticky), false)) {
+                    if($this->Thread->save(array('id' => $id, 'sticky' => $sticky), array('validate' => false,
+                        'fieldList' => array('sticky')))) {
                         $this->Session->setFlash('Thread has been updated.');
                         $this->redirect("/threads/view/$f_id/");
                     }

@@ -88,9 +88,11 @@
 		}
 		
 		function beforeSave() {
-			$this->data['User']['first_name'] = ucwords(strtolower($this->data['User']['first_name']));
-			$this->data['User']['last_name'] = ucwords(strtolower($this->data['User']['last_name']));
-			$this->hashPasswords($data);
+            if($this->data != NULL) {
+                $this->data['User']['first_name'] = ucwords(strtolower($this->data['User']['first_name']));
+                $this->data['User']['last_name'] = ucwords(strtolower($this->data['User']['last_name']));
+                $this->hashPasswords($this->data);
+            }
 			return TRUE;
 		}
 	}
