@@ -24,22 +24,51 @@
 			<h1><?php echo $row['Forum']['summary']; ?></h1>
 		</td>
 		<td>
-			<div class="modified">
-				by <b><?php echo $row['Forum']['lastpost']; ?></b>
-				&nbsp;
+			<div class="modified" align="right">
 				<?php 
 					//GRAB THE ID FROM LAST POST MADE TO POSTS DATABASE
-					echo $html->link('View Now', "/posts/view?id=1"); 
+                    if($row['Forum']['threads'] == 0):
+                        echo "<b>No threads in this forum</b>&nbsp; <br />";
+                        echo $html->link('Add a Thread Now', "/threads/add/".$row['Forum']['id']."/"); 
+                    elseif($row['Thread'] == NULL):
+                        $numPosts = $row['Post']['posts'];
+                        if($numPosts > 10) {
+                            $page = floor($numPosts/10) + 1;
+                        }
+                        else {
+                            $page = 1;
+                        }
+                        echo substr(strip_tags($row['Post']['content']),0,50)."...<br />"; 
+                        echo "by <b>" . $row['Post']['username'] . "</b>&nbsp;";
+                        echo $html->link('View Now', "/posts/view/".$row['Post']['thread_id']."/page:$page#post".$row['Post']['id']."");
+                    ?>
+                       <br />
+                        <h4>&nbsp;&nbsp;&nbsp;
+                            <i>
+                                <?php 
+                                    echo $time->timeAgoInWords($row['Post']['modified']); 
+                                ?> 
+                                <br />
+                            </i>
+                        </h4>
+                <?php
+                    else:
+                        echo substr(strip_tags($row['Thread']['content']),0,50)."...<br />"; 
+                        echo "by <b>" . $row['Thread']['username'] . "</b>&nbsp;";
+                        echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
+                    ?>
+                       <br />
+                        <h4>&nbsp;&nbsp;&nbsp;
+                            <i>
+                                <?php 
+                                    echo $time->timeAgoInWords($row['Thread']['modified']); 
+                                ?> 
+                                <br />
+                            </i>
+                        </h4>
+                <?php
+                    endif;
 				?>
-				<br />
-				<h4>&nbsp;&nbsp;&nbsp;
-					<i>
-						<?php 
-							echo $time->timeAgoInWords($row['Forum']['modified']); 
-						?> 
-						<br />
-					</i>
-				</h4>
 			</div>
 		</td>
 		<td><div class="modified" align="center"><?php echo $row['Forum']['threads']; ?></td>

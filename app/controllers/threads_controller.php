@@ -77,9 +77,9 @@
                         $threads = $this->Forum->find('first', array('conditions' => array('id' => $id), 'fields' => array('threads'), 'recursive' => 0));
                         $threads = $threads['Forum']['threads'];
                         $threads = $threads + 1;
-                        $this->Forum->save(array('id' => $id, 'threads' => $threads, 'lastpost' => $this->Auth->user('username')), false);
+                        $this->Forum->save(array('id' => $id, 'threads' => $threads), false);
                         $this->Session->setFlash("Thread added successfully");
-                        $this->redirect(array('controller' => 'threads', 'action' => "view/".$id."/"));
+                        $this->redirect(array('controller' => 'threads', 'action' => "view/".$id."#thread".$this->Thread->id.""));
                     }
                     else {
                         $this->Session->setFlash("Thread was not added. Error occured. Try again.");

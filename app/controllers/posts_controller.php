@@ -39,7 +39,7 @@
                     
                     if($posts > 10) {
                         //Figure page
-                        $page = floor($posts/10);
+                        $page = floor($posts/10) + 1;
                     }
                     else {
                         $page = 1;
@@ -49,7 +49,7 @@
                     $posts = $this->Forum->find('first', array('conditions' => array('id' => $forum_id), 'fields' => array('posts'), 'recursive' => 0));
                     $posts = $posts['Forum']['posts'];
                     $posts = $posts + 1;
-                    $this->Forum->save(array('id' => $forum_id, 'posts' => $posts, 'lastpost' => $this->Auth->user('username')), false);
+                    $this->Forum->save(array('id' => $forum_id, 'posts' => $posts), false);
                     $this->Session->setFlash("Post added successfully");
                     $post_id = $this->Post->id;
 

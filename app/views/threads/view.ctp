@@ -30,6 +30,7 @@
 					echo "Sticky: ";
 				}
 			?>
+                <a name="thread<?php echo $row['Thread']['id']; ?>"></a>
 				<?php echo $html->link($row['Thread']['thread_name'], "/posts/view/".$row['Thread']['id']."/");?>
 			</h4> 
 			<h1>Pages: 1, 2, 3, ..., Last</h1>
@@ -62,7 +63,7 @@
                     $numPosts = $row['Thread']['posts'];
                     if($numPosts > 10) {
                         //Figure page
-                        $page = floor($numPosts/10);
+                        $page = floor($numPosts/10) + 1;
                     }
                     else {
                         $page = 1;
