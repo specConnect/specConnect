@@ -67,6 +67,45 @@
             $this->set('thread_id', $id);
 		}
         
+        function delete($id = NULL, $t_id = NULL) {
+            $this->autoRender = false;
+            $user = $this->Auth->user('username');
+            $post = $this->Post->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($user == $post['Post']['username'] || $this->__isAdmin()) {
+                if($id != NULL) {
+                    $this->loadModel('Thread');
+                    $this->loadModel('Forum');
+                    
+                    //Delete post
+                    $this->Post->delete($id, false);
+                    
+                    $thread = $this->Thread->find('first', array('conditions' => array('id' => $t_id), 'recursive' => 0));
+                    if($thread['Thread']['posts'] > 0) {
+                        $thread['Thread']['posts'] = $thread['Thread']['posts'] - 1;
+                        $this->Thread->save(array('id' => $t_id, 'posts' => $thread['Thread']['posts']), false);
+                    }
+                    
+                    $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['id']), 'recursive' => 0));
+                    if($forum['Forum']['posts'] > 0) {
+                        $forum['Forum']['posts'] = $forum['Forum']['posts'] - 1;
+                        $this->Forum->save(array('id' => $thread['Thread']['forum_id'], 'posts' => $forum['Forum']['posts']), false);
+                    }
+                    
+                    
+                    $this->Session->setFlash('Post deleted successfully.');
+                    //FIXME: REDIRECT TO WHERE THIS DELETED POST (PAGE NUMBER AND LOCATION) PREVIOUSLY WAS
+                    $this->redirect("/posts/view/$t_id");
+                }
+                else {
+                    $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+                }
+            }
+            else {
+                $this->Session->setFlash('You cannot delete a post which does not belong to you.');
+                $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+            }
+        }
+        
         function view($id = NULL) {
             if($id != NULL) {
                 //Set pagination parameters
@@ -93,6 +132,8 @@
                     $index++;
                 }
                 
+                $this->set('admin', $this->__isAdmin());
+                $this->set('loggedUser', $this->Auth->user('username'));
                 $this->set('title', $thread['Thread']['thread_name']);
                 $this->set('thread', $thread);
                 $this->set('thread_user', $thread_user);

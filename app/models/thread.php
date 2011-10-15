@@ -15,13 +15,17 @@
 					'rule' => 'isUnique',
 					'message' => 'A thread with this name already exists.'
 					),
+                'between' => array(
+					'rule' => array('between', 11, 60),
+					'message' => 'The username has to be between 11 to 60 characters in length'
+					),
 				'notEmpty' => array(
 					'rule' => 'notEmpty',
 					'message' => 'Please fill out a name for your thread'
 					),
 				'minLength' => array(
-					'rule' => array('minLength', 10),
-					'message' => 'Title has to have a minimum of 10 characters'
+					'rule' => array('minLength', 11),
+					'message' => 'Title has to have a minimum of 11 characters'
 				)
 			),
 			'content' => array(
