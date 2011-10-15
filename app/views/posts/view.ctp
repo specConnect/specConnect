@@ -24,7 +24,7 @@
             </td>
             <td width="70%">
                 <?php echo $thread['Thread']['content']; ?>
-                <hr /><br />
+                <br />
             </td>
         </tr>
 <?php 
@@ -36,7 +36,6 @@
     <tr>
         <th>
             <?php echo $time->timeAgoInWords($row['Post']['modified']); ?>
-            <a name="<?php echo "post".$row['Post']['id']; ?>"></a>
         </th>
         <th><div align="left"><?php echo "RE: " .$title; ?></div></th>
     </tr>
@@ -48,11 +47,12 @@
                     <?php echo $row['User']['username']; ?> <br />
                     <?php echo $row['User']['email']; ?>
                 </div>
+                <a name="<?php echo "post".$row['Post']['id']; ?>"></a>
             </div>
         </td>
         <td width="70%">
             <?php echo $row['Post']['content']; ?>
-            <hr /><br />
+            <br />
         </td>
     </tr>
     <?php

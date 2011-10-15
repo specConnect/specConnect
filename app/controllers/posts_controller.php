@@ -37,6 +37,14 @@
                     $posts = $posts + 1;
                     $this->Thread->save(array('id' => $id, 'posts' => $posts));
                     
+                    if($posts > 10) {
+                        //Figure page
+                        $page = floor($posts/10);
+                    }
+                    else {
+                        $page = 1;
+                    }
+                    
                     //Update number for posts in forum and last posting user
                     $posts = $this->Forum->find('first', array('conditions' => array('id' => $forum_id), 'fields' => array('posts'), 'recursive' => 0));
                     $posts = $posts['Forum']['posts'];
@@ -44,7 +52,8 @@
                     $this->Forum->save(array('id' => $forum_id, 'posts' => $posts, 'lastpost' => $this->Auth->user('username')), false);
                     $this->Session->setFlash("Post added successfully");
                     $post_id = $this->Post->id;
-                    $this->redirect(array('controller' => 'posts', 'action' => "view/".$id."#post$post_id/"));
+
+                    $this->redirect(array('controller' => 'posts', 'action' => "view/".$id."/page:".$page."#post$post_id"));
                 }
                 else {
                     $this->Session->setFlash("Post was not added. Error occured. Try again.");

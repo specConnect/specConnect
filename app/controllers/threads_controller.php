@@ -118,10 +118,18 @@
 				//Load up Forum Model so that we can get some information about the forum
 				$this->loadModel('Forum');
 				$this->loadModel('User');
+                $this->loadModel('Post');
                 
 				$forum = $this->Forum->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
 				$thread = $this->paginate('Thread');
 			    
+                $index = 0;
+                foreach ($thread as $row) {
+                    $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
+                    $thread[$index]['Post'] = $post['Post'];
+                    $index++;
+                }
+                
 				//Title above Breadcrumb
 				$this->set('title', $forum['Forum']['name']);
 				

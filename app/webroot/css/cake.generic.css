@@ -120,7 +120,7 @@ ul, li {
 	color: #333;
 	padding: 10px 20px 30px 20px;
 	overflow: auto;
-	width:1000px;
+	width:1200px;
 	background:#fff;
 	text-align:left;
 }
@@ -130,7 +130,7 @@ ul, li {
 	padding: 6px 20px 0px 20px;
 	text-align: center;
 	overflow: auto;
-	width:1000px;
+	width:600px;
 	background:#000;
 }
 #inner {

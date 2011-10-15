@@ -50,22 +50,62 @@
 		?> 
 		</div></td>
 		<td>
-		<div class="modified" align="center">
-			by <b><?php echo "someUser"; ?></b>
-			&nbsp;
-			<?php 
-				//GRAB THE ID FROM LAST POST MADE TO POSTS DATABASE
-				echo $html->link('View Now', "/posts/view?id=1"); 
-			?>
-			<br />
-			<h4>&nbsp;&nbsp;&nbsp;
+		<div class="modified" align="right">
+            <?php 
+                if($row['Post'] != NULL):   
+            ?>
+                <?php echo substr(strip_tags($row['Post']['content']),0,50)."..."; ?><br />
+                by <b><?php echo $row['Post']['username']; ?></b>
+                &nbsp;
+                <?php 
+                    //GRAB THE ID FROM LAST POST MADE TO POSTS DATABASE
+                    $numPosts = $row['Thread']['posts'];
+                    if($numPosts > 10) {
+                        //Figure page
+                        $page = floor($numPosts/10);
+                    }
+                    else {
+                        $page = 1;
+                    }
+                    echo $html->link('View Now', "/posts/view/".$row['Post']['thread_id']."/page:".$page."#post".$row['Post']['id'].""); 
+                ?>
+                <br />
+                <h4>&nbsp;&nbsp;&nbsp;
 				<i>
 					<?php 
-							echo $time->timeAgoInWords($row['Thread']['modified']); 
+                        $updated = $time->niceShort($row['Post']['modified']);
+                        $updated = explode(',', $updated);
+                        $updated[1] = $time->format('g:i a', $updated[1]);
+                        echo "". $updated[0]. ", ".$updated[1];
 					?> 
 					<br />
 				</i>
-			</h4>
+                </h4>
+            <?php
+                else:
+            ?>
+                <?php echo substr(strip_tags($row['Thread']['content']),0,50)."..."; ?><br />
+                by <b><?php echo $row['Thread']['username']; ?></b>
+                &nbsp;
+                <?php 
+                    echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
+                ?>
+                <br />
+                <h4>&nbsp;&nbsp;&nbsp;
+				<i>
+					<?php 
+                        $updated = $time->niceShort($row['Thread']['modified']);
+                        $updated = explode(',', $updated);
+                        $updated[1] = $time->format('g:i a', $updated[1]);
+                        echo "". $updated[0]. ", ".$updated[1];
+					?> 
+					<br />
+				</i>
+                </h4>
+            <?php
+                endif;
+            ?>
+
 		</div></td>
 		<td><div class="modified" align="center"> <?php echo $row['Thread']['posts'] ?> </div></td>
 		<td><div class="modified" align="center"> 0 </div></td>
