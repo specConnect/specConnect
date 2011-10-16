@@ -61,7 +61,7 @@
                 }
             }                
             else {
-                $this->Session->setFlash('You cannot edit a thread which does not belong to you.');
+                $this->Session->setFlash('You cannot edit a post which does not belong to you.');
                 $this->redirect(array('controller' => 'forums', 'action' => 'view'));
             }
         }
