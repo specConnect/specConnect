@@ -25,6 +25,8 @@
                     <?php
                         if($loggedUser == $thread['Thread']['username'] || $admin):
                             echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/");
+                            echo "<br />";
+                            echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
                         endif;
                     ?>
                 </div>
@@ -59,6 +61,8 @@
                 <?php
                     if($loggedUser == $row['Post']['username'] || $admin):
                         echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");
+                        echo "<br />";
+                        echo $html->link('Edit', "edit/".$row['Post']['id']."/");
                     endif;
                 ?>
                 <a name="<?php echo "post".$row['Post']['id']; ?>"></a>

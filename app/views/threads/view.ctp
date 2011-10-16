@@ -41,6 +41,10 @@
             ?>
                 &nbsp; &nbsp;
             <?php
+                echo $html->link('Edit', "edit/".$row['Thread']['id']."/");
+            ?>
+                &nbsp; &nbsp;
+            <?php
                 echo $html->link('Toggle Sticky', "sticky/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
             endif;
             ?>

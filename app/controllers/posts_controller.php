@@ -4,6 +4,15 @@
         var $name = 'Posts';
         var $helpers = array('Form', 'Html', 'Javascript', 'Time');
         
+        function __getPage($posts) {
+            if($posts > 10) {
+                return (floor($posts/10)) + 1;
+            }
+            else {
+                return 1;
+            }
+        }
+        
         function beforeFilter() {
             parent::beforeFilter();
             $this->Auth->allow('view');
@@ -14,6 +23,47 @@
 				$this->set('userInfo', $this->Auth->user());
 			}
 			$this->set('online', $online);
+        }
+        
+        function edit($id = NULL) {
+            $this->layout = 'forum';
+            $user = $this->Auth->user('username');
+            $post = $this->Post->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($user == $post['Post']['username'] || $this->__isAdmin()) {
+                if($id != NULL) {
+                    $this->set('title_for_layout', 'specConnect - Edit Post');
+                    $this->set('title', "Edit Post"); //Title above Breadcrumb
+                    
+                    if(!empty($this->data)) { //IF USER POSTS DATA
+                        //Save to database
+                        //User the below declaration if we are to use the cakePHP SAVE method
+                        //$this->data['Post']['id'] = $id
+                        $this->set('id', $post['Post']['id']);
+                        $this->set('content', NULL);
+                        if($this->Post->query("UPDATE `posts` SET  `content` = '".$this->data['Post']['content']."' WHERE  `id` = $id;")) {
+                            $this->Session->setFlash("Editing successful.");
+                            $this->loadModel('Thread');
+                            $thread = $this->Thread->find('first', array('conditions' => array('id' => $post['Post']['thread_id'])));
+                            $page = $this->__getPage($thread['Thread']['posts']);
+                            $this->redirect("/posts/view/".$post['Post']['thread_id']."/page:$page#post".$post['Post']['id']."");
+                        }
+                        else {
+                            $this->Session->setFlash("Unable to update post. Try again.");
+                        }
+                    }
+                    else { //WHEN NEW DATA ISN'T POSTED
+                        $this->set('id', $post['Post']['id']);
+                        $this->set('content', $post['Post']['content']);
+                    }
+                }
+                else {
+                    $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+                }
+            }                
+            else {
+                $this->Session->setFlash('You cannot edit a thread which does not belong to you.');
+                $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+            }
         }
         
         function add($id = NULL) {
@@ -39,13 +89,7 @@
                     $posts = $posts + 1;
                     $this->Thread->save(array('id' => $id, 'posts' => $posts));
                     
-                    if($posts > 10) {
-                        //Figure page
-                        $page = floor($posts/10) + 1;
-                    }
-                    else {
-                        $page = 1;
-                    }
+                    $page = $this->__getPage($posts);
                     
                     //Update number for posts in forum
                     $posts = $this->Forum->find('first', array('conditions' => array('id' => $forum_id), 'fields' => array('posts'), 'recursive' => 0));
@@ -113,10 +157,9 @@
                         'fieldList' => array('posts')));
                     }
                     
-                    
                     $this->Session->setFlash('Post deleted successfully.');
-                    //FIXME: REDIRECT TO WHERE THIS DELETED POST (PAGE NUMBER AND LOCATION) PREVIOUSLY WAS
-                    $this->redirect("/posts/view/$t_id");
+                    $page = $this->__getPage($thread['Thread']['posts']);
+                    $this->redirect("/posts/view/$t_id/page:$page"); 
                 }
                 else {
                     $this->redirect(array('controller' => 'forums', 'action' => 'view'));

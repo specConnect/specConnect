@@ -4,6 +4,15 @@
         var $name = 'Threads';
 		var $helpers = array('Form', 'Html', 'Javascript', 'Time');
         
+        function __getPage($posts) {
+            if($posts > 10) {
+                return (floor($posts/10)) + 1;
+            }
+            else {
+                return 1;
+            }
+        }
+        
 		function beforeFilter() {
 			parent::beforeFilter();
 			$this->Auth->allow('view');
@@ -16,6 +25,45 @@
 			$this->set('online', $online); 
 		}
 		
+        function edit($id = NULL) {
+            $this->layout = 'forum';
+            $user = $this->Auth->user('username');
+            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($user == $thread['Thread']['username'] || $this->__isAdmin()) {
+                if($id != NULL) {
+                    $this->set('title_for_layout', 'specConnect - Edit Thread');
+                    $this->set('title', "EDIT:".$thread['Thread']['thread_name']); //Title above Breadcrumb
+                    
+                    if(!empty($this->data)) { //IF USER POSTS DATA
+                        //Save to database
+                        $this->data['id'] = $id;
+                        $this->set('id', $thread['Thread']['id']);
+                        $this->set('thread_name', NULL);
+                        $this->set('content', NULL);
+                        if($this->Thread->save($this->data)) {
+                            $this->Session->setFlash("Editing successful.");
+                            $this->redirect("/posts/view/".$thread['Thread']['id']."/");
+                        }
+                        else {
+                            $this->Session->setFlash("Unable to update post. Try again.");
+                        }
+                    }
+                    else { //WHEN NEW DATA ISN'T POSTED
+                        $this->set('id', $thread['Thread']['id']);
+                        $this->set('thread_name', $thread['Thread']['thread_name']);
+                        $this->set('content', $thread['Thread']['content']);
+                    }
+                }
+                else {
+                    $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+                }
+            }                
+            else {
+                $this->Session->setFlash('You cannot edit a thread which does not belong to you.');
+                $this->redirect(array('controller' => 'forums', 'action' => 'view'));
+            }
+        }
+        
         function delete($id = NULL, $f_id = NULL) {
             $this->autoRender = false;
             $user = $this->Auth->user('username');
@@ -50,15 +98,15 @@
                     }
                     
                     $this->Session->setFlash('Thread deleted successfully.');
-                    //FIXME: REDIRECT TO WHERE THIS DELETED THREAD (PAGE NUMBER AND LOCATION) PREVIOUSLY WAS
-                    $this->redirect("/threads/view/$f_id");
+                    $page = $this->__getPage($forum['Forum']['threads']);
+                    $this->redirect("/threads/view/$f_id/page:$page"); 
                 }
                 else {
                     $this->redirect(array('controller' => 'forums', 'action' => 'view'));
                 }
             }
             else {
-                $this->Session->setFlash('You cannot delete a post which does not belong to you.');
+                $this->Session->setFlash('You cannot delete a thread which does not belong to you.');
                 $this->redirect(array('controller' => 'forums', 'action' => 'view'));
             }
         }
