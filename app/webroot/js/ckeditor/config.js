@@ -19,7 +19,8 @@ CKEDITOR.editorConfig = function( config )
 		{ name: 'insert', items : [ 'Table','HorizontalRule','Smiley','SpecialChar'] },
 		{ name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat' ] },
 		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote' ] },
-		{ name: 'tools', items : [ 'Maximize'] }
+		{ name: 'tools', items : [ 'Maximize'] },
+        { name: 'colors', items : [ 'TextColor','BGColor' ] },
 	];
 };
 CKEDITOR.on('instanceReady', function(ev){
