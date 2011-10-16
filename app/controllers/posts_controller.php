@@ -129,37 +129,42 @@
         }
         
         function view($id = NULL) {
-            if($id != NULL) {
-                //Set pagination parameters
-                $this->paginate = array(
-                            'Post' => array(
-                                'limit' => 10, 
-                                'conditions' => array('thread_id' => $id),
-                                'recursive' => 0, 
-                                'order' => array('modified ASC')
-                            )
-                        );
-                $this->layout = 'forum';
-                $this->set('title_for_layout', 'specConnect - Threads');
-                $this->loadModel('Thread');
-                $this->loadModel('User');
-                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
-                $thread_user = $this->User->find('first', array('conditions' => array('username' => $thread['Thread']['username'])));
-                $posts = $this->paginate('Post');
-                
-                $index = 0;
-                foreach ($posts as $row) {
-                    $post_user = $this->User->find('first', array('conditions' => array('username' => $row['Post']['username']), 'recursive' => 0));
-                    $posts[$index]['User'] = $post_user['User'];
-                    $index++;
-                }
-                
-                $this->set('admin', $this->__isAdmin());
-                $this->set('loggedUser', $this->Auth->user('username'));
-                $this->set('title', $thread['Thread']['thread_name']);
-                $this->set('thread', $thread);
-                $this->set('thread_user', $thread_user);
-                $this->set('posts', $posts);
+                //Check if post exists
+                if($id != NULL) {
+                    $this->loadModel('Thread');
+                    $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                    if ($thread != NULL):
+                        //Set pagination parameters
+                        $this->paginate = array(
+                                    'Post' => array(
+                                        'limit' => 10, 
+                                        'conditions' => array('thread_id' => $id),
+                                        'recursive' => 0, 
+                                        'order' => array('modified ASC')
+                                    )
+                                );
+                        $this->layout = 'forum';
+                        $this->set('title_for_layout', 'specConnect - Threads');
+                        $this->loadModel('User');
+                        $thread_user = $this->User->find('first', array('conditions' => array('username' => $thread['Thread']['username'])));
+                        $posts = $this->paginate('Post');
+                        
+                        $index = 0;
+                        foreach ($posts as $row) {
+                            $post_user = $this->User->find('first', array('conditions' => array('username' => $row['Post']['username']), 'recursive' => 0));
+                            $posts[$index]['User'] = $post_user['User'];
+                            $index++;
+                        }
+                        
+                        $this->set('admin', $this->__isAdmin());
+                        $this->set('loggedUser', $this->Auth->user('username'));
+                        $this->set('title', $thread['Thread']['thread_name']);
+                        $this->set('thread', $thread);
+                        $this->set('thread_user', $thread_user);
+                        $this->set('posts', $posts);
+                    else: 
+                        $this->redirect(array('controller' => 'forums', 'action' => "view"));
+                    endif;
             }
             else {
                 $this->redirect(array('controller' => 'forums', 'action' => 'view'));

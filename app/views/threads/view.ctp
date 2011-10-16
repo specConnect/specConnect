@@ -23,7 +23,7 @@
 		foreach ($thread as $row): 
 	?> 
 	<tr>
-		<td>
+		<td title="<?php echo "".substr(strip_tags($row['Thread']['content']),0,100)."..."; ?>">
 			<h4>
 			<?php
 				if ($row['Thread']['sticky']) {
@@ -55,7 +55,17 @@
             <?php 
                 if($row['Post'] != NULL):   
             ?>
-                <?php echo substr(strip_tags($row['Post']['content']),0,50)."..."; ?><br />
+                <h4>&nbsp;&nbsp;&nbsp;
+				<i>
+					<?php 
+                        $updated = $time->niceShort($row['Post']['modified']);
+                        $updated = explode(',', $updated);
+                        $updated[1] = $time->format('g:i a', $updated[1]);
+                        echo "". $updated[0]. ", ".$updated[1];
+					?> 
+					<br />
+				</i>
+                </h4>
                 by <b><?php echo $row['Post']['username']; ?></b>
                 &nbsp;
                 <?php 
@@ -71,27 +81,9 @@
                     echo $html->link('View Now', "/posts/view/".$row['Post']['thread_id']."/page:".$page."#post".$row['Post']['id'].""); 
                 ?>
                 <br />
-                <h4>&nbsp;&nbsp;&nbsp;
-				<i>
-					<?php 
-                        $updated = $time->niceShort($row['Post']['modified']);
-                        $updated = explode(',', $updated);
-                        $updated[1] = $time->format('g:i a', $updated[1]);
-                        echo "". $updated[0]. ", ".$updated[1];
-					?> 
-					<br />
-				</i>
-                </h4>
             <?php
                 else:
             ?>
-                <?php echo substr(strip_tags($row['Thread']['content']),0,50)."..."; ?><br />
-                by <b><?php echo $row['Thread']['username']; ?></b>
-                &nbsp;
-                <?php 
-                    echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
-                ?>
-                <br />
                 <h4>&nbsp;&nbsp;&nbsp;
 				<i>
 					<?php 
@@ -103,6 +95,13 @@
 					<br />
 				</i>
                 </h4>
+                by <b><?php echo $row['Thread']['username']; ?></b>
+                &nbsp;
+                <?php 
+                    echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
+                ?>
+                <br />
+
             <?php
                 endif;
             ?>

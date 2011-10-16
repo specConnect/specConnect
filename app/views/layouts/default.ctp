@@ -1,6 +1,7 @@
 <html>
 <head>
 <title><?php echo $title_for_layout; ?></title>
+<?php echo $javascript->link('jquery.js'); ?>
 <?php echo $html->css('cake.generic'); ?>
 <?php echo $scripts_for_layout; ?>
 </head>

@@ -32,11 +32,10 @@
                     
                     $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
                     if($forum['Forum']['threads'] > 0) {
-                        $forum['Forum']['threads'] = $forum['Forum']['threads'];
+                        $forum['Forum']['threads'] = $forum['Forum']['threads'] - 1;
                     }
                     if($forum['Forum']['posts'] > 0) {
-                        
-                        $forum['Forum']['posts'] = $forum['Forum']['posts'] - $thread['Thread']['posts'] - 1;
+                        $forum['Forum']['posts'] = $forum['Forum']['posts'] - $thread['Thread']['posts'];
                     }
                     
                     $this->Forum->save(array('id' => $f_id, 'threads' => $forum['Forum']['threads'], 'posts' => $forum['Forum']['posts']),

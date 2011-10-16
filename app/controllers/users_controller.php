@@ -1,7 +1,8 @@
 <?php 
 	class UsersController extends AppController {
 		var $name = "Users";
-		
+		var $helpers = array('Form', 'Html', 'Javascript', 'Time');
+        
 		function beforeFilter() {
 			parent::beforeFilter(); 
 			$this->Auth->allow('login', 'register');

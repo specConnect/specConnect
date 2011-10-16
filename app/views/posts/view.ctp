@@ -22,6 +22,11 @@
                     </div> 
                     Posts: <i><?php echo $thread_user['User']['posts']; ?></i>
                     <br /><br />
+                    <?php
+                        if($loggedUser == $thread['Thread']['username'] || $admin):
+                            echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/");
+                        endif;
+                    ?>
                 </div>
             </td>
             <td width="70%">
