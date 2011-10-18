@@ -38,11 +38,8 @@
                         else {
                             $page = 1;
                         }
-                        ?>
-                        <a href="<?php echo "/posts/view/".$row['Post']['thread_id']."/page:$page#post".$row['Post']['id'].""; ?>">
-                            <?php echo substr(strip_tags($row['Post']['content']),0,50)."... <br />"; ?>
-                        </a>
-                    <?php    
+                        echo $html->link(substr(strip_tags($row['Post']['content']),0,50)."...", "/posts/view/".$row['Post']['thread_id']."/page:$page#post".$row['Post']['id']."");
+                        echo "<br />";
                         echo "by <b>" . $row['Post']['username'] . "</b>&nbsp;";
                         echo $html->link('View Now', "/posts/view/".$row['Post']['thread_id']."/page:$page#post".$row['Post']['id']."");
                     ?>
@@ -57,11 +54,8 @@
                         </h4>
                 <?php
                     else:
-                ?>
-                        <a href="<?php echo "/posts/view/".$row['Thread']['id']; ?>">
-                            <?php echo substr(strip_tags($row['Thread']['thread_name']),0,50)."... <br />"; ?>
-                        </a>
-                    <?php 
+                        echo $html->link(substr(strip_tags($row['Thread']['thread_name']),0,50)."...", "/posts/view/".$row['Thread']['id']);
+                        echo "<br />";
                         echo "by <b>" . $row['Thread']['username'] . "</b>&nbsp;";
                         echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
                     ?>
