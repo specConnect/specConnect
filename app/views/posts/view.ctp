@@ -34,8 +34,10 @@
                 </div>
             </td>
             <td width="70%">
-                <?php echo $thread['Thread']['content']; ?>
-                <br />
+                <div class="post">
+                    <?php echo $thread['Thread']['content']; ?>
+                    <br />
+                </div>
             </td>
         </tr>
 <?php 
@@ -73,8 +75,10 @@
             </div>
         </td>
         <td width="70%">
-            <?php echo $row['Post']['content']; ?>
-            <br />
+            <div class="post">
+                <?php echo $row['Post']['content']; ?>
+                <br />
+            </div>
         </td>
     </tr>
     <?php

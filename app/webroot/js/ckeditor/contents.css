@@ -23,3 +23,15 @@ ol,ul,dl
 	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
     padding:0 40px;
 }
+
+blockquote {
+    margin:10px;
+    font-style:italic;
+    margin-left:30px;
+    text-align:left;
+    display:block;
+    padding:5px;
+    width:80%;
+    background-color:#BBB;
+    border:1px solid #000;
+}
