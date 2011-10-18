@@ -33,7 +33,6 @@
                 <a name="thread<?php echo $row['Thread']['id']; ?>"></a>
 				<?php echo $html->link($row['Thread']['thread_name'], "/posts/view/".$row['Thread']['id']."/");?>
 			</h4> 
-			<h1>Pages: 1, 2, 3, ..., Last</h1>
 			<h1>by <b><?php echo $row['Thread']['username']; ?></b> </h1>
             <?php 
             if($loggedUser == $row['Thread']['username'] || $admin) :
@@ -45,7 +44,9 @@
             ?>
                 &nbsp; &nbsp;
             <?php
-                echo $html->link('Toggle Sticky', "sticky/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+                if ($admin) {
+                    echo $html->link('Toggle Sticky', "sticky/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+                }
             endif;
             ?>
 		</td>
