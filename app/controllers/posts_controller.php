@@ -29,11 +29,13 @@
             $this->layout = 'forum';
             $user = $this->Auth->user('username');
             $post = $this->Post->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($post == NULL) {
+                $this->redirect('/forums/view/');
+            }
             if($user == $post['Post']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
                     $this->set('title_for_layout', 'specConnect - Edit Post');
                     $this->set('title', "Edit Post"); //Title above Breadcrumb
-                    
                     if(!empty($this->data)) { //IF USER POSTS DATA
                         //Save to database
                         //User the below declaration if we are to use the cakePHP SAVE method
@@ -66,7 +68,7 @@
             }
         }
         
-        function add($id = NULL) {
+        function add($id = NULL, $q_id = NULL) {
             $this->layout = 'forum';
             $this->set('title_for_layout', 'specConnect - Add Post');
             $this->loadModel('Thread');
@@ -76,14 +78,43 @@
             //Title above Breadcrumb
             $this->set('title', "POST TO: ".$thread['Thread']['thread_name']);	
             
-            if(!empty($this->data) && $id != NULL) {
-                //Adding a thread
+            if($id != NULL) {
+                $posts = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                if($posts == NULL) {
+                    $this->redirect('/forums/view/');
+                }
+                if($q_id != NULL) {
+                    if($q_id == $id) { 
+                        //We are quoting a thread
+                        $quote = $this->Thread->find('first', array('conditions' => array('id' => $q_id)));
+                        $quote_id = $quote['Thread']['id'];
+                        $quote = $quote['Thread']['content'];
+                    }
+                    else {
+                        //We are quoting a post
+                        $quote = $this->Post->find('first', array('conditions' => array('id' => $q_id)));
+                        $quote_id = $quote['Post']['thread_id'];
+                        $quote = $quote['Post']['content'];
+                    }
+                    
+                    if($quote_id == $posts['Thread']['id']) {
+                        $this->set('quote', $quote);
+                    }
+                    else {
+                        $this->Session->setFlash("Cannot handle your request");
+                        $this->redirect('/forums/view/');
+                    }
+                }
+            }
+            
+            if(!empty($this->data)) {
+
+                //Adding a post
                 $this->data['Post']['username'] = $this->Auth->user('username');
                 $this->data['Post']['thread_id'] = $id;
                 $this->Post->create(); //Gets ready to create new entry in database
                 if($this->Post->save($this->data)) {
                     //Update number of posts in thread
-                    $posts = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                     $forum_id = $posts['Thread']['forum_id'];
                     $posts = $posts['Thread']['posts'];
                     $posts = $posts + 1;
@@ -120,6 +151,7 @@
             }
             
             $this->set('thread_id', $id);
+            $this->set('quote_id', $q_id);
 		}
         
         function delete($id = NULL, $t_id = NULL) {

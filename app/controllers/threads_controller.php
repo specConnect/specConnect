@@ -29,6 +29,9 @@
             $this->layout = 'forum';
             $user = $this->Auth->user('username');
             $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($thread == NULL) {
+                $this->redirect('/forums/view/');
+            }
             if($user == $thread['Thread']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
                     $this->set('title_for_layout', 'specConnect - Edit Thread');
@@ -116,14 +119,22 @@
 				$this->set('title_for_layout', 'specConnect - Add Thread');
 					
 				//Title above Breadcrumb
-				$this->set('title', 'Add New Thread');	
+				$this->set('title', 'Add New Thread');
                 
-				if(!empty($this->data) && $id != NULL) {
+                $this->loadModel('Forum');
+
+                if($id != NULL) {
+                    $forums = $this->Forum->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                    if($forums == NULL) {
+                        $this->redirect('/forums/view/');
+                    }
+                }
+                
+				if(!empty($this->data)) {
                     //Adding a thread
 					$this->data['Thread']['username'] = $this->Auth->user('username');
                     $this->data['Thread']['forum_id'] = $id;
 					if($this->Thread->save($this->data)) {
-                        $this->loadModel('Forum');
                         $this->loadModel('User');
                         //Update number for threads in forum and last posting user
                         $threads = $this->Forum->find('first', array('conditions' => array('id' => $id), 'fields' => array('threads'), 'recursive' => 0));

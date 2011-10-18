@@ -28,6 +28,8 @@
                             echo "<br />";
                             echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
                         endif;
+                        echo "<br />";
+                        echo $html->link('Quote', "/posts/add/".$thread['Thread']['id']."/".$thread['Thread']['id']."/");
                     ?>
                 </div>
             </td>
@@ -64,6 +66,8 @@
                         echo "<br />";
                         echo $html->link('Edit', "edit/".$row['Post']['id']."/");
                     endif;
+                    echo "<br />";
+                    echo $html->link('Quote', "/posts/add/".$row['Post']['thread_id']."/".$row['Post']['id']."/");
                 ?>
                 <a name="<?php echo "post".$row['Post']['id']; ?>"></a>
             </div>

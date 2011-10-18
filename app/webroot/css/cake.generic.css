@@ -159,6 +159,18 @@ ul, li {
 #titleCrumb h1 {
 	padding-left:20px;
 }
+
+blockquote {
+    margin:10px;
+    font-style:italic;
+    margin-left:30px;
+    text-align:left;
+    display:block;
+    padding:5px;
+    width:80%;
+    background:#BBB;
+    border:1px solid #000;
+}
 	
 /** containers **/
 div.form,
