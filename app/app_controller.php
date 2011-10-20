@@ -1,6 +1,6 @@
 <?php
 	class AppController extends Controller {
-		var $components = array('Auth', 'Session');	
+		var $components = array('Auth', 'Session', 'RequestHandler');	
         
         function __isAdmin() {
             $this->loadModel('User');

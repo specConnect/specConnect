@@ -25,6 +25,43 @@
 			$this->set('online', $online); 
 		}
 		
+        function thumb($id = NULL, $f_id = NULL) {
+            $this->autoRender = false;
+            if($id != NULL && $f_id != NULL) {
+                $this->loadModel('Thumb');
+                $this->loadModel('Forum');
+                $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
+                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id)));
+                if($forum != NULL && $thread != NULL) {
+                    $thumb = $this->Thumb->find('first', array('conditions' => array('thread_id' => $thread['Thread']['id'], 
+                    'username' => $this->Auth->user('username'))));
+                    if(!$thumb) { 
+                        $val = array('username' => $this->Auth->user('username'),
+                                     'user_id' => $this->Auth->user('id'),
+                                     'thread_id' => $id,
+                                     'ip' => $this->RequestHandler->getClientIp());
+                        $this->Thumb->create();
+                        $this->Thumb->save($val);
+                        $this->Session->setFlash("Thumbs up to: " . $thread['Thread']['thread_name']);
+                        $page = $this->__getPage($forum['Forum']['threads']);
+                        $this->redirect("/threads/view/$f_id/page:$page#thread$id");
+                    }
+                    else {
+                        $this->Session->setFlash("Thumbs down to: " . $thread['Thread']['thread_name']."");
+                        $this->Thumb->delete($thumb['Thumb']['id'], false);
+                        $page = $this->__getPage($forum['Forum']['threads']);
+                        $this->redirect("/threads/view/$f_id/page:$page#thread$id");
+                    }
+                }
+                else {
+                    $this->redirect('/forums/view');
+                }
+            }
+            else {
+                $this->redirect('/forums/view');
+            }
+        }
+        
         function edit($id = NULL) {
             $this->layout = 'forum';
             $user = $this->Auth->user('username');
@@ -177,7 +214,7 @@
                             'Thread' => array(
                                 'limit' => 10, 
                                 'conditions' => array('forum_id' => $id),
-                                'recursive' => 0, 
+                                'recursive' => 1, 
                                 'order' => array('sticky DESC','modified DESC')
                             )
                         );
@@ -190,14 +227,26 @@
 				$this->loadModel('Forum');
 				$this->loadModel('User');
                 $this->loadModel('Post');
+                $this->loadModel('Thumb');
                 
 				$forum = $this->Forum->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
 				$thread = $this->paginate('Thread');
-			    
+			         
                 $index = 0;
                 foreach ($thread as $row) {
                     $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
                     $thread[$index]['Post'] = $post['Post'];
+                    $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
+                    $x = 0;
+                    $thread[$index]['voted'] = 0;
+                    foreach ($thread[$index]['Thumb'] as $thumbs) {
+                        if($thread[$index]['Thumb'][$x]['username'] == $this->Auth->user('username')) {
+                            $thread[$index]['voted'] = 1;
+                            break;
+                        }
+                        $x++;
+                    }
+                   
                     $index++;
                 }
                 

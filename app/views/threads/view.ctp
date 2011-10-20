@@ -48,6 +48,15 @@
                     echo $html->link('Toggle Sticky', "sticky/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
                 }
             endif;
+            if  ($online && !($row['voted'])) {
+                echo "&nbsp; &nbsp;";
+                echo $html->link('+1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+            }
+            else {
+                echo "&nbsp; &nbsp;";
+                echo $html->link('-1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+            }
+            echo "<h1>+<b>" .$row['thumbUp'] . "</b></h1>";
             ?>
 		</td>
 		<td><div class="modified" align="center"> 	

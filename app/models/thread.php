@@ -3,10 +3,13 @@
 		var $name = 'Thread';
 		
         var $hasMany = array(
-			'Post' => array(
+			/*'Post' => array(
 				'className' => 'Post',
 				'order' => array('modified ASC')
-			)
+			),*/
+            'Thumb' => array(
+                'className' => 'Thumb'
+            )
 		);
         
 		var $validate = array(
