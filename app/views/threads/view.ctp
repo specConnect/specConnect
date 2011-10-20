@@ -52,7 +52,7 @@
                 echo "&nbsp; &nbsp;";
                 echo $html->link('+1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
             }
-            else {
+            else if($online){
                 echo "&nbsp; &nbsp;";
                 echo $html->link('-1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
             }
