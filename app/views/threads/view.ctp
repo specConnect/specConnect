@@ -56,6 +56,17 @@
                 echo "&nbsp; &nbsp;";
                 echo $html->link('-1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
             }
+            
+            echo "<br />"; 
+                
+            if  ($online && !($row['sub'])) {
+                echo "&nbsp; &nbsp;";
+                echo $html->link('Subscribe', "/posts/subscribe/".$row['Thread']['id']."/");
+            }
+            else if($online){
+                echo "&nbsp; &nbsp;";
+                echo $html->link('Unsubscribe', "/posts/subscribe/".$row['Thread']['id']."/");
+            }
             echo "<h1>+<b>" .$row['thumbUp'] . "</b></h1>";
             ?>
 		</td>

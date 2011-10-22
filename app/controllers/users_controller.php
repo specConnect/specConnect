@@ -30,6 +30,8 @@
 		function register() {
 			$this->set('title_for_layout', 'specConnect - Register');
 			if(!empty($this->data)) {
+                $hash = md5(strtolower(trim($this->data['User']['email'])));
+                $this->data['User']['avatar'] = "http://www.gravatar.com/avatar/$hash.jpg?s=100&d=identicon";
 				if($this->User->save($this->data)) {
 					$this->Session->setFlash('You have successfully joined specNow');
 					$this->redirect(array('action' => 'login'));

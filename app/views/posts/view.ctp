@@ -1,6 +1,15 @@
 <?php $html->addCrumb($title); ?>
 <div align="right"><?php echo $html->link('+New Post', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
-<br /><br />
+<?php
+    echo "<br />";
+    if($online && $sub) {
+        echo $html->link('Subscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
+    }
+    else if($online && !$sub) {
+        echo $html->link('Unsubscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
+    }
+?>
+<br />
 <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
 <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
 <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>

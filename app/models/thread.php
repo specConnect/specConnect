@@ -3,10 +3,9 @@
 		var $name = 'Thread';
 		
         var $hasMany = array(
-			/*'Post' => array(
-				'className' => 'Post',
-				'order' => array('modified ASC')
-			),*/
+			'Subscription' => array(
+				'className' => 'Subscription'
+			),
             'Thumb' => array(
                 'className' => 'Thumb'
             )

@@ -25,6 +25,29 @@
 			$this->set('online', $online);
         }
         
+        function subscribe($id = NULL) {
+            $this->autoRender = false;
+            if($id != NULL) {
+                $this->loadModel('Thread');
+                $subscript = $this->Thread->Subscription->find('first', array('conditions' => array('thread_id' => $id, 
+                'username' => $this->Auth->user('username'))));
+                if($subscript == NULL ) {
+                    $this->Thread->Subscription->create();
+                    if($this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username')))) {
+                        $this->Session->setFlash("Subscription successfull.");
+                        $this->redirect("/posts/view/$id/");
+                    }
+                }
+                else {
+                    $this->Session->setFlash("Unsubscribed successfully.");
+                    $this->Thread->Subscription->query("DELETE FROM `subscriptions` WHERE `thread_id` = $id AND `username` = '".$this->Auth->user('username')."'");
+                    $this->redirect("/posts/view/$id/");
+                }
+            }
+            else {
+                $this->redirect("/forums/view/");
+            }   
+        }
         function edit($id = NULL) {
             $this->layout = 'forum';
             $user = $this->Auth->user('username');
@@ -120,6 +143,10 @@
                     $posts = $posts + 1;
                     $this->Thread->save(array('id' => $id, 'posts' => $posts));
                     
+                    //Subscribe to thread user posts in
+                    $this->Thread->Subscription->create();
+                    $this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username')));
+                    
                     $page = $this->__getPage($posts);
                     
                     //Update number for posts in forum
@@ -165,7 +192,7 @@
                     $this->loadModel('User');
                     
                     //Delete post
-                    $this->Post->delete($id, false);
+                    $this->Post->query("DELETE FROM `posts` WHERE `id` = $id");
                     
                     $thread = $this->Thread->find('first', array('conditions' => array('id' => $t_id), 'recursive' => 0));
                     if($thread['Thread']['posts'] > 0) {
@@ -218,6 +245,18 @@
                                         'order' => array('modified ASC')
                                     )
                                 );
+                        
+                        if($this->Auth->user() != NULL) {
+                            $sub = $this->Thread->Subscription->find('first', array('conditions' => array('thread_id' => $id, 
+                            'username' => $this->Auth->user('username'))));
+                            if($sub == NULL) {
+                                $this->set('sub', 1);
+                            }
+                            else {
+                                $this->set('sub', 0);
+                            }
+                        }
+                        
                         $this->layout = 'forum';
                         $this->set('title_for_layout', 'specConnect - Threads');
                         $this->loadModel('User');

@@ -24,7 +24,7 @@
 			}
 			$this->set('online', $online); 
 		}
-		
+        
         function thumb($id = NULL, $f_id = NULL) {
             $this->autoRender = false;
             if($id != NULL && $f_id != NULL) {
@@ -48,7 +48,7 @@
                     }
                     else {
                         $this->Session->setFlash("Thumbs down to: " . $thread['Thread']['thread_name']."");
-                        $this->Thumb->delete($thumb['Thumb']['id'], false);
+                        $this->Thumb->query("DELETE FROM `thumbs` WHERE `thread_id` = $id AND `username` = '".$this->Auth->user('username')."'");
                         $page = $this->__getPage($forum['Forum']['threads']);
                         $this->redirect("/threads/view/$f_id/page:$page#thread$id");
                     }
@@ -117,6 +117,8 @@
                     //Delete all Threads, and Posts attached to Threads
                     $this->Thread->delete($id, false);
                     $this->Post->deleteAll(array('thread_id' => $id));
+                    $this->Thread->Subscription->deleteAll(array('thread_id' => $id));
+                    $this->Thread->Thumb->deleteAll(array('thread_id' => $id));
                     
                     $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
                     if($forum['Forum']['threads'] > 0) {
@@ -172,6 +174,10 @@
 					$this->data['Thread']['username'] = $this->Auth->user('username');
                     $this->data['Thread']['forum_id'] = $id;
 					if($this->Thread->save($this->data)) {
+                        //Subscribe to thread user posts in
+                        $this->Thread->Subscription->create();
+                        $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username')));
+                        
                         $this->loadModel('User');
                         //Update number for threads in forum and last posting user
                         $threads = $this->Forum->find('first', array('conditions' => array('id' => $id), 'fields' => array('threads'), 'recursive' => 0));
@@ -222,7 +228,7 @@
 				$this->layout = 'forum';
 				
 				$this->set('title_for_layout', 'specConnect - Threads');
-				
+                
 				//Load up Forum Model so that we can get some information about the forum
 				$this->loadModel('Forum');
 				$this->loadModel('User');
@@ -230,32 +236,49 @@
                 $this->loadModel('Thumb');
                 
 				$forum = $this->Forum->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
-				$thread = $this->paginate('Thread');
-			         
-                $index = 0;
-                foreach ($thread as $row) {
-                    $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
-                    $thread[$index]['Post'] = $post['Post'];
-                    $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
-                    $x = 0;
-                    $thread[$index]['voted'] = 0;
-                    foreach ($thread[$index]['Thumb'] as $thumbs) {
-                        if($thread[$index]['Thumb'][$x]['username'] == $this->Auth->user('username')) {
-                            $thread[$index]['voted'] = 1;
-                            break;
-                        }
-                        $x++;
-                    }
-                   
-                    $index++;
-                }
                 
-				//Title above Breadcrumb
-				$this->set('title', $forum['Forum']['name']);
-				
-				$this->set('forum', $forum);
-				$this->set('thread', $thread);
-			}
+                if($forum != NULL) {
+                    $thread = $this->paginate('Thread');
+                        
+                    $index = 0;
+                    foreach ($thread as $row) {
+                        $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
+                        $thread[$index]['Post'] = $post['Post'];
+                        $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
+                        $x = 0;
+                        $thread[$index]['voted'] = 0;
+                        foreach ($thread[$index]['Thumb'] as $thumbs) {
+                            if($thread[$index]['Thumb'][$x]['username'] == $this->Auth->user('username')) {
+                                $thread[$index]['voted'] = 1;
+                                break;
+                            }
+                            $x++;
+                        }
+                        
+                        $x = 0;
+                        $thread[$index]['sub'] = 0;
+                        foreach ($thread[$index]['Subscription'] as $subs) {
+                            if($thread[$index]['Subscription'][$x]['username'] == $this->Auth->user('username')
+                               && $thread[$index]['Subscription'][$x]['thread_id'] == $thread[$index]['Thread']['id']) {
+                                $thread[$index]['sub'] = 1;
+                                break;
+                            }
+                            $x++;
+                        }
+                       
+                        $index++;
+                    }
+                    
+                    //Title above Breadcrumb
+                    $this->set('title', $forum['Forum']['name']);
+                    
+                    $this->set('forum', $forum);
+                    $this->set('thread', $thread);
+                }
+                else {
+                    $this->redirect("/forums/view/");
+                }
+            }
 		}
         
         function sticky($id = NULL, $f_id = NULL) {
