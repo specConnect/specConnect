@@ -33,7 +33,8 @@
                 'username' => $this->Auth->user('username'))));
                 if($subscript == NULL ) {
                     $this->Thread->Subscription->create();
-                    if($this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username')))) {
+                    if($this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username'),
+                    'email' => $this->Auth->user('email')))) {
                         $this->Session->setFlash("Subscription successfull.");
                         $this->redirect("/posts/view/$id/");
                     }
@@ -97,7 +98,7 @@
             $this->loadModel('Thread');
             $this->loadModel('Forum');
             $this->loadModel('User');
-            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'fields' => array('thread_name'), 'recursive' => 0)); 
+            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'fields' => array('thread_name', 'modified'), 'recursive' => 0)); 
             //Title above Breadcrumb
             $this->set('title', "POST TO: ".$thread['Thread']['thread_name']);	
             
@@ -144,8 +145,12 @@
                     $this->Thread->save(array('id' => $id, 'posts' => $posts));
                     
                     //Subscribe to thread user posts in
-                    $this->Thread->Subscription->create();
-                    $this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username')));
+                    if($this->Thread->Subscription->find('first', array('conditions' => 
+                    array('thread_id' => $id, 'username' => $this->Auth->user('username')))) == NULL) {
+                        $this->Thread->Subscription->create();
+                        $this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username'), 
+                        'email' => $this->Auth->user('email')));
+                    }
                     
                     $page = $this->__getPage($posts);
                     
@@ -165,7 +170,25 @@
                         'fieldList' => array('posts')));
                     $this->Session->setFlash("Post added successfully");
                     $post_id = $this->Post->id;
-
+                    $subscription = $this->Thread->Subscription->find('all', array('conditions' => array('thread_id' => $id)));
+                    //Send emails to users subscribed to post
+                    if($subscription != NULL) {
+                        foreach ($subscription as $row) {
+                            $this->Email->reset();
+                            //$this->Email->delivery = "debug";
+                            $this->Email->delivery = "mail";
+                            $this->Email->from = 'specConnect@spec.net';
+                            $this->Email->to = $row['Subscription']['email'];
+                            $this->Email->subject = $this->Auth->user('username') . " just posted on " . $thread['Thread']['thread_name'];
+                            $this->Email->sendAs = 'html';
+                            $this->Email->layout = 'default';
+                            $this->Email->template = 'subscription_message';
+                            $content = $this->data['Post']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $thread['Thread']['thread_name'] . "*(*)*" 
+                                       . $row['Subscription']['username'] . "*(*)*" . $thread['Thread']['modified'] . "*(*)*" . "/posts/view/$id/page:$page#post$post_id";
+                            $this->Email->send($content);
+                        }
+                    }
+                    
                     $this->redirect(array('controller' => 'posts', 'action' => "view/".$id."/page:".$page."#post$post_id"));
                 }
                 else {

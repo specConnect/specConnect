@@ -92,5 +92,6 @@
     </tr>
     <?php
         endforeach; 
+        //echo $this->Session->flash('email');
     ?>
 </table>

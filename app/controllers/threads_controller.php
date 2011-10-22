@@ -174,9 +174,11 @@
 					$this->data['Thread']['username'] = $this->Auth->user('username');
                     $this->data['Thread']['forum_id'] = $id;
 					if($this->Thread->save($this->data)) {
+                    
                         //Subscribe to thread user posts in
                         $this->Thread->Subscription->create();
-                        $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username')));
+                        $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username'),
+                        'email' => $this->Auth->user('email')));
                         
                         $this->loadModel('User');
                         //Update number for threads in forum and last posting user
