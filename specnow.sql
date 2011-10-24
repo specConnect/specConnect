@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 22, 2011 at 11:58 PM
+-- Generation Time: Oct 24, 2011 at 03:19 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -46,7 +46,7 @@ INSERT INTO `forums` (`id`, `name`, `summary`, `modified`, `category`, `threads`
 (2, 'News and Information', 'Look here for news and information relating to all SPEC members.', '2011-10-22 22:40:31', 'Latest News', 1, 0),
 (3, 'MROMS', 'Multi Robot Open-space Mapping System team discussion and more.', '2011-10-04 19:09:12', 'Projects', 0, 0),
 (4, 'SPEC Announcements', 'Executive announcements, new project announcement, and much more.', '2011-10-19 00:11:04', 'Latest News', 0, 0),
-(5, 'Tickets and Glitches', 'Your input matters. Tell us about glitches or features you would like to see here.', '2011-10-22 21:30:30', 'Bug Reporting', 3, 4);
+(5, 'Tickets and Glitches', 'Your input matters. Tell us about glitches or features you would like to see here.', '2011-10-24 03:16:33', 'Bug Reporting', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `posts`
@@ -69,10 +69,8 @@ CREATE TABLE IF NOT EXISTS `posts` (
 
 INSERT INTO `posts` (`id`, `thread_id`, `username`, `content`, `modified`) VALUES
 (2, 1, 'edchand', '<p>Another important feature is to add a User Profile. Things profile will include:&nbsp; \r\n<img alt="crying" height="20" src="http://localhost/js/ckeditor/plugins/smiley/images/cry_smile.gif" title="crying" width="20" /></p>\r\n<ol>\r\n<li>Users LAST LOGIN TIME</li>\r\n<li>User personal information such as name and email</li>\r\n<li>Users website</li>\r\n<li>Users company information</li>\r\n<li>Users Awards Based on his specConnect Interactions</li>\r\n<li>Users GRAVATAR</li>\r\n<li>Users interest in SPEC projects</li>\r\n</ol>\r\n<p>This information will be presented in some NICE manner. \r\n<img alt="smiley" height="20" src="http://localhost/js/ckeditor/plugins/smiley/images/regular_smile.gif" title="smiley" width="20" /></p>\r\n', '2011-10-16 23:43:31'),
-(3, 8, 'edchand', '<p>Almost forgot this important feature:&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Forum Subscription - Users should be able to subscribe to forums and get updates via email when someone makes a thread of a post in that forum.\r\n<ul>\r\n<li>A note on this feature: BEFORE SUBSCRIBING A USER MUST CONFIRM HIS/HER EMAIL.</li>\r\n</ul>\r\n</li>\r\n</ol>\r\n', '2011-10-16 03:26:56'),
-(5, 1, 'edchand', '<p>Be able to make certain forums PRIVATE</p>\r\n<p>Only&nbsp; \r\n<strong>SOME</strong>\r\nmembers can have access to these forums.</p>\r\n<p>Also make sure that the non-members cannot add posts/threads to this forum by just changin the URL...&nbsp;</p>\r\n<p>&nbsp;</p>\r\n', '2011-10-16 23:46:01'),
-(6, 10, 'testUser', '<p>Sweet I have a SICK gravatar</p>\r\n', '2011-10-21 23:39:12'),
-(9, 10, 'edchand', '<p>Quote:</p>\r\n<blockquote>\r\n<p>Sweet I have a SICK gravatar</p>\r\n</blockquote>\r\n<p>\r\n<br />Ya all this gravatar stuff is really nice</p>\r\n', '2011-10-22 04:27:10');
+(3, 8, 'edchand', '<p>Almost forgot this important feature:</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Forum Subscription - Users should be able to subscribe to forums and get updates via email when someone makes a thread of a post in that forum.\r\n<ul>\r\n<li>A note on this feature: BEFORE SUBSCRIBING A USER MUST CONFIRM HIS/HER EMAIL.</li>\r\n</ul>\r\n</li>\r\n</ol>\r\n', '2011-10-16 03:26:56'),
+(5, 1, 'edchand', '<p>Be able to make certain forums PRIVATE</p>\r\n<p>Only&nbsp; \r\n<strong>SOME</strong>\r\nmembers can have access to these forums.</p>\r\n<p>Also make sure that the non-members cannot add posts/threads to this forum by just changin the URL...&nbsp;</p>\r\n<p>&nbsp;</p>\r\n', '2011-10-16 23:46:01');
 
 -- --------------------------------------------------------
 
@@ -84,18 +82,24 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `thread_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `subscriptions`
 --
 
-INSERT INTO `subscriptions` (`id`, `thread_id`, `username`, `email`, `modified`) VALUES
-(1, 1, 'edchand', 'edchand@gmail.com', '2011-10-22 21:28:21'),
-(2, 16, 'edchand', 'edchand@gmail.com', '2011-10-22 21:30:49');
+INSERT INTO `subscriptions` (`id`, `thread_id`, `username`, `first_name`, `email`, `modified`) VALUES
+(1, 8, 'edchand', 'Edwin', 'edchand@gmail.com', '2011-10-24 02:59:06'),
+(2, 1, 'edchand', 'Edwin', 'edchand@gmail.com', '2011-10-24 02:59:09'),
+(3, 10, 'edchand', 'Edwin', 'edchand@gmail.com', '2011-10-24 02:59:16'),
+(4, 8, 'testUser', 'Edwin', 'tingle2link@gmail.com', '2011-10-24 02:59:53'),
+(5, 10, 'jello', 'James', 'terasic@gmail.com', '2011-10-24 03:00:42'),
+(6, 8, 'jello', 'James', 'terasic@gmail.com', '2011-10-24 03:00:46'),
+(7, 1, 'jello', 'James', 'terasic@gmail.com', '2011-10-24 03:00:49');
 
 -- --------------------------------------------------------
 
@@ -116,16 +120,16 @@ CREATE TABLE IF NOT EXISTS `threads` (
   `private` tinyint(1) NOT NULL DEFAULT '0',
   `view` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `threads`
 --
 
 INSERT INTO `threads` (`id`, `username`, `forum_id`, `thread_name`, `content`, `created`, `modified`, `posts`, `sticky`, `private`, `view`) VALUES
-(1, 'edchand', 5, 'Long & Short term goals', '<p>Here is the goals for upcoming weeks (short term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Views on threads</li>\r\n<li>User Profiles</li>\r\n<li>Fix Breadcrumb</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>Long Term Goals (in order of IMPORTANCE - long term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Ajax Integration - UI enhancements with fades and what not</li>\r\n<li>Google Calendar Integration</li>\r\n<li>Live Feeds -Latest forum posts, facebook posts, twitter posts.</li>\r\n<li>Facebook Integration</li>\r\n<li>Twitter Integration</li>\r\n<li>Google+ or Skype integration</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>These are the goals. The sooner they get done the better.</p>\r\n', '2011-10-16 02:03:58', '2011-10-22 23:38:34', 2, 1, 0, 0),
-(8, 'edchand', 5, 'Advanced Features', '<p>Here is a list of advanced features for users:</p>\r\n<ol>\r\n<li>RSS feeds</li>\r\n<li>Integration with Facebook/Googe/Twiiter API</li>\r\n<li>AJAX/Long Polling Integration for seemless user experience</li>\r\n</ol>\r\n<p>More to be added later...</p>\r\n', '2011-10-16 03:24:09', '2011-10-16 03:26:56', 1, 1, 0, 0),
-(10, 'edchand', 5, 'FEATURES TO TWEAK', '<p>For keeping forum data in sync, we will make a function that will be run and all the forum posts and threads will be counted at the end of the day.</p>\r\n<p>&nbsp;</p>\r\n<p>This will make sure that the post/threads data of forums and thread replies is kept VALID an that count isn&#39;t lost.</p>\r\n<p>&nbsp;</p>\r\n<p>we can do this using CRONJOB or CRON mangement in domain.com control panel &gt; manage webspace....</p>\r\n', '2011-10-16 11:41:19', '2011-10-22 04:27:10', 2, 1, 0, 0),
+(1, 'edchand', 5, 'Long & Short term goals', '<p>Here is the goals for upcoming weeks (short term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Views on threads</li>\r\n<li>User Profiles</li>\r\n<li>Fix Breadcrumb</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>Long Term Goals (in order of IMPORTANCE - long term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Ajax Integration - UI enhancements with fades and what not</li>\r\n<li>Google Calendar Integration</li>\r\n<li>Live Feeds -Latest forum posts, facebook posts, twitter posts.</li>\r\n<li>Facebook Integration</li>\r\n<li>Twitter Integration</li>\r\n<li>Google+ or Skype integration</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>These are the goals. The sooner they get done the better.</p>\r\n', '2011-10-16 02:03:58', '2011-10-24 02:43:50', 2, 1, 0, 0),
+(8, 'edchand', 5, 'Advanced Features', '<p>Here is a list of advanced features for users:</p>\r\n<ol>\r\n<li>RSS feeds</li>\r\n<li>Integration with Facebook/Googe/Twiiter API</li>\r\n<li>AJAX/Long Polling Integration for seemless user experience</li>\r\n</ol>\r\n<p>More to be added later...</p>\r\n', '2011-10-16 03:24:09', '2011-10-24 03:16:33', 1, 1, 0, 0),
+(10, 'edchand', 5, 'FEATURES TO TWEAK', '<p>For keeping forum data in sync, we will make a function that will be run and all the forum posts and threads will be counted at the end of the day.</p>\r\n<p>&nbsp;</p>\r\n<p>This will make sure that the post/threads data of forums and thread replies is kept VALID an that count isn&#39;t lost.</p>\r\n<p>&nbsp;</p>\r\n<p>we can do this using CRONJOB or CRON mangement in domain.com control panel &gt; manage webspace....</p>\r\n', '2011-10-16 11:41:19', '2011-10-24 02:35:23', 0, 1, 0, 0),
 (16, 'edchand', 2, 'This is completely a test', '<p>This is a test forum...</p>\r\n', '2011-10-22 21:30:49', '2011-10-22 22:40:31', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
@@ -141,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `thumbs` (
   `ip` varchar(50) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -160,16 +164,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `avatar` varchar(100) NOT NULL,
   `posts` int(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `roles`, `first_name`, `last_name`, `avatar`, `posts`) VALUES
-(4, 'edchand', '662c39204b127d49411c791b9319bf91f5ef3418', 'edchand@gmail.com', 'sadmin', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/5487e92e63aa83bd019429e03195b35b.jpg?s=100', 6),
-(5, 'testUser', '662c39204b127d49411c791b9319bf91f5ef3418', 'tingle2link@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/6dce93ac9026dd9eee1796039f3953d4.jpg?s=100&d=identicon', 1),
-(6, 'tbagers', '662c39204b127d49411c791b9319bf91f5ef3418', 'tbagers@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/0f087653fb94f993ea78ea557e5b0c2d.jpg?s=100&d=identicon', 1);
+(4, 'edchand', '662c39204b127d49411c791b9319bf91f5ef3418', 'edchand@gmail.com', 'sadmin', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/5487e92e63aa83bd019429e03195b35b.jpg?s=100', 3),
+(5, 'testUser', '662c39204b127d49411c791b9319bf91f5ef3418', 'tingle2link@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/6dce93ac9026dd9eee1796039f3953d4.jpg?s=100&d=identicon', 2),
+(6, 'tbagers', '662c39204b127d49411c791b9319bf91f5ef3418', 'tbagers@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/0f087653fb94f993ea78ea557e5b0c2d.jpg?s=100&d=identicon', 1),
+(7, 'jello', '662c39204b127d49411c791b9319bf91f5ef3418', 'terasic@gmail.com', 'regular', 'James', 'Blunt', 'http://www.gravatar.com/avatar/c78fc736aae5381806b551b5ec8402dc.jpg?s=100&d=identicon', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
