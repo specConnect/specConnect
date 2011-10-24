@@ -2,7 +2,7 @@
 <?php 
     $content = explode('*(*)*', $content);
 ?>
-    Dear <b><?php echo $content[3]; ?></b>, <br />
+    Dear <b><?php echo $content[3]; ?></b>, <br /><br />
     <b><?php echo $content[1]; ?></b> has posted the following message in thread <b><?php echo $content[2]; ?></b>: 
     <br />
     <?php 

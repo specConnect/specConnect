@@ -28,27 +28,26 @@
         function thumb($id = NULL, $f_id = NULL) {
             $this->autoRender = false;
             if($id != NULL && $f_id != NULL) {
-                $this->loadModel('Thumb');
                 $this->loadModel('Forum');
                 $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
-                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id)));
+                $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                 if($forum != NULL && $thread != NULL) {
-                    $thumb = $this->Thumb->find('first', array('conditions' => array('thread_id' => $thread['Thread']['id'], 
+                    $thumb = $this->Thread->Thumb->find('first', array('conditions' => array('thread_id' => $thread['Thread']['id'], 
                     'username' => $this->Auth->user('username'))));
                     if(!$thumb) { 
                         $val = array('username' => $this->Auth->user('username'),
                                      'user_id' => $this->Auth->user('id'),
                                      'thread_id' => $id,
                                      'ip' => $this->RequestHandler->getClientIp());
-                        $this->Thumb->create();
-                        $this->Thumb->save($val);
+                        $this->Thread->Thumb->create();
+                        $this->Thread->Thumb->save($val);
                         $this->Session->setFlash("Thumbs up to: " . $thread['Thread']['thread_name']);
                         $page = $this->__getPage($forum['Forum']['threads']);
                         $this->redirect("/threads/view/$f_id/page:$page#thread$id");
                     }
                     else {
                         $this->Session->setFlash("Thumbs down to: " . $thread['Thread']['thread_name']."");
-                        $this->Thumb->query("DELETE FROM `thumbs` WHERE `thread_id` = $id AND `username` = '".$this->Auth->user('username')."'");
+                        $this->Thread->Thumb->query("DELETE FROM `thumbs` WHERE `thread_id` = $id AND `username` = '".$this->Auth->user('username')."'");
                         $page = $this->__getPage($forum['Forum']['threads']);
                         $this->redirect("/threads/view/$f_id/page:$page#thread$id");
                     }
@@ -178,7 +177,7 @@
                         //Subscribe to thread user posts in
                         $this->Thread->Subscription->create();
                         $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username'),
-                        'email' => $this->Auth->user('email')));
+                        'email' => $this->Auth->user('email'), 'first_name' => $this->Auth->user('first_name')));
                         
                         $this->loadModel('User');
                         //Update number for threads in forum and last posting user
