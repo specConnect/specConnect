@@ -216,6 +216,9 @@
                     $this->loadModel('Forum');
                     $this->loadModel('User');
                     
+                    //Find posting user
+                    $user = $this->Post->find('first', array('conditions' => array('id' => $id), 'recursive' => 0, 'fields' => array('username')));
+                    
                     //Delete post
                     $this->Post->query("DELETE FROM `posts` WHERE `id` = $id");
                     
@@ -226,7 +229,7 @@
                         'fieldList' => array('posts')));
                     }
                     
-                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    $user = $this->User->find('first', array('conditions' => array('username' => $user['Post']['username']), 'recursive' => 0));
                     if($user['User']['posts'] > 0) {
                         $user['User']['posts'] = $user['User']['posts'] - 1;
                         $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,

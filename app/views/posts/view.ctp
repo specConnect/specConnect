@@ -1,5 +1,5 @@
 <?php $html->addCrumb($title); ?>
-<div align="right"><?php echo $html->link('+New Post', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
+<div align="right"><?php echo $html->link('+Reply', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
 <?php
     echo "<br />";
     if($online && $sub) {

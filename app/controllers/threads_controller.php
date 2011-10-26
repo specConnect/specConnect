@@ -113,6 +113,9 @@
                     $this->loadModel('Forum');
                     $this->loadModel('User');
                     
+                    //Find posting user
+                    $user = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0, 'fields' => array('username')));
+                    
                     //Delete all Threads, and Posts attached to Threads
                     $this->Thread->delete($id, false);
                     $this->Post->deleteAll(array('thread_id' => $id));
@@ -130,7 +133,7 @@
                     $this->Forum->save(array('id' => $f_id, 'threads' => $forum['Forum']['threads'], 'posts' => $forum['Forum']['posts']),
                     array('validate' => false, 'fieldList' => array('threads', 'posts')));
                     
-                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    $user = $this->User->find('first', array('conditions' => array('username' => $user['Thread']['username']), 'recursive' => 0));
                     if($user['User']['posts'] > 0) {
                         //The minus 1 is for the 1 thread we are deleting as that also counts as a post
                         $user['User']['posts'] = $user['User']['posts'] - $thread['Thread']['posts'] - 1;
