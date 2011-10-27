@@ -22,6 +22,16 @@
 		<td>
 			<h4><?php echo $html->link("".$row['Forum']['name']."", "/threads/view/".$row['Forum']['id']."/"); ?></h4>
 			<h1><?php echo $row['Forum']['summary']; ?></h1>
+            <h3>
+                <?php
+                    if($online && !$row['sub']) {
+                        echo $html->link('Subscribe to Forum', "/forums/subscribe/".$row['Forum']['id']."");
+                    }
+                    else if($online){
+                        echo $html->link('Unsbuscribe from Forum', "/forums/subscribe/".$row['Forum']['id']."");
+                    }
+                ?>
+            </h3>
 		</td>
 		<td>
 			<div class="modified" align="right">

@@ -195,7 +195,26 @@
                         $user['User']['posts'] = $user['User']['posts'] + 1;
                         $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
                         'fieldList' => array('posts'), 'callbacks' => false));
-                        
+                        $forumSub = $this->Forum->ForumSubscription->find('all', array('conditions' => array('forum_id' => $id)));
+                        if($forumSub != NULL) {
+                            foreach ($forumSub as $row) {
+                                if($row['ForumSubscription']['username'] != $this->Auth->user('username')) {
+                                    $this->Email->reset();
+                                    //$this->Email->delivery = "debug";
+                                    $this->Email->delivery = "mail";
+                                    $this->Email->from = 'specConnect@spec.net';
+                                    $this->Email->to = $row['ForumSubscription']['email'];
+                                    $this->Email->subject = $this->Auth->user('username') . " just posted on " . $this->data['Thread']['thread_name'] ;
+                                    $this->Email->sendAs = 'html';
+                                    $this->Email->layout = 'default';
+                                    $this->Email->template = 'subscription_message';
+                                    $modified = date('Y-m-d G:i:s');
+                                    $content = "" . $this->data['Thread']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $this->data['Thread']['thread_name'] . "*(*)*" 
+                                               . $row['ForumSubscription']['first_name'] . "*(*)*" . $modified  . "*(*)*" . "/threads/view/".$this->Thread->id."/#thread".$this->Thread->id."";
+                                    $this->Email->send($content);
+                                }
+                            }
+                        }
                         $this->Session->setFlash("Thread added successfully");
                         $this->redirect(array('controller' => 'threads', 'action' => "view/".$id."#thread".$this->Thread->id.""));
                     }
@@ -259,15 +278,24 @@
                             $x++;
                         }
                         
-                        $x = 0;
                         $thread[$index]['sub'] = 0;
-                        foreach ($thread[$index]['Subscription'] as $subs) {
-                            if($thread[$index]['Subscription'][$x]['username'] == $this->Auth->user('username')
-                               && $thread[$index]['Subscription'][$x]['thread_id'] == $thread[$index]['Thread']['id']) {
-                                $thread[$index]['sub'] = 1;
-                                break;
+                        if($this->Auth->user()) {
+                            $forumSub = $this->Forum->ForumSubscription->find('first', array('conditions' => array('forum_id' => $id, 
+                            'username' => $this->Auth->user('username'))));
+                            if($forumSub == NULL) {
+                                $x = 0;
+                                foreach ($thread[$index]['Subscription'] as $subs) {
+                                    if($thread[$index]['Subscription'][$x]['username'] == $this->Auth->user('username')
+                                       && $thread[$index]['Subscription'][$x]['thread_id'] == $thread[$index]['Thread']['id']) {
+                                        $thread[$index]['sub'] = 1;
+                                        break;
+                                    }
+                                    $x++;
+                                }
                             }
-                            $x++;
+                            else {
+                                $thread[$index]['sub'] = 3;
+                            }
                         }
                        
                         $index++;

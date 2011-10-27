@@ -2,11 +2,14 @@
 <div align="right"><?php echo $html->link('+Reply', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
 <?php
     echo "<br />";
-    if($online && $sub) {
+    if($online && ($sub == 1)) {
         echo $html->link('Subscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
     }
-    else if($online && !$sub) {
+    else if($online && ($sub == 0)) {
         echo $html->link('Unsubscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
+    }
+    else {
+    
     }
 ?>
 <br />

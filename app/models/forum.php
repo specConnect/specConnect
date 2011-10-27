@@ -5,6 +5,9 @@
 			'Thread' => array(
 				'className' => 'Thread',
 				'order' => array('sticky DESC','modified DESC')
+			),
+            'ForumSubscription' => array(
+				'className' => 'ForumSubscription',
 			)
 		);
 	}

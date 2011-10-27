@@ -59,13 +59,16 @@
             
             echo "<br />"; 
                 
-            if  ($online && !($row['sub'])) {
+            if  ($online && ($row['sub'] == 0)) {
                 echo "&nbsp; &nbsp;";
                 echo $html->link('Subscribe', "/posts/subscribe/".$row['Thread']['id']."/");
             }
-            else if($online){
+            else if($online && ($row['sub'] == 1)){
                 echo "&nbsp; &nbsp;";
                 echo $html->link('Unsubscribe', "/posts/subscribe/".$row['Thread']['id']."/");
+            }
+            else {
+                
             }
             echo "<h1>+<b>" .$row['thumbUp'] . "</b></h1>";
             ?>
@@ -138,5 +141,6 @@
 	<?php 
 		endforeach;
 	endif;
+    //echo $this->Session->flash('email');
 	?>
 </table>

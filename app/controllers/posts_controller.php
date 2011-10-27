@@ -49,6 +49,7 @@
                 $this->redirect("/forums/view/");
             }   
         }
+        
         function edit($id = NULL) {
             $this->layout = 'forum';
             $user = $this->Auth->user('username');
@@ -171,6 +172,7 @@
                     $this->Session->setFlash("Post added successfully");
                     $post_id = $this->Post->id;
                     $subscription = $this->Thread->Subscription->find('all', array('conditions' => array('thread_id' => $id)));
+                    $forumSub = $this->Forum->ForumSubscription->find('all', array('conditions' => array('forum_id' => $forum_id)));
                     //Send emails to users subscribed to post
                     if($subscription != NULL) {
                         foreach ($subscription as $row) {
@@ -186,6 +188,24 @@
                                 $this->Email->template = 'subscription_message';
                                 $content = $this->data['Post']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $thread['Thread']['thread_name'] . "*(*)*" 
                                            . $row['Subscription']['first_name'] . "*(*)*" . $thread['Thread']['modified'] . "*(*)*" . "/posts/view/$id/page:$page#post$post_id";
+                                $this->Email->send($content);
+                            }
+                        }
+                    }
+                    if($forumSub != NULL) {
+                        foreach ($forumSub as $row) {
+                            if($row['ForumSubscription']['username'] != $this->Auth->user('username')) {
+                                $this->Email->reset();
+                                //$this->Email->delivery = "debug";
+                                $this->Email->delivery = "mail";
+                                $this->Email->from = 'specConnect@spec.net';
+                                $this->Email->to = $row['ForumSubscription']['email'];
+                                $this->Email->subject = $this->Auth->user('username') . " just posted on " . $thread['Thread']['thread_name'];
+                                $this->Email->sendAs = 'html';
+                                $this->Email->layout = 'default';
+                                $this->Email->template = 'subscription_message';
+                                $content = $this->data['Post']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $thread['Thread']['thread_name'] . "*(*)*" 
+                                           . $row['ForumSubscription']['first_name'] . "*(*)*" . $thread['Thread']['modified'] . "*(*)*" . "/posts/view/$id/page:$page#post$post_id";
                                 $this->Email->send($content);
                             }
                         }
@@ -261,6 +281,7 @@
         function view($id = NULL) {
                 //Check if post exists
                 if($id != NULL) {
+                    $this->loadModel('Forum');
                     $this->loadModel('Thread');
                     $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                     if ($thread != NULL):
@@ -274,14 +295,21 @@
                                     )
                                 );
                         
-                        if($this->Auth->user() != NULL) {
-                            $sub = $this->Thread->Subscription->find('first', array('conditions' => array('thread_id' => $id, 
+                        if($this->Auth->user()) {
+                            $fsub = $this->Forum->ForumSubscription->find('first', array('conditions' => array('forum_id' => $thread['Thread']['forum_id'],
                             'username' => $this->Auth->user('username'))));
-                            if($sub == NULL) {
-                                $this->set('sub', 1);
+                            if($fsub == NULL) {
+                                $sub = $this->Thread->Subscription->find('first', array('conditions' => array('thread_id' => $id, 
+                                'username' => $this->Auth->user('username'))));
+                                if($sub == NULL) {
+                                    $this->set('sub', 1);
+                                }
+                                else {
+                                    $this->set('sub', 0);
+                                }
                             }
                             else {
-                                $this->set('sub', 0);
+                                $this->set('sub', 3);
                             }
                         }
                         
