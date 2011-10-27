@@ -210,7 +210,7 @@
                                     $this->Email->template = 'subscription_message';
                                     $modified = date('Y-m-d G:i:s');
                                     $content = "" . $this->data['Thread']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $this->data['Thread']['thread_name'] . "*(*)*" 
-                                               . $row['ForumSubscription']['first_name'] . "*(*)*" . $modified  . "*(*)*" . "/threads/view/".$this->Thread->id."/#thread".$this->Thread->id."";
+                                               . $row['ForumSubscription']['first_name'] . "*(*)*" . $modified  . "*(*)*" . "/posts/view/".$this->Thread->id."";
                                     $this->Email->send($content);
                                 }
                             }
