@@ -1,6 +1,5 @@
 <?php $html->addCrumb($title); ?>
 <div align="right"><?php echo $html->link("+ New Thread","/threads/add/".$forum['Forum']['id']."/"); ?></div>
-<br /><br />
 <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
 <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
 <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
@@ -32,6 +31,19 @@
 			?>
                 <a name="thread<?php echo $row['Thread']['id']; ?>"></a>
 				<?php echo $html->link($row['Thread']['thread_name'], "/posts/view/".$row['Thread']['id']."/");?>
+                <?php
+                    if  ($online && ($row['sub'] == 0)) {
+                        echo "&nbsp; &nbsp;";
+                        echo $html->link('Subscribe', "/posts/subscribe/".$row['Thread']['id']."/");
+                    }
+                    else if($online && ($row['sub'] == 1)){
+                        echo "&nbsp; &nbsp;";
+                        echo $html->link('Unsubscribe', "/posts/subscribe/".$row['Thread']['id']."/");
+                    }
+                    else {
+
+                    }
+                ?>
 			</h4> 
 			<h1>by <b><?php echo $row['Thread']['username']; ?></b> </h1>
             <?php 
@@ -55,20 +67,6 @@
             else if($online){
                 echo "&nbsp; &nbsp;";
                 echo $html->link('-1', "/threads/thumb/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
-            }
-            
-            echo "<br />"; 
-                
-            if  ($online && ($row['sub'] == 0)) {
-                echo "&nbsp; &nbsp;";
-                echo $html->link('Subscribe', "/posts/subscribe/".$row['Thread']['id']."/");
-            }
-            else if($online && ($row['sub'] == 1)){
-                echo "&nbsp; &nbsp;";
-                echo $html->link('Unsubscribe', "/posts/subscribe/".$row['Thread']['id']."/");
-            }
-            else {
-                
             }
             echo "<h1>+<b>" .$row['thumbUp'] . "</b></h1>";
             ?>
@@ -144,3 +142,4 @@
     //echo $this->Session->flash('email');
 	?>
 </table>
+<div align="right"><?php echo $html->link("+ New Thread","/threads/add/".$forum['Forum']['id']."/"); ?></div>

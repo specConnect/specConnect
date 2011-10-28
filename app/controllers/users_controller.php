@@ -33,6 +33,9 @@
                 $hash = md5(strtolower(trim($this->data['User']['email'])));
                 $this->data['User']['avatar'] = "http://www.gravatar.com/avatar/$hash.jpg?s=100&d=identicon";
 				if($this->User->save($this->data)) {
+                    //Create a new profile for user
+                    $this->User->Profile->create();
+                    $this->User->Profile->save(array('user_id' => $this->User->id));
 					$this->Session->setFlash('You have successfully joined specNow');
 					$this->redirect(array('action' => 'login'));
 				}
