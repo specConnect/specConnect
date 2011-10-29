@@ -161,10 +161,9 @@
                     $posts = $posts + 1;
                     
                     //User just added a post
-                    $user = $this->User->find('first', array('conditions' => array('id' => $this->Auth->user('id')), 'recursive' => 0));
+                    $user = $this->User->find('first', array('conditions' => array('User.id' => $this->Auth->user('id')), 'recursive' => 0));
                     $user['User']['posts'] = $user['User']['posts'] + 1;
-                    $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
-                    'fieldList' => array('posts'), 'callbacks' => false));
+                    $this->User->query("UPDATE `users` SET  `posts` = '".$user['User']['posts']."' WHERE `id` = ".$user['User']['id'].";");
              
                     
                     $this->Forum->save(array('id' => $forum_id, 'posts' => $posts), array('validate' => false,
@@ -252,12 +251,11 @@
                     $user = $this->User->find('first', array('conditions' => array('username' => $user['Post']['username']), 'recursive' => 0));
                     if($user['User']['posts'] > 0) {
                         $user['User']['posts'] = $user['User']['posts'] - 1;
-                        $this->User->save(array('id' => $user['User']['id'], 'posts' => $user['User']['posts']), array('validate' => false,
-                        'fieldList' => array('posts'), 'callbacks' => false));
+                        $this->User->query("UPDATE `users` SET  `posts` = '".$user['User']['posts']."' WHERE `id` = ".$user['User']['id'].";");
                     }
                     
                     $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id']), 'recursive' => 0));
-                    debug($forum);
+
                     if($forum['Forum']['posts'] > 0) {
                         $forum['Forum']['posts'] = $forum['Forum']['posts'] - 1;
                         $this->Forum->save(array('id' => $forum['Forum']['id'], 'posts' => $forum['Forum']['posts']), array('validate' => false,
@@ -323,6 +321,7 @@
                         foreach ($posts as $row) {
                             $post_user = $this->User->find('first', array('conditions' => array('username' => $row['Post']['username']), 'recursive' => 0));
                             $posts[$index]['User'] = $post_user['User'];
+                            $posts[$index]['Profile'] = $post_user['Profile'];
                             $index++;
                         }
                         

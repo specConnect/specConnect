@@ -32,7 +32,9 @@ body {
 }
 
 hr {
-    border:1px dotted #000;
+    background-color:#222;
+    width:30%;
+    margin-top:20px;
 }
 
 a {
@@ -100,6 +102,19 @@ h4 {
 	font-weight: normal;
 	margin-bottom:0.5em;
 	background:none;
+}
+
+.postUser {
+    background:#555; 
+    border:2px solid #222; 
+    margin:10px;
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+	color:#FFF;
+	padding: 2px 0px 2px 0px;
+	font-size: 75%;
+    text-align:left;
 }
 
 ul, li {
@@ -380,8 +395,11 @@ textarea {
 }
 select {
 	clear: both;
-	font-size: 120%;
+    width:100%;
+	font-size: 140%;
+    font-family: Calibri;
 	vertical-align: text-bottom;
+    padding:5px;
 }
 select[multiple=multiple] {
 	width: 100%;

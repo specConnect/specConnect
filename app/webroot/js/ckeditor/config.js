@@ -15,6 +15,7 @@ CKEDITOR.editorConfig = function( config )
 		{ name: 'document', items : [ 'Preview' ] },
 		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','-','Undo','Redo' ] },
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
+        { name: 'styles', items : ['FontSize'] },
             '/',
 		{ name: 'insert', items : [ 'Table','HorizontalRule','Smiley','SpecialChar'] },
 		{ name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat' ] },

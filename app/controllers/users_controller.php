@@ -35,7 +35,7 @@
 				if($this->User->save($this->data)) {
                     //Create a new profile for user
                     $this->User->Profile->create();
-                    $this->User->Profile->save(array('user_id' => $this->User->id));
+                    $this->User->Profile->save(array('user_id' => $this->User->id, 'signature' => "SPEC - Invent Your Future"));
 					$this->Session->setFlash('You have successfully joined specNow');
 					$this->redirect(array('action' => 'login'));
 				}

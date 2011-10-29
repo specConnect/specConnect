@@ -24,6 +24,8 @@
 				</h2>
 					<?php
 						if($online) { //When user is logged in
+                            echo $html->link('Edit Profile', '/profiles/edit');
+                            echo "&nbsp;&nbsp;&nbsp;";
 							echo $html->link('Sign Out', '/users/logout/');
 						}
 						else {

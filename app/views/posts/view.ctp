@@ -22,33 +22,44 @@
 ?>
         <tr>
             <th><?php echo $time->timeAgoInWords($thread['Thread']['created']); ?></th>
-            <th><div align="left"><?php echo $title; ?></div></th>
+            <th>
+                <div align="left">
+                    <?php echo $title; ?>
+                </div>
+            </th>
         </tr>
         <tr>
             <td style="border-right: 1px solid #bbb;">
                 <div align="center">
                     <?php echo $html->image($thread_user['User']['avatar']); ?> <br /><br />
-                    <div style="background:#AAA; border:1px solid #000; padding:5px;">
-                        <?php echo $thread_user['User']['username']; ?> <br />
-                        <?php echo $thread_user['User']['email']; ?>
+                    <div  style="padding:5px;" class="postUser">
+                        <b><?php echo $thread_user['User']['username']; ?></b> <br />
+                        &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['User']['email']; ?></i> <br /> <br />
+                        <b><?php echo $thread_user['Profile']['university']; ?> </b> <br />
+                        &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['Profile']['university_program']; ?></i>
                     </div> 
-                    Posts: <i><?php echo $thread_user['User']['posts']; ?></i>
+                    <div  style="padding:5px;" class="postUser">Posts: <i><?php echo $thread_user['User']['posts']; ?></i></div>
                     <br /><br />
-                    <?php
-                        if($loggedUser == $thread['Thread']['username'] || $admin):
-                            echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/");
-                            echo "<br />";
-                            echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
-                        endif;
-                        echo "<br />";
-                        echo $html->link('Quote', "/posts/add/".$thread['Thread']['id']."/".$thread['Thread']['id']."/");
-                    ?>
                 </div>
             </td>
             <td width="70%">
                 <div class="post">
                     <?php echo $thread['Thread']['content']; ?>
                     <br />
+                    <hr />
+                    <?php echo $thread_user['Profile']['signature']; ?>
+                    <div align="right">
+                    <?php
+                        echo "<br /><br />";
+                        if($loggedUser == $thread['Thread']['username'] || $admin):
+                            echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/");
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                            echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        endif;
+                        echo $html->link('+Quote', "/posts/add/".$thread['Thread']['id']."/".$thread['Thread']['id']."/");
+                    ?>
+                    </div>
                 </div>
             </td>
         </tr>
@@ -68,21 +79,14 @@
         <td style="border-right: 1px solid #bbb;">
             <div align="center">
                 <?php echo $html->image($row['User']['avatar']); ?> <br /><br />
-                <div style="background:#AAA; border:1px solid #000; padding:5px;">
-                    <?php echo $row['User']['username']; ?> <br />
-                    <?php echo $row['User']['email']; ?> 
+                <div  style="padding:5px;" class="postUser" align="left">
+                    <b><?php echo $row['User']['username']; ?></b> <br />
+                    &nbsp;&nbsp;&nbsp;<i><?php echo $row['User']['email']; ?></i><br /> <br />
+                    <b><?php echo $row['Profile']['university']; ?></b> <br />
+                    &nbsp;&nbsp;&nbsp;<i><?php echo $row['Profile']['university_program']; ?></i>
                 </div>
-                Posts: <i><?php echo $row['User']['posts']; ?></i>
+               <div  style="padding:5px;" class="postUser" align="left"> Posts: <i><?php echo $row['User']['posts']; ?></i></div>
                 <br /><br />
-                <?php
-                    if($loggedUser == $row['Post']['username'] || $admin):
-                        echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");
-                        echo "<br />";
-                        echo $html->link('Edit', "edit/".$row['Post']['id']."/");
-                    endif;
-                    echo "<br />";
-                    echo $html->link('Quote', "/posts/add/".$row['Post']['thread_id']."/".$row['Post']['id']."/");
-                ?>
                 <a name="<?php echo "post".$row['Post']['id']; ?>"></a>
             </div>
         </td>
@@ -90,6 +94,20 @@
             <div class="post">
                 <?php echo $row['Post']['content']; ?>
                 <br />
+                <hr />
+                <?php echo $row['Profile']['signature']; ?>
+                <div align="right">
+                <?php 
+                    echo "<br /><br />";
+                    if($loggedUser == $thread['Thread']['username'] || $admin):
+                        echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");                        
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    endif;
+                    echo $html->link('+Quote', "/posts/add/".$row['Post']['thread_id']."/".$row['Post']['id']."/");
+                ?>
+                </div>
             </div>
         </td>
     </tr>
