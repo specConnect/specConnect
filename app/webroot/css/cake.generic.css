@@ -177,21 +177,35 @@ ul, li {
 
 #titleCrumb {
 	padding:15px;
-	background:#f5f5f5;
-	border:1px solid #d5d5d5;
 	margin:0px;
+    color:#fff;
+    background: #666666;
+    background: -moz-linear-gradient(left, #666666, #333333);
+    background: -webkit-gradient(linear,
+                left top, right top, from(#666666), to(#333333));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#666666', EndColorStr='#333333', GradientType=1);
+}
+
+#titleCrumb a  {
+    text-decoration:none;
+}
+
+#titleCrumb a:hover  {
+    color:#FFF;
 }
 
 #titleCrumb h2 {
-	color: #0055bb;
+	color: #FFF;
 	font-weight: normal;
-	font-style:italic;
+	font-style:bold;
 	font-family: verdana,helvetica,arial,sans-serif;
 	font-size:140%;
 }
 
 #titleCrumb h1 {
 	padding-left:20px;
+    color: #FFF;
 }
 
 .post
@@ -235,10 +249,16 @@ table {
 }
 th {
 	border:0;
-	border-bottom:2px solid #aaa;
+    color:#fff;
+	border-bottom:2px solid #666666;
 	text-align: center;
 	padding:4px;
-	background: #D6D6D6;
+    background: #333333;
+    background: -moz-linear-gradient(top, #333333, #666666);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#333333), to(#666666));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#333333', EndColorStr='#666666', GradientType=0);
 }
 th a {
 	display: block;
@@ -252,7 +272,6 @@ th a.desc:after {
 	content: ' ⇡';
 }
 table tr td {
-	background: #fff;
 	padding: 20px;
 	text-align: left;
 	vertical-align: top;
@@ -262,7 +281,12 @@ table tr td ol {
     margin-left:20px;
 }
 table tr td{
-	background: #f5f5f5;
+    background: #FFFFFF;
+    background: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#FFFFFF), to(#CCCCCC));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#FFFFFF', EndColorStr='#CCCCCC', GradientType=0);
 }
 table .altrow td {
 	background: #f5f5f5;

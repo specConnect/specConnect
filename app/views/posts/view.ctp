@@ -11,11 +11,12 @@
     
     }
 ?>
-<div align="left"><?php echo $html->link('+Reply', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
-<br />
-<?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
-<div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
-<?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
+<div align="right">
+    <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
+    <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
+    <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
+</div>
+<div align="left"><?php echo $html->link($html->image('layoutImg/reply.jpg'), "/posts/add/".$thread['Thread']['id']."/", array('escape' => false)); ?></div><br />
 <table>
 <?php 
     if ($this->Paginator->current() == 1 || $this->Paginator->current() == 0): 
@@ -116,4 +117,4 @@
         //echo $this->Session->flash('email');
     ?>
 </table>
-<div align="left"><?php echo $html->link('+Reply', "/posts/add/".$thread['Thread']['id']."/"); ?></div>
+<div align="left"><?php echo $html->link($html->image('layoutImg/reply.jpg'), "/posts/add/".$thread['Thread']['id']."/", array('escape' => false)); ?></div>
