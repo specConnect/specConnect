@@ -14,6 +14,20 @@
            return ($user['User']['roles'] == 'sadmin');
         }
         
+        /*
+        $model: The name of the first parameter of array
+        $field: The field in the array to search
+        $value: The value to search.
+        $array: The array to search.
+        */
+        function __find($array = array(), $model, $field, $value) {
+            foreach ($array as $row) {
+                if($row[$model][$field] == $value) {
+                    return $row;
+                }
+            }
+        }
+        
 		function beforeFilter() {
 			$this->Auth->authError = 'Please login to view that page';
 			$this->Auth->loginError = 'Incorrect username/password combination';

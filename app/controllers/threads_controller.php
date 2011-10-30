@@ -214,22 +214,29 @@
                         $user['User']['posts'] = $user['User']['posts'] + 1;
                         $this->User->query("UPDATE `users` SET  `posts` = '".$user['User']['posts']."' WHERE `id` = ".$user['User']['id'].";");
                         $forumSub = $this->Forum->ForumSubscription->find('all', array('conditions' => array('forum_id' => $id)));
+                        $userCache = $this->User->find('all', array('fields' => array('username', 'roles')));
                         if($forumSub != NULL) {
                             foreach ($forumSub as $row) {
                                 if($row['ForumSubscription']['username'] != $this->Auth->user('username')) {
-                                    $this->Email->reset();
-                                    //$this->Email->delivery = "debug";
-                                    $this->Email->delivery = "mail";
-                                    $this->Email->from = 'specConnect@spec.net';
-                                    $this->Email->to = $row['ForumSubscription']['email'];
-                                    $this->Email->subject = $this->Auth->user('username') . " just posted on " . $this->data['Thread']['thread_name'] ;
-                                    $this->Email->sendAs = 'html';
-                                    $this->Email->layout = 'default';
-                                    $this->Email->template = 'subscription_message';
-                                    $modified = date('Y-m-d G:i:s');
-                                    $content = "" . $this->data['Thread']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $this->data['Thread']['thread_name'] . "*(*)*" 
-                                               . $row['ForumSubscription']['first_name'] . "*(*)*" . $modified  . "*(*)*" . "/posts/view/".$this->Thread->id."";
-                                    $this->Email->send($content);
+                                    $user = $this->__find($userCache, 'User', 'username', $row['ForumSubscription']['username']);
+                                    if($this->data['Thread']['private'] && $user['User']['roles'] != 'sadmin') {
+                                        //DO NOTHING
+                                    }
+                                    else {
+                                        $this->Email->reset();
+                                        //$this->Email->delivery = "debug";
+                                        $this->Email->delivery = "mail";
+                                        $this->Email->from = 'specConnect@spec.net';
+                                        $this->Email->to = $row['ForumSubscription']['email'];
+                                        $this->Email->subject = $this->Auth->user('username') . " just posted on " . $this->data['Thread']['thread_name'] ;
+                                        $this->Email->sendAs = 'html';
+                                        $this->Email->layout = 'default';
+                                        $this->Email->template = 'subscription_message';
+                                        $modified = date('Y-m-d G:i:s');
+                                        $content = "" . $this->data['Thread']['content'] . "*(*)*" . $this->Auth->user('username') . "*(*)*" . $this->data['Thread']['thread_name'] . "*(*)*" 
+                                                   . $row['ForumSubscription']['first_name'] . "*(*)*" . $modified  . "*(*)*" . "/posts/view/".$this->Thread->id."";
+                                        $this->Email->send($content);
+                                    }
                                 }
                             }
                         }
