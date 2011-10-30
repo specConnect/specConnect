@@ -139,8 +139,8 @@
             ?>
 
 		</div></td>
-		<td><div class="modified" align="center"> <?php echo $row['Thread']['posts'] ?> </div></td>
-		<td><div class="modified" align="center"> 0 </div></td>
+		<td><div class="modified" align="center"> <?php echo $row['Thread']['posts']; ?> </div></td>
+		<td><div class="modified" align="center"> <?php echo $row['Thread']['view']; ?> </div></td>
 	</tr>
 	<?php            
         $count++;

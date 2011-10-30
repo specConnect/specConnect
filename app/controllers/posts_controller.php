@@ -293,9 +293,15 @@
         function view($id = NULL) {
                 //Check if post exists
                 if($id != NULL) {
+                    $ip = $this->RequestHandler->getClientIp();
                     $this->loadModel('Forum');
                     $this->loadModel('Thread');
                     $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                    $view = $this->Thread->ThreadView->find('first', array('conditions' => array('ip' => $ip, 'thread_id' => $id)));
+                    if($view == NULL) {
+                        $this->Thread->ThreadView->create();
+                        $this->Thread->ThreadView->save(array('ip' => $ip, 'thread_id' => $thread['Thread']['id']));
+                    }
                     if ($thread != NULL):
                         if($thread['Thread']['private'] && $this->Auth->user('roles') != 'sadmin') {
                             $this->redirect('/forums/view/');

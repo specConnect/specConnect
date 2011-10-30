@@ -3,6 +3,9 @@
 		var $name = 'Thread';
 		
         var $hasMany = array(
+            'ThreadView' => array(
+                'className' => 'ThreadView'
+            ),
 			'Subscription' => array(
 				'className' => 'Subscription'
 			),

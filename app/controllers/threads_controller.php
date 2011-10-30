@@ -293,6 +293,7 @@
                         $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
                         $thread[$index]['Post'] = $post['Post'];
                         $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
+                        $thread[$index]['Thread']['view'] = count($thread[$index]['ThreadView']);
                         $x = 0;
                         $thread[$index]['voted'] = 0;
                         foreach ($thread[$index]['Thumb'] as $thumbs) {
@@ -302,7 +303,6 @@
                             }
                             $x++;
                         }
-                        
                         $thread[$index]['sub'] = 0;
                         if($this->Auth->user()) {
                             $forumSub = $this->Forum->ForumSubscription->find('first', array('conditions' => array('forum_id' => $id, 

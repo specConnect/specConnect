@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 30, 2011 at 12:40 AM
+-- Generation Time: Oct 30, 2011 at 09:07 PM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `forums` (
 
 INSERT INTO `forums` (`id`, `name`, `summary`, `modified`, `category`, `threads`, `posts`) VALUES
 (1, 'UHDMS', 'Unmanned Highway Drive System project team discussions and more.', '2011-10-04 19:09:12', 'Projects', 0, 0),
-(2, 'News and Information', 'Look here for news and information relating to all SPEC members.', '2011-10-29 22:04:16', 'Latest News', 0, 0),
+(2, 'News and Announcement', 'Look here for news and information relating to all SPEC members.', '2011-10-30 20:13:38', 'Latest News', 2, 0),
 (3, 'MROMS', 'Multi Robot Open-space Mapping System team discussion and more.', '2011-10-04 19:09:12', 'Projects', 0, 0),
-(4, 'SPEC Announcements', 'Executive announcements, new project announcement, and much more.', '2011-10-19 00:11:04', 'Latest News', 0, 0),
-(5, 'Tickets and Glitches', 'Your input matters. Tell us about glitches or features you would like to see here.', '2011-10-29 22:53:25', 'Bug Reporting', 2, 1);
+(4, 'General Discussion', 'Executive announcements, new project announcement, and much more.', '2011-10-19 00:11:04', 'Latest News', 0, 0),
+(5, 'Tickets and Glitches', 'Your input matters. Tell us about glitches or features you would like to see here.', '2011-10-29 22:53:25', 'Reporting Bugs', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,14 @@ CREATE TABLE IF NOT EXISTS `forum_subscriptions` (
   `email` varchar(100) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `forum_subscriptions`
+--
+
+INSERT INTO `forum_subscriptions` (`id`, `forum_id`, `username`, `first_name`, `email`, `modified`) VALUES
+(1, 2, 'tbagers', 'Edwin', 'tbagers@gmail.com', '2011-10-30 19:12:13');
 
 -- --------------------------------------------------------
 
@@ -77,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `posts`
@@ -100,14 +107,15 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `university_program` varchar(60) NOT NULL DEFAULT 'Applied Science',
   `signature` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `profiles`
 --
 
 INSERT INTO `profiles` (`id`, `user_id`, `university`, `university_program`, `signature`) VALUES
-(1, 4, 'Simon Fraser University', 'Computer Engineering', '<p>&ldquo;Impossible is just a big word thrown around by small men who find it easier to live in the world they&#39;ve been given than to explore the power they have to change it. Impossible is not a fact. It&#39;s an opinion. Impossible is not a declaration. It&#39;s a dare. Impossible is potential. Impossible is temporary. Impossible is nothing.&quot;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>- Muhammad Ali</p>\r\n');
+(1, 4, 'Simon Fraser University', 'Computer Engineering', '<p>&ldquo;Impossible is just a big word thrown around by small men who find it easier to live in the world they&#39;ve been given than to explore the power they have to change it. Impossible is not a fact. It&#39;s an opinion. Impossible is not a declaration. It&#39;s a dare. Impossible is potential. Impossible is temporary. Impossible is nothing.&quot;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>- Muhammad Ali</p>\r\n'),
+(9, 23, 'Simon Fraser University', 'Applied Science', 'SPEC - Invent Your Future');
 
 -- --------------------------------------------------------
 
@@ -123,17 +131,7 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
   `email` varchar(100) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
-
---
--- Dumping data for table `subscriptions`
---
-
-INSERT INTO `subscriptions` (`id`, `thread_id`, `username`, `first_name`, `email`, `modified`) VALUES
-(29, 10, 'testUser', 'Edwin', 'tingle2link@gmail.com', '2011-10-27 06:27:02'),
-(30, 1, 'edchand', 'Edwin', 'edchand@gmail.com', '2011-10-28 01:20:54'),
-(34, 1, 'sexyTown', 'Sexy', 'sexyinHouse@sexy.com', '2011-10-28 02:30:27'),
-(43, 1, 'tbagers', 'Edwin', 'tbagers@gmail.com', '2011-10-28 02:55:55');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 -- --------------------------------------------------------
 
@@ -152,18 +150,41 @@ CREATE TABLE IF NOT EXISTS `threads` (
   `posts` int(50) NOT NULL DEFAULT '0',
   `sticky` tinyint(1) NOT NULL DEFAULT '0',
   `private` tinyint(1) NOT NULL DEFAULT '0',
-  `view` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
 
 --
 -- Dumping data for table `threads`
 --
 
-INSERT INTO `threads` (`id`, `username`, `forum_id`, `thread_name`, `content`, `created`, `modified`, `posts`, `sticky`, `private`, `view`) VALUES
-(1, 'edchand', 5, 'Long & Short term goals', '<p>Here is the goals for upcoming weeks (short term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>User Profiles</li>\r\n<li>Views on threads</li>\r\n<li>Ajax Integration - UI enhancements with fades and what not</li>\r\n<li>Fix Breadcrumb</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>Long Term Goals (in order of IMPORTANCE - long term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Google Calendar Integration</li>\r\n<li>Live Feeds -Latest forum posts, facebook posts, twitter posts.</li>\r\n<li>Facebook Integration</li>\r\n<li>Twitter Integration</li>\r\n<li>Google+ or Skype integration</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>These are the goals. The sooner they get done the better.</p>\r\n', '2011-10-16 02:03:58', '2011-10-29 22:53:25', 1, 1, 0, 0),
-(8, 'edchand', 5, 'Advanced Features', '<p>Here is a list of advanced features for users:</p>\r\n<ol>\r\n<li>RSS feeds</li>\r\n<li>Integration with Facebook/Googe/Twiiter API</li>\r\n<li>AJAX/Long Polling Integration for seemless user experience</li>\r\n</ol>\r\n<p>More to be added later...</p>\r\n', '2011-10-16 03:24:09', '2011-10-24 03:16:33', 1, 1, 0, 0),
-(10, 'edchand', 5, 'FEATURES TO TWEAK', '<p>For keeping forum data in sync, we will make a function that will be run and all the forum posts and threads will be counted at the end of the day.</p>\r\n<p>&nbsp;</p>\r\n<p>This will make sure that the post/threads data of forums and thread replies is kept VALID an that count isn&#39;t lost.</p>\r\n<p>&nbsp;</p>\r\n<p>we can do this using CRONJOB or CRON mangement in domain.com control panel &gt; manage webspace....</p>\r\n', '2011-10-16 11:41:19', '2011-10-27 06:27:19', 0, 1, 0, 0);
+INSERT INTO `threads` (`id`, `username`, `forum_id`, `thread_name`, `content`, `created`, `modified`, `posts`, `sticky`, `private`) VALUES
+(1, 'edchand', 5, 'Long & Short term goals', '<p>Here is the goals for upcoming weeks (short term):</p>\r\n<ol>\r\n<li>Don&#39;t email ALL subscribers the private thread updates. Only email sadmin users on the list.</li>\r\n<li>Resize Forum</li>\r\n<li>Views on threads</li>\r\n<li>Ajax Integration - UI enhancements with fades and what not</li>\r\n<li>User Profile</li>\r\n</ol>\r\n<ul style="margin-left: 40px; ">\r\n<li>Add email, name editing, and password editing as well...</li>\r\n</ul>\r\n<ol>\r\n<li>Fix Breadcrumb</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>Long Term Goals (in order of IMPORTANCE - long term):</p>\r\n<p>&nbsp;</p>\r\n<ol>\r\n<li>Google Calendar Integration</li>\r\n<li>Live Feeds -Latest forum posts, facebook posts, twitter posts.</li>\r\n<li>Facebook Integration</li>\r\n<li>Twitter Integration</li>\r\n<li>Google+ or Skype integration</li>\r\n</ol>\r\n<p>&nbsp;</p>\r\n<p>These are the goals. The sooner they get done the better.</p>\r\n', '2011-10-16 02:03:58', '2011-10-30 09:50:20', 1, 1, 0),
+(8, 'edchand', 5, 'Advanced Features', '<p>Here is a list of advanced features for users:</p>\r\n<ol>\r\n<li>RSS feeds</li>\r\n<li>Integration with Facebook/Googe/Twiiter API</li>\r\n<li>AJAX/Long Polling Integration for seemless user experience</li>\r\n</ol>\r\n<p>More to be added later...</p>\r\n', '2011-10-16 03:24:09', '2011-10-24 03:16:33', 1, 1, 0),
+(10, 'edchand', 5, 'FEATURES TO TWEAK', '<p>For keeping forum data in sync, we will make a function that will be run and all the forum posts and threads will be counted at the end of the day.</p>\r\n<p>&nbsp;</p>\r\n<p>This will make sure that the post/threads data of forums and thread replies is kept VALID an that count isn&#39;t lost.</p>\r\n<p>&nbsp;</p>\r\n<p>we can do this using CRONJOB or CRON mangement in domain.com control panel &gt; manage webspace....</p>\r\n', '2011-10-16 11:41:19', '2011-10-27 06:27:19', 0, 1, 0),
+(47, 'edchand', 2, 'This is a private thread only for SPEC Core team', '<p>This tread should not be visible to anyone who is not part of SPEC Core or in other words sadmin...</p>\r\n', '2011-10-30 08:13:00', '2011-10-30 08:51:43', 0, 0, 1),
+(55, 'edchand', 2, 'this is PRIVATE', '<p>sdfasdfadfasdfasdfasdfasdf</p>\r\n', '2011-10-30 19:32:17', '2011-10-30 20:13:17', 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `thread_views`
+--
+
+CREATE TABLE IF NOT EXISTS `thread_views` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `thread_id` int(11) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `thread_views`
+--
+
+INSERT INTO `thread_views` (`id`, `thread_id`, `ip`) VALUES
+(1, 1, '127.0.0.1'),
+(2, 10, '127.0.0.1'),
+(3, 8, '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -197,18 +218,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `avatar` varchar(100) NOT NULL,
   `posts` int(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `roles`, `first_name`, `last_name`, `avatar`, `posts`) VALUES
-(4, 'edchand', '662c39204b127d49411c791b9319bf91f5ef3418', 'edchand@gmail.com', 'sadmin', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/5487e92e63aa83bd019429e03195b35b.jpg?s=100', 2),
-(5, 'testUser', '662c39204b127d49411c791b9319bf91f5ef3418', 'tingle2link@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/6dce93ac9026dd9eee1796039f3953d4.jpg?s=100&d=identicon', 3),
+(4, 'edchand', '662c39204b127d49411c791b9319bf91f5ef3418', 'edchand@gmail.com', 'sadmin', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/5487e92e63aa83bd019429e03195b35b.jpg?s=100', 4),
 (6, 'tbagers', '662c39204b127d49411c791b9319bf91f5ef3418', 'tbagers@gmail.com', 'admin', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/0f087653fb94f993ea78ea557e5b0c2d.jpg?s=100&d=identicon', 1),
 (7, 'jello', '662c39204b127d49411c791b9319bf91f5ef3418', 'terasic@gmail.com', 'regular', 'James', 'Blunt', 'http://www.gravatar.com/avatar/c78fc736aae5381806b551b5ec8402dc.jpg?s=100&d=identicon', 0),
-(8, 'sexyTown', '662c39204b127d49411c791b9319bf91f5ef3418', 'sexyinHouse@sexy.com', 'regular', 'Sexy', 'Town', 'http://www.gravatar.com/avatar/b3514d0867479bf08e60eb1a124551fc.jpg?s=100&d=identicon', 0);
+(8, 'sexyTown', '662c39204b127d49411c791b9319bf91f5ef3418', 'sexyinHouse@sexy.com', 'regular', 'Sexy', 'Town', 'http://www.gravatar.com/avatar/b3514d0867479bf08e60eb1a124551fc.jpg?s=100&d=identicon', 0),
+(23, 'testUser', '662c39204b127d49411c791b9319bf91f5ef3418', 'tingle2link@gmail.com', 'regular', 'Edwin', 'Chand', 'http://www.gravatar.com/avatar/6dce93ac9026dd9eee1796039f3953d4.jpg?s=100&d=identicon', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
