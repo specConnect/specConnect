@@ -283,6 +283,9 @@
                     $this->loadModel('Thread');
                     $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                     if ($thread != NULL):
+                        if($thread['Thread']['private'] && $this->Auth->user('roles') != 'sadmin') {
+                            $this->redirect('/forums/view/');
+                        }
                         //Set pagination parameters
                         $this->paginate = array(
                                     'Post' => array(

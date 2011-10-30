@@ -67,9 +67,19 @@
                         $forum[$index]['sub'] = 1;
                     }
                 }
-                $thread = $this->Thread->find('first', array('conditions' => array('forum_id' => $row['Forum']['id']), 
-                'order' => 'modified DESC', 'recursive' => 0));
-                if($thread['Thread']['posts'] == 0) {
+                if($this->Auth->user('roles') == 'sadmin') {
+                    $thread = $this->Thread->find('first', array('conditions' => array('forum_id' => $row['Forum']['id']), 
+                    'order' => 'modified DESC', 'recursive' => 0));
+                }
+                else {
+                    $thread = $this->Thread->find('first', array('conditions' => array('forum_id' => $row['Forum']['id'], 'private' => '0'), 
+                    'order' => 'modified DESC', 'recursive' => 0));
+                }
+                if($thread == NULL) {
+                    $forum[$index]['Thread'] = NULL;
+                    $forum[$index]['Post'] = NULL;
+                }
+                else if($thread['Thread']['posts'] == 0) {
                     $forum[$index]['Thread'] = $thread['Thread'];
                     $forum[$index]['Post'] = NULL;
                 }

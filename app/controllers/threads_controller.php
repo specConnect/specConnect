@@ -32,6 +32,9 @@
                 $forum = $this->Forum->find('first', array('conditions' => array('id' => $f_id), 'recursive' => 0));
                 $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
                 if($forum != NULL && $thread != NULL) {
+                    if($thread['Thread']['private'] && $this->Auth->user('roles') != 'sadmin') {
+                        $this->redirect('/forums/view/');
+                    }
                     $thumb = $this->Thread->Thumb->find('first', array('conditions' => array('thread_id' => $thread['Thread']['id'], 
                     'username' => $this->Auth->user('username'))));
                     if(!$thumb) { 
@@ -67,6 +70,13 @@
             $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
             if($thread == NULL) {
                 $this->redirect('/forums/view/');
+            }
+            else {
+                if($thread['Thread']['private'] && $this->Auth->user('roles') != 'sadmin') {
+                    $this->redirect('/forums/view/');
+                }
+                $this->set('sadmin', $this->__isSuperAdmin());
+                $this->set('private', $thread['Thread']['private']);
             }
             if($user == $thread['Thread']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
@@ -107,6 +117,14 @@
             $this->autoRender = false;
             $user = $this->Auth->user('username');
             $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+            if($thread == NULL) {
+                $this->redirect('/forums/view/');
+            }
+            else {
+                if($thread['Thread']['private'] && $this->Auth->user('roles') != 'sadmin') {
+                    $this->redirect('/forums/view/');
+                }
+            }
             if($user == $thread['Thread']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
                     $this->loadModel('Post');
@@ -160,6 +178,8 @@
 					
 				//Title above Breadcrumb
 				$this->set('title', 'Add New Thread');
+                
+                $this->set('sadmin', $this->__isSuperAdmin());
                 
                 $this->loadModel('Forum');
 
@@ -301,7 +321,7 @@
                     
                     //Title above Breadcrumb
                     $this->set('title', $forum['Forum']['name']);
-                    
+                    $this->set('sadmin', $this->__isSuperAdmin());
                     $this->set('forum', $forum);
                     $this->set('thread', $thread);
                 }

@@ -16,12 +16,16 @@
 	<?php
 	if ($thread == NULL):
 	?>
-	<tr>
-		<td colspan="5"><h4><b><div align="center">NO THREADS IN THIS FORUM</div></b></h4></td>
-	</tr>
+        <tr>
+            <td colspan="5"><h4><b><div align="center">NO THREADS IN THIS FORUM</div></b></h4></td>
+        </tr>
 	<?php
 	else:
+        $count = 0;
 		foreach ($thread as $row): 
+            if($row['Thread']['private'] && !$sadmin):
+                continue;
+            endif;
 	?> 
 	<tr>
 		<td title="<?php echo "".substr(strip_tags($row['Thread']['content']),0,100)."..."; ?>">
@@ -138,8 +142,16 @@
 		<td><div class="modified" align="center"> <?php echo $row['Thread']['posts'] ?> </div></td>
 		<td><div class="modified" align="center"> 0 </div></td>
 	</tr>
-	<?php 
+	<?php            
+        $count++;
 		endforeach;
+    if($count < 1) {
+    ?>
+        <tr>
+        <td colspan="5"><h4><b><div align="center">NO THREADS IN THIS FORUM</div></b></h4></td>
+        </tr>   
+    <?php
+        }
 	endif;
     //echo $this->Session->flash('email');
 	?>

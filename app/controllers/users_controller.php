@@ -36,6 +36,22 @@
                     //Create a new profile for user
                     $this->User->Profile->create();
                     $this->User->Profile->save(array('user_id' => $this->User->id, 'signature' => "SPEC - Invent Your Future"));
+                    
+                    //Subscribe User to all Forums
+                    $this->loadModel('Forum');
+                    $forum = $this->Forum->find('all', array('fields'=>array('id')));
+                    foreach ($forum as $row):
+                        $array = array(
+                                'forum_id' => $row['Forum']['id'],
+                                'username' => $this->data['User']['username'],
+                                'first_name' => $this->data['User']['first_name'],
+                                'email' => $this->data['User']['email']
+                        );
+                        $this->Forum->ForumSubscription->create();
+                        $this->Forum->ForumSubscription->save($array);
+                    endforeach;
+                    
+                    
 					$this->Session->setFlash('You have successfully joined specNow');
 					$this->redirect(array('action' => 'login'));
 				}
