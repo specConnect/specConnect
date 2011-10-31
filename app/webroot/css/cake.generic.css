@@ -115,6 +115,11 @@ h4 {
 	padding: 2px 0px 2px 0px;
 	font-size: 75%;
     text-align:left;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;
+}
 }
 
 ul, li {
@@ -154,9 +159,13 @@ ul, li {
 	color: #333;
 	padding: 10px 20px 30px 20px;
 	overflow: auto;
-	width:1200px;
+	width:950px;
 	background:#fff;
 	text-align:left;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
 }
 #footer {
 	clear: both;
@@ -185,6 +194,11 @@ ul, li {
                 left top, right top, from(#666666), to(#333333));
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#666666', EndColorStr='#333333', GradientType=1);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+}
 }
 
 #titleCrumb a  {
@@ -259,6 +273,10 @@ th {
                 left top, left bottom, from(#333333), to(#666666));
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#333333', EndColorStr='#666666', GradientType=0);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;            
 }
 th a {
 	display: block;
@@ -276,6 +294,10 @@ table tr td {
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #bbb;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
 }
 table tr td ol {
     margin-left:20px;
