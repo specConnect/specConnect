@@ -197,9 +197,13 @@
 					if($this->Thread->save($this->data)) {
                     
                         //Subscribe to thread user posts in
-                        $this->Thread->Subscription->create();
-                        $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username'),
-                        'email' => $this->Auth->user('email'), 'first_name' => $this->Auth->user('first_name')));
+                        $forumSub = $this->Forum->ForumSubscription->find('first', array('conditions' => array('forum_id' => $id, 
+                        'username' => $this->Auth->user('username'))));
+                        if($forumSub == NULL) {
+                            $this->Thread->Subscription->create();
+                            $this->Thread->Subscription->save(array('thread_id' => $this->Thread->id, 'username' => $this->Auth->user('username'),
+                            'email' => $this->Auth->user('email'), 'first_name' => $this->Auth->user('first_name')));
+                        }
                         
                         $this->loadModel('User');
                         //Update number for threads in forum and last posting user
