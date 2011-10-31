@@ -3,6 +3,7 @@
     $javascript->link('ckeditor/ckeditor', false);
 ?>
 <div id="inner">
+    Post Rating: <b><i><?php echo $profile['Profile']['rating']; ?></i></b><br /><br />
     <?php echo $html->image($avatar); ?>
     <br /><br />
     <h1><i>specConnect uses <b>Gravatar</b></i><br /> 
@@ -20,8 +21,8 @@
         );
 		echo $form->create('Profile', array('action'=>'edit'));
         
-        if($profile['Profile']['university'] == NULL || $profile['Profile']['university_program'] == NULL || $profile['Profile']['signature'] == NULL) {
-            echo $form->select('university', $options, '', array('id' => 'university')) . "<br /><br />";
+        if($profile['Profile']['university_program'] == NULL || $profile['Profile']['signature'] == NULL) {
+            echo $form->select('university', $options, $profile['Profile']['university'], array('id' => 'university')) . "<br /><br />";
         	echo $form->input('university_program', array('id' => 'university_program'));
             echo $form->input('signature', array('type' => 'textarea', 'id' => 'signature', 'class' => 'ckeditor'));
         }

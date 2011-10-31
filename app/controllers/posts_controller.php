@@ -172,6 +172,8 @@
                     $user['User']['posts'] = $user['User']['posts'] + 1;
                     $this->User->query("UPDATE `users` SET  `posts` = '".$user['User']['posts']."' WHERE `id` = ".$user['User']['id'].";");
              
+                    //Save user rating
+                    $this->__getSaveRating($this->Auth->user('id'), $user['User']['posts']);
                     
                     $this->Forum->save(array('id' => $forum_id, 'posts' => $posts), array('validate' => false,
                         'fieldList' => array('posts')));
@@ -260,12 +262,6 @@
                         $thread['Thread']['posts'] = $thread['Thread']['posts'] - 1;
                         $this->Thread->save(array('id' => $t_id, 'posts' => $thread['Thread']['posts']), array('validate' => false,
                         'fieldList' => array('posts')));
-                    }
-                    
-                    $user = $this->User->find('first', array('conditions' => array('username' => $user['Post']['username']), 'recursive' => 0));
-                    if($user['User']['posts'] > 0) {
-                        $user['User']['posts'] = $user['User']['posts'] - 1;
-                        $this->User->query("UPDATE `users` SET  `posts` = '".$user['User']['posts']."' WHERE `id` = ".$user['User']['id'].";");
                     }
                     
                     $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id']), 'recursive' => 0));

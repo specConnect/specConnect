@@ -9,7 +9,7 @@
 <body>
 	<div id="container">
 		<div align="center">
-			<div id="header"><?php echo $html->image('specLogo/logo.png'); ?></div>
+			<div id="header"><?php echo $html->link($html->image('specLogo/logo.png'), '/forums/view/', array('escape' => false)); ?></div>
 			<div id="content">
 				<h2>
 					Welcome, 
@@ -24,7 +24,9 @@
 				</h2>
 					<?php
 						if($online) { //When user is logged in
-                            echo $html->link('Edit Profile', '/profiles/edit');
+                            echo $html->link('SPEC Forums', '/forums/view/');
+                            echo "&nbsp;&nbsp;&nbsp;";
+                            echo $html->link('Edit Profile', '/profiles/edit/');
                             echo "&nbsp;&nbsp;&nbsp;";
 							echo $html->link('Sign Out', '/users/logout/');
 						}

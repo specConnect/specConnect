@@ -16,7 +16,9 @@
     <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
     <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
 </div>
-<div align="left"><?php echo $html->link($html->image('layoutImg/reply.jpg'), "/posts/add/".$thread['Thread']['id']."/", array('escape' => false)); ?></div><br />
+<div align="left" class="postReply">
+<?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
+</div><br />
 <table>
 <?php 
     if ($this->Paginator->current() == 1 || $this->Paginator->current() == 0): 
@@ -39,7 +41,9 @@
                         <b><?php echo $thread_user['Profile']['university']; ?> </b> <br />
                         &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['Profile']['university_program']; ?></i>
                     </div> 
-                    <div  style="padding:5px;" class="postUser">Posts: <i><?php echo $thread_user['User']['posts']; ?></i></div>
+                    <div  style="padding:5px;" class="postUser">
+                    Posts: <i><?php echo $thread_user['User']['posts']; ?></i><br />
+                    <b><?php echo $thread_user['Profile']['rating']; ?></b></div>
                     <br /><br />
                 </div>
             </td>
@@ -86,7 +90,10 @@
                     <b><?php echo $row['Profile']['university']; ?></b> <br />
                     &nbsp;&nbsp;&nbsp;<i><?php echo $row['Profile']['university_program']; ?></i>
                 </div>
-               <div  style="padding:5px;" class="postUser" align="left"> Posts: <i><?php echo $row['User']['posts']; ?></i></div>
+               <div  style="padding:5px;" class="postUser" align="left">
+               Posts: <i><?php echo $row['User']['posts']; ?></i><br />
+               <b><?php echo $row['Profile']['rating']; ?></b>
+               </div>
                 <br /><br />
                 <a name="<?php echo "post".$row['Post']['id']; ?>"></a>
             </div>
@@ -117,4 +124,6 @@
         //echo $this->Session->flash('email');
     ?>
 </table>
-<div align="left"><?php echo $html->link($html->image('layoutImg/reply.jpg'), "/posts/add/".$thread['Thread']['id']."/", array('escape' => false)); ?></div>
+<div align="left" class="postReply">
+<?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
+</div><br />

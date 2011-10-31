@@ -21,15 +21,14 @@
             
             if(!empty($this->data)) {
                 $this->data['Profile']['user_id'] = $this->Auth->user('id');
+                $profile = $this->Profile->find('first', array('conditions' => array('user_id' => $this->Auth->user('id')), 'recursive' => 0));
                 if($this->Profile->save($this->data)) {
                     $this->Session->setFlash("Changes Saved");
-                    $profile = $this->Profile->find('first', array('conditions' => array('user_id' => $this->Auth->user('id')), 'recursive' => 0));
                 }
                 else {
                     $this->Session->setFlash("Error Saving Changes");
-                    $id = $profile['Profile']['id'];
-                    $profile = NULL;
-                    $profile['Profile']['id'] = $id;
+                    $profile['Profile']['university_program'] = NULL;
+                    $profile['Profile']['signature'] = NULL;
                 }
             }
             else {

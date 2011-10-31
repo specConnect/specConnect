@@ -8,7 +8,7 @@
 <body>
 	<div id="container">
 		<div align="center">
-			<div id="header"><?php echo $html->image('specLogo/logo.png'); ?></div>
+			<div id="header"><?php echo $html->link($html->image('specLogo/logo.png'), '/forums/view/', array('escape' => false)); ?></div>
 			<div id="content">
 				<?php echo $content_for_layout; ?>
 				<?php echo $session->flash(); ?>

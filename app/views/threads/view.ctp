@@ -4,7 +4,9 @@
     <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
     <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
 </div>
-<div align="right"><?php echo $html->link($html->image('layoutImg/newthread.jpg'),"/threads/add/".$forum['Forum']['id']."/", array('escape' => false)); ?></div>
+<div align="right" class="postReply">
+    <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
+</div>
 <table>
 	<tr>
 		<th>Thread Name</th>
@@ -156,4 +158,6 @@
     //echo $this->Session->flash('email');
 	?>
 </table>
-<div align="right"><?php echo $html->link($html->image('layoutImg/newthread.jpg'),"/threads/add/".$forum['Forum']['id']."/", array('escape' => false)); ?></div>
+<div align="right" class="postReply">
+    <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
+</div>

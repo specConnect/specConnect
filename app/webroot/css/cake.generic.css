@@ -21,6 +21,78 @@
 	padding:0;
 }
 
+div.postReply a:link {
+    margin:10px;
+    font-style:normal;
+    font-weight:bold;
+    text-decoration:none;
+    margin-left:30px;
+    text-align:center;
+    display:block;
+    padding:10px;
+    color:#fff;
+    width:150px;
+    background:#222;
+    border:1px solid #444;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    background: -moz-linear-gradient(top, #222, #000);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#222), to(#000));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#222', EndColorStr='#000', GradientType=0);
+}
+
+div.postReply a:visited {
+    margin:10px;
+    font-style:normal;
+    font-weight:bold;
+    text-decoration:none;
+    margin-left:30px;
+    text-align:center;
+    display:block;
+    padding:10px;
+    color:#fff;
+    width:150px;
+    background:#222;
+    border:1px solid #444;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    background: -moz-linear-gradient(top, #222, #000);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#222), to(#000));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#222', EndColorStr='#000', GradientType=0);
+}
+
+div.postReply a:hover {
+    margin:10px;
+    font-style:normal;
+    font-weight:bold;
+    text-decoration:none;
+    margin-left:30px;
+    text-align:center;
+    display:block;
+    padding:10px;
+    color:#aaa;
+    width:150px;
+    background:#222;
+    border:1px solid #444;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    background: -moz-linear-gradient(top, #222, #111);
+    background: -webkit-gradient(linear,
+                left top, left bottom, from(#222), to(#111));
+    filter: progid:DXImageTransform.Microsoft.Gradient(
+                StartColorStr='#222', EndColorStr='#111', GradientType=0);
+}
+
 /** General Style Info **/
 body {
 	/** background: #003d4c; **/
@@ -92,8 +164,13 @@ h4 {
     display:block;
     padding:5px;
     width:80%;
-    background:#BBB;
-    border:1px solid #000;
+    color:#fff;
+    background:#222;
+    border:1px solid #FFF;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;
 }
 .modified {
 	color:#000;
@@ -105,8 +182,7 @@ h4 {
 }
 
 .postUser {
-    background:#555; 
-    border:2px solid #222; 
+    background:#222; 
     margin:10px;
     width:70%;
     margin-left:auto;
@@ -115,10 +191,10 @@ h4 {
 	padding: 2px 0px 2px 0px;
 	font-size: 75%;
     text-align:left;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    -khtml-border-radius: 3px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -khtml-border-radius: 6px;
 }
 }
 
@@ -159,7 +235,7 @@ ul, li {
 	color: #333;
 	padding: 10px 20px 30px 20px;
 	overflow: auto;
-	width:950px;
+	width:1200px;
 	background:#fff;
 	text-align:left;
     -moz-border-radius: 10px;
@@ -188,12 +264,7 @@ ul, li {
 	padding:15px;
 	margin:0px;
     color:#fff;
-    background: #666666;
-    background: -moz-linear-gradient(left, #666666, #333333);
-    background: -webkit-gradient(linear,
-                left top, right top, from(#666666), to(#333333));
-    filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#666666', EndColorStr='#333333', GradientType=1);
+    background: #111;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -203,6 +274,7 @@ ul, li {
 
 #titleCrumb a  {
     text-decoration:none;
+    color:#aaa;
 }
 
 #titleCrumb a:hover  {
@@ -264,15 +336,15 @@ table {
 th {
 	border:0;
     color:#fff;
-	border-bottom:2px solid #666666;
+	border-bottom:2px solid #000;
 	text-align: center;
 	padding:4px;
     background: #333333;
-    background: -moz-linear-gradient(top, #333333, #666666);
+    background: -moz-linear-gradient(top, #222, #000);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#333333), to(#666666));
+                left top, left bottom, from(#222), to(#000));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#333333', EndColorStr='#666666', GradientType=0);
+                StartColorStr='#222', EndColorStr='#000', GradientType=0);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -304,11 +376,11 @@ table tr td ol {
 }
 table tr td{
     background: #FFFFFF;
-    background: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+    background: -moz-linear-gradient(top, #FFFFFF, #AAAAAA);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#FFFFFF), to(#CCCCCC));
+                left top, left bottom, from(#FFFFFF), to(#AAAAAA));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#FFFFFF', EndColorStr='#CCCCCC', GradientType=0);
+                StartColorStr='#FFFFFF', EndColorStr='#AAAAAA', GradientType=0);
 }
 table .altrow td {
 	background: #f5f5f5;
@@ -494,26 +566,39 @@ form .submit input[type=submit]:hover {
 div.message {
 	clear: both;
 	color: #fff;
-	font-size: 140%;
+	font-size: 90%;
 	font-weight: bold;
 	margin: 0 0 1em 0;
-	background: #c73e14;
+	background: #222;
 	padding: 5px;
+    background: #222;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px; 
 }
 div.error-message {
 	clear: both;
 	color: #fff;
 	font-weight: bold;
-	background: #c73e14;
+	background: #222;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;  
 }
 p.error {
-	background-color: #e32;
 	color: #fff;
 	font-family: Courier, monospace;
-	font-size: 120%;
+	font-size: 90%;
 	line-height: 140%;
 	padding: 0.8em;
 	margin: 1em 0;
+    background: #222;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px; 
 }
 p.error em {
 	color: #000;
@@ -521,14 +606,19 @@ p.error em {
 	line-height: 140%;
 }
 .notice {
-	background: #ffcc00;
+	background: #222;
 	color: #000;
 	display: block;
 	font-family: Courier, monospace;
-	font-size: 120%;
+	font-size: 90%;
 	line-height: 140%;
 	padding: 0.8em;
 	margin: 1em 0;
+    background: #222;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -khtml-border-radius: 3px; 
 }
 .success {
 	background: green;

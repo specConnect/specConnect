@@ -8,7 +8,7 @@
             echo $form->create('Thread', array('action'=> "edit/". $id ."/"));
             echo $form->input('thread_name', array('id' => 'thread_name'));
             if($sadmin) {
-                echo $form->input('private', array('type' => 'checkbox', 'label' => 'Make thread private', 'checked' => "".$private.""));
+                echo $form->input('private', array('type' => 'checkbox', 'label' => 'SPEC Executives Only', 'checked' => "".$private.""));
             }
             echo $form->input('content', array('type' => 'textarea', 'id' => 'content', 'class' => 'ckeditor'));
             echo $form->end('Finish');
