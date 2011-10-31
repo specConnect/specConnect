@@ -103,7 +103,7 @@
                     if($loggedUser == $thread['Thread']['username'] || $admin):
                         echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");                        
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                        echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
+                        echo $html->link('Edit', "/posts/edit/".$row['Post']['id']."/");
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                     endif;
                     echo $html->link('+Quote', "/posts/add/".$row['Post']['thread_id']."/".$row['Post']['id']."/");
