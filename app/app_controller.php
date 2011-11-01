@@ -16,27 +16,25 @@
         
         function __getSaveRating($user_id, $posts) {
             $this->loadModel('User');
+            $rating = NULL;
             switch ($posts) {
-                case ($posts >= 20):
+                case 20:
                     $rating = "2nd Year";
                     break;
-                case ($posts >= 40):
+                case 80:
                     $rating = "3rd Year";
                     break;
-                case ($posts >= 70):
+                case 180:
                     $rating = "4th Year";
                     break;
-                case ($posts >= 100):
+                case 280:
                     $rating = "Undergraduate";
                     break;
-                case ($posts >= 150):
+                case 400:
                     $rating = "Masters-MSc";
                     break;
-                case($posts >= 250):
+                case 600:
                     $rating = "Doctorate - PHd.";
-                    break;
-                default:
-                    $rating = NULL;
                     break;
             }
             if($rating != NULL){
