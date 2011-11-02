@@ -187,6 +187,7 @@
                     //Adding a thread
 					$this->data['Thread']['username'] = $this->Auth->user('username');
                     $this->data['Thread']['forum_id'] = $id;
+                    $this->Thread->create(); //Gets ready to create new entry in database
 					if($this->Thread->save($this->data)) {
                     
                         //Subscribe to thread user posts in
