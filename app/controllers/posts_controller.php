@@ -66,8 +66,10 @@
             }
             if($user == $post['Post']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
+                    $this->loadModel('Forum');
+                    $this->loadModel('Thread');
                     $this->set('title_for_layout', 'specConnect - Edit Post');
-                    $this->set('title', "Edit Post"); //Title above Breadcrumb
+                    $thread = NULL;
                     if(!empty($this->data)) { //IF USER POSTS DATA
                         //Save to database
                         //User the below declaration if we are to use the cakePHP SAVE method
@@ -76,7 +78,6 @@
                         $this->set('content', NULL);
                         if($this->Post->query("UPDATE `posts` SET  `content` = '".$this->data['Post']['content']."' WHERE  `id` = $id;")) {
                             $this->Session->setFlash("Editing successful.");
-                            $this->loadModel('Thread');
                             $thread = $this->Thread->find('first', array('conditions' => array('id' => $post['Post']['thread_id']), 'recursive' => 0));
                             $page = $this->__getPage($thread['Thread']['posts']);
                             $this->redirect("/posts/view/".$post['Post']['thread_id']."/page:$page#post".$post['Post']['id']."");
@@ -89,6 +90,12 @@
                         $this->set('id', $post['Post']['id']);
                         $this->set('content', $post['Post']['content']);
                     }
+                    if($thread == NULL) {
+                        $thread = $this->Thread->find('first', array('conditions' => array('id' => $post['Post']['thread_id']), 'fields' => array('id','forum_id','thread_name'), 'recursive' => 0));
+                    }              
+                    $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id'])));
+                    $this->set('title', array(0 => $forum['Forum']['name'], 'link0' => "/threads/view/".$forum['Forum']['id']."", 
+                    1 => $thread['Thread']['thread_name'],'link1' => "/posts/view/".$thread['Thread']['id']."" , 2 => "Edit Post"));
                 }
                 else {
                     $this->redirect(array('controller' => 'forums', 'action' => 'view'));
@@ -102,16 +109,16 @@
         
         function add($id = NULL, $q_id = NULL) {
             $this->layout = 'forum';
-            $this->set('title_for_layout', 'specConnect - Add Post');
+            $this->set('title_for_layout', 'specConnect - Reply');
             $this->loadModel('Thread');
             $this->loadModel('Forum');
             $this->loadModel('User');
-            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'fields' => array('thread_name', 'modified', 'private'), 'recursive' => 0)); 
-            //Title above Breadcrumb
-            $this->set('title', "POST TO: ".$thread['Thread']['thread_name']);	
-            
+            $thread = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));          
+            $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id'])));
+            $this->set('title', array(0 => $forum['Forum']['name'], 'link0' => "/threads/view/".$forum['Forum']['id']."", 
+            1 => $thread['Thread']['thread_name'],'link1' => "/posts/view/".$thread['Thread']['id']."" , 2 => "Reply"));
             if($id != NULL) {
-                $posts = $this->Thread->find('first', array('conditions' => array('id' => $id), 'recursive' => 0));
+                $posts = $thread;
                 if($posts == NULL) {
                     $this->redirect('/forums/view/');
                 }
@@ -120,13 +127,13 @@
                         //We are quoting a thread
                         $quote = $this->Thread->find('first', array('conditions' => array('id' => $q_id)));
                         $quote_id = $quote['Thread']['id'];
-                        $quote = $quote['Thread']['content'];
+                        $quote = "Originally Posted by <b>".$quote['Thread']['username']."</b><br />".$quote['Thread']['content'];
                     }
                     else {
                         //We are quoting a post
                         $quote = $this->Post->find('first', array('conditions' => array('id' => $q_id)));
                         $quote_id = $quote['Post']['thread_id'];
-                        $quote = $quote['Post']['content'];
+                        $quote = "Originally Posted by <b>".$quote['Post']['username']."</b><br />".$quote['Post']['content'];
                     }
                     
                     if($quote_id == $posts['Thread']['id']) {
@@ -335,6 +342,7 @@
                         $this->loadModel('User');
                         $thread_user = $this->User->find('first', array('conditions' => array('username' => $thread['Thread']['username'])));
                         $posts = $this->paginate('Post');
+                        $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id']), 'recursive' => 0));
                         
                         $index = 0;
                         foreach ($posts as $row) {
@@ -346,7 +354,8 @@
                         
                         $this->set('admin', $this->__isAdmin());
                         $this->set('loggedUser', $this->Auth->user('username'));
-                        $this->set('title', $thread['Thread']['thread_name']);
+                        $this->set('title', array(0 => $forum['Forum']['name'], 'link0' => "/threads/view/".$forum['Forum']['id']."", 
+                        1 => $thread['Thread']['thread_name']));
                         $this->set('thread', $thread);
                         $this->set('thread_user', $thread_user);
                         $this->set('posts', $posts);

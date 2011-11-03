@@ -92,6 +92,29 @@ div.postReply a:hover {
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#222', EndColorStr='#111', GradientType=0);
 }
+div.paginator {
+    width:
+    font-size:12px;
+    text-align:center;
+    padding:7px;
+}
+div.paginator a{
+    font-size:12px;
+    text-decoration:none;
+    color:#555;
+}
+
+div.paginator a:visited{
+    font-size:12px;
+    text-decoration:none;
+    color:#555;
+}
+
+div.paginator a:hover{
+    font-size:12px;
+    text-decoration:none;
+    color:#111;
+}
 
 /** General Style Info **/
 body {
@@ -172,6 +195,7 @@ h4 {
     border-radius: 3px;
     -khtml-border-radius: 3px;
 }
+
 .modified {
 	color:#000;
 	padding: 2px 0px 2px 0px;

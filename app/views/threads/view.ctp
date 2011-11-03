@@ -1,8 +1,10 @@
 <?php $html->addCrumb($title); ?>
-<div align="right">
-    <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
+<div class="paginator">
+    <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
     <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
-    <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
 <div align="right" class="postReply">
     <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
@@ -160,4 +162,11 @@
 </table>
 <div align="right" class="postReply">
     <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
+</div>
+<div class="paginator" >
+    <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
+    <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
+    <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>

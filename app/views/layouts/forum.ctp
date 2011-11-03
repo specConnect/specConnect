@@ -37,8 +37,8 @@
 
 				<br /><br />
 				<div id="titleCrumb"> 
+                   <h2> SPEC - Inviting Innovation </h2>
 					<?php
-						echo "<h2>" . strtoupper($title) . "</h2>";
 						//Breadcrumb
 						if($breadcrumb != NULL) {
 							echo "<h1>" . $breadcrumb . "</h1>";

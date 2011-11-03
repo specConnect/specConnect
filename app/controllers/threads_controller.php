@@ -81,7 +81,10 @@
             if($user == $thread['Thread']['username'] || $this->__isAdmin()) {
                 if($id != NULL) {
                     $this->set('title_for_layout', 'specConnect - Edit Thread');
-                    $this->set('title', "EDIT:".$thread['Thread']['thread_name']); //Title above Breadcrumb
+                    $this->loadModel('Forum');
+                    $forum = $this->Forum->find('first', array('conditions' => array('id' => $thread['Thread']['forum_id']), 
+                    'fields' => array('name'),'recursive' => 0));
+                    $this->set('title', array(0 => $forum['Forum']['name'], 'link0' => "/threads/view/".$thread['Thread']['forum_id']."", 1 => "Edit Thread")); 
                     
                     if(!empty($this->data)) { //IF USER POSTS DATA
                         //Save to database
@@ -168,9 +171,6 @@
 		function add($id = NULL) {
 				$this->layout = 'forum';
 				$this->set('title_for_layout', 'specConnect - Add Thread');
-					
-				//Title above Breadcrumb
-				$this->set('title', 'Add New Thread');
                 
                 $this->set('sadmin', $this->__isSuperAdmin());
                 
@@ -181,6 +181,8 @@
                     if($forums == NULL) {
                         $this->redirect('/forums/view/');
                     }
+                    $this->set('title', array(0 => $forums['Forum']['name'], 'link0' => "/threads/view/$id", 1 => "Add New Thread"));
+
                 }
                 
 				if(!empty($this->data)) {

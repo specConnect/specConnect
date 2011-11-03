@@ -1,4 +1,7 @@
-<?php $html->addCrumb($title); ?>
+<?php 
+    $html->addCrumb($title[0], $title['link0']);
+    $html->addCrumb($title[1]); 
+?>
 <?php
     echo "<br />";
     if($online && ($sub == 1)) {
@@ -11,14 +14,16 @@
     
     }
 ?>
-<div align="right">
-    <?php echo $this->Paginator->prev("<< Previous ", null, " ", array('class' => 'disabled')); ?>
+<div class="paginator">
+    <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
     <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
-    <?php echo $this->Paginator->next(" Next >>", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
 <div align="left" class="postReply">
 <?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
-</div><br />
+</div>
 <table>
 <?php 
     if ($this->Paginator->current() == 1 || $this->Paginator->current() == 0): 
@@ -27,14 +32,15 @@
             <th><?php echo $time->timeAgoInWords($thread['Thread']['created']); ?></th>
             <th>
                 <div align="left">
-                    <?php echo $title; ?>
+                    <?php echo $title[1]; ?>
                 </div>
             </th>
         </tr>
         <tr>
             <td style="border-right: 1px solid #bbb;">
                 <div align="center">
-                    <?php echo $html->image($thread_user['User']['avatar']); ?> <br /><br />
+                    <?php echo $html->image($thread_user['User']['avatar']); ?>
+                    <br /><br />
                     <div  style="padding:5px;" class="postUser">
                         <b><?php echo $thread_user['User']['username']; ?></b> <br />
                         &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['User']['email']; ?></i> <br /> <br />
@@ -126,4 +132,11 @@
 </table>
 <div align="left" class="postReply">
 <?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
-</div><br />
+</div>
+<div class="paginator" >
+    <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
+    <div style="margin:5px;padding:5px;display:inline;"><?php echo $this->Paginator->numbers(array('modulus' => 5, 'seperator' => '|')); ?></div>
+    <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
+    <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
+</div>

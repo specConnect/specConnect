@@ -1,5 +1,7 @@
 <?php  
-	$html->addCrumb("Edit Thread");
+	$html->addCrumb($title[0], $title['link0']);
+    $html->addCrumb($title[1]);
+    
     $javascript->link('ckeditor/ckeditor', false);
 ?>
 <div id="inner">

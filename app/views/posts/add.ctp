@@ -1,5 +1,8 @@
 <?php  
-	$html->addCrumb("Add New Post");
+	$html->addCrumb($title[0], $title['link0']);
+    $html->addCrumb($title[1], $title['link1']); 
+    $html->addCrumb($title[2]); 
+    
     $javascript->link('ckeditor/ckeditor', false);
 ?>
 <div id="inner">
