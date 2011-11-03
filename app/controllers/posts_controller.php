@@ -160,11 +160,15 @@
                     $this->Thread->save(array('id' => $id, 'posts' => $posts));
                     
                     //Subscribe to thread user posts in
-                    if($this->Thread->Subscription->find('first', array('conditions' => 
-                    array('thread_id' => $id, 'username' => $this->Auth->user('username')))) == NULL) {
-                        $this->Thread->Subscription->create();
-                        $this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username'), 
-                        'email' => $this->Auth->user('email'), 'first_name' => $this->Auth->user('first_name')));
+                    $f_sub = $this->Forum->ForumSubscription->find('first', array('conditions' => array('forum_id' => $forum_id,
+                    'username' => $this->Auth->user('username'))));
+                    if($f_sub == NULL) {
+                        if($this->Thread->Subscription->find('first', array('conditions' => 
+                        array('thread_id' => $id, 'username' => $this->Auth->user('username')))) == NULL) {
+                            $this->Thread->Subscription->create();
+                            $this->Thread->Subscription->save(array('thread_id' => $id, 'username' => $this->Auth->user('username'), 
+                            'email' => $this->Auth->user('email'), 'first_name' => $this->Auth->user('first_name')));
+                        }   
                     }
                     
                     $page = $this->__getPage($posts);
