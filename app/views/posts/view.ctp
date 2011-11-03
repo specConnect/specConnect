@@ -84,7 +84,7 @@
         <th>
             <?php echo $time->timeAgoInWords($row['Post']['modified']); ?>
         </th>
-        <th><div align="left"><?php echo "RE: " .$title; ?></div></th>
+        <th><div align="left"><?php echo "RE: " .$title[1]; ?></div></th>
     </tr>
     <tr>
         <td style="border-right: 1px solid #bbb;">
