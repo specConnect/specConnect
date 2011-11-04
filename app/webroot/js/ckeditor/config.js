@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config )
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
         { name: 'styles', items : ['FontSize'] },
             '/',
-		{ name: 'insert', items : [ 'Table','HorizontalRule','Smiley','SpecialChar'] },
+		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar'] },
 		{ name: 'basicstyles', items : [ 'Bold','Italic','Strike','-','RemoveFormat' ] },
 		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote' ] },
 		{ name: 'tools', items : [ 'Maximize'] },
