@@ -18,6 +18,12 @@
 					'message' => 'This field cannot be left empty'
 					)
 			),
+            'old_password' => array(
+                'checkOldPass' => array(
+                    'rule' => 'checkOldPass',
+                    'message' => 'Your current password does not match.'
+                )
+            ),
 			'password' => array(
 				'minLength' => array(
 					'rule' => array('minLength', '5'),
@@ -64,6 +70,16 @@
 			)
 		);
 		
+        function checkOldPass($data) {
+            $userInfo = $this->findById($this->data['User']['id']);
+            $hashed = Security::hash($this->data['User']['old_password'], NULL, TRUE);
+            if($userInfo['User']['password'] != $hashed) {
+                $this->invalidate('old_password', 'Your current password does not match.');
+                return FALSE;
+            }
+            return TRUE;
+        }
+        
 		function checkPass($data) {
 			if($data['password'] == $this->data['User']['confirm password']) {
 				return TRUE;

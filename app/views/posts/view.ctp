@@ -43,9 +43,18 @@
                     <br /><br />
                     <div  style="padding:5px;" class="postUser">
                         <b><?php echo $thread_user['User']['username']; ?></b> <br />
-                        &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['User']['email']; ?></i> <br /> <br />
+                        <div style="padding-left:20px;"><i><?php echo $thread_user['User']['email']; ?></i></div><br />
                         <b><?php echo $thread_user['Profile']['university']; ?> </b> <br />
-                        &nbsp;&nbsp;&nbsp;<i><?php echo $thread_user['Profile']['university_program']; ?></i>
+                        <div style="padding-left:20px;"><i><?php echo $thread_user['Profile']['university_program']; ?></i></div>
+                        <?php
+                            if ($thread_user['Profile']['job'] != NULL && $thread_user['Profile']['job_title'] != NULL):
+                        ?>
+                                <br />
+                                <b><?php echo $thread_user['Profile']['job']; ?> </b> <br />
+                                <div style="padding-left:20px;"><i><?php echo $thread_user['Profile']['job_title']; ?></i></div>
+                        <?php 
+                            endif;
+                        ?>
                     </div> 
                     <div  style="padding:5px;" class="postUser">
                     Posts: <i><?php echo $thread_user['User']['posts']; ?></i><br />
@@ -92,9 +101,18 @@
                 <?php echo $html->image($row['User']['avatar']); ?> <br /><br />
                 <div  style="padding:5px;" class="postUser" align="left">
                     <b><?php echo $row['User']['username']; ?></b> <br />
-                    &nbsp;&nbsp;&nbsp;<i><?php echo $row['User']['email']; ?></i><br /> <br />
-                    <b><?php echo $row['Profile']['university']; ?></b> <br />
-                    &nbsp;&nbsp;&nbsp;<i><?php echo $row['Profile']['university_program']; ?></i>
+                    <div style="padding-left:20px;"><i><?php echo $row['User']['email']; ?></i></div><br />
+                    <b><?php echo $row['Profile']['university']; ?> </b> <br />
+                    <div style="padding-left:20px;"><i><?php echo $row['Profile']['university_program']; ?></i></div>
+                    <?php
+                        if ($row['Profile']['job'] != NULL && $row['Profile']['job_title'] != NULL):
+                    ?>
+                            <br />
+                            <b><?php echo $row['Profile']['job']; ?> </b> <br />
+                            <div style="padding-left:20px;"><i><?php echo $row['Profile']['job_title']; ?></i></div>
+                    <?php 
+                        endif;
+                    ?>
                 </div>
                <div  style="padding:5px;" class="postUser" align="left">
                Posts: <i><?php echo $row['User']['posts']; ?></i><br />

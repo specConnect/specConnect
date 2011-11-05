@@ -19,22 +19,22 @@
             $rating = NULL;
             switch ($posts) {
                 case 20:
-                    $rating = "2nd Year";
+                    $rating = "Sophomore(level 2)";
                     break;
                 case 80:
-                    $rating = "3rd Year";
+                    $rating = "Junior(level 3)";
                     break;
                 case 180:
-                    $rating = "4th Year";
+                    $rating = "Senior(level 4)";
                     break;
                 case 280:
-                    $rating = "Undergraduate";
+                    $rating = "BASC(level 5)";
                     break;
                 case 400:
-                    $rating = "Masters-MSc";
+                    $rating = "MSc(level 6)";
                     break;
                 case 600:
-                    $rating = "Doctorate - PHd.";
+                    $rating = "PHd(level 7)";
                     break;
             }
             if($rating != NULL){

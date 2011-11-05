@@ -18,14 +18,14 @@
             $this->layout = 'forum';
             $this->set('title_for_layout', 'specConnect - Edit Profile');
             $this->set('title', "Edit Profile"); 
-            
             if(!empty($this->data)) {
                 $this->data['Profile']['user_id'] = $this->Auth->user('id');
-                $profile = $this->Profile->find('first', array('conditions' => array('user_id' => $this->Auth->user('id')), 'recursive' => 0));
                 if($this->Profile->save($this->data)) {
+                    $profile = $this->Profile->find('first', array('conditions' => array('user_id' => $this->Auth->user('id')), 'recursive' => 0));
                     $this->Session->setFlash("Changes Saved");
                 }
                 else {
+                    $profile = $this->Profile->find('first', array('conditions' => array('user_id' => $this->Auth->user('id')), 'recursive' => 0));
                     $this->Session->setFlash("Error Saving Changes");
                     $profile['Profile']['university_program'] = NULL;
                     $profile['Profile']['signature'] = NULL;

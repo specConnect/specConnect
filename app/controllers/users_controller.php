@@ -11,9 +11,17 @@
 			if($this->action == 'register') {	
 				$this->Auth->authenticate = $this->User;
 			}
-			
-			//Redirect everytime except when logout action
-			if($this->Auth->user() && $this->action != 'logout') {
+            
+            //Set User Online status
+            $online = false;
+			if($this->Auth->user()) {
+				$online = true;
+				$this->set('userInfo', $this->Auth->user());
+			}
+			$this->set('online', $online); 
+            
+			//Redirect everytime except when logout or changePass action
+			if($online && $this->action != 'logout' && $this->action != 'personal') {
 				$this->redirect(array('controller' => 'forums', 'action' => 'view'));
 			}
 		}
@@ -27,6 +35,42 @@
 			$this->redirect($this->Auth->logout());
 		}
 		
+        function personal() {
+            $this->layout = 'forum';
+            $this->set('title_for_layout', 'specConnect - Personal Info');
+            $id = $this->Auth->user('id');
+            $this->set('id', $id);
+            if(!empty($this->data)) {
+                if($this->data['User']['request'] == "pass") {
+                    $this->data['User']['first_name'] = NULL;
+                    $this->data['User']['last_name'] = NULL;
+                    if($this->User->save($this->data, true, array('password', 'old_password'))) {
+                        $this->Session->setFlash("Successfully saved your password.");
+                        $this->Session->write('Auth', $this->User->read(null, $id));
+                    }
+                    else {
+                        $this->Session->setFlash("Error occured, please try again.");
+                    } 
+                }
+                else if($this->data['User']['request'] == "user") {
+                    $this->data['User']['confirm email'] = $this->data['User']['email'];
+                    if($this->User->save($this->data, true, array('first_name', 'last_name', 'email'))) {
+                        $this->Session->setFlash("Successfully updated information.");
+                        $this->Session->write('Auth', $this->User->read(null, $id));
+                    }
+                    else {
+                        $this->Session->setFlash("Error occured, please try again.");
+                    } 
+                }
+                else {
+                    $this->redirect("/forums/view/");
+                }
+            }
+            $this->set('first_name', $this->Auth->user('first_name'));
+            $this->set('last_name', $this->Auth->user('last_name'));
+            $this->set('email', $this->Auth->user('email'));
+        }
+        
 		function register() {
 			$this->set('title_for_layout', 'specConnect - Register');
 			if(!empty($this->data)) {

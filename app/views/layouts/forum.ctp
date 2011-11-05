@@ -28,6 +28,8 @@
                             echo "&nbsp;&nbsp;&nbsp;";
                             echo $html->link('Edit Profile', '/profiles/edit/');
                             echo "&nbsp;&nbsp;&nbsp;";
+                            echo $html->link('Personal Info', '/users/personal/');
+                            echo "&nbsp;&nbsp;&nbsp;";
 							echo $html->link('Sign Out', '/users/logout/');
 						}
 						else {
