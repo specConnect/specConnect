@@ -53,10 +53,19 @@
                     } 
                 }
                 else if($this->data['User']['request'] == "user") {
+                    $oldEmail = $this->Auth->user('email');
                     $this->data['User']['confirm email'] = $this->data['User']['email'];
                     if($this->User->save($this->data, true, array('first_name', 'last_name', 'email'))) {
+                        $this->Session->write('Auth', $this->User->read(null, $id)); //Rewrite to Auth Session
+                        if($this->Auth->user('email') != $oldEmail) { //IF USER CHANGES HIS EMAIL (WE WILL ALSO SEND CONFIRMATION IN FUTURE)
+                            $this->loadModel('Forum');
+                            $this->loadModel('Thread');
+                            $this->Forum->ForumSubscription->updateAll(array('email' => "'".$this->Auth->user('email')."'"), 
+                            array('username' => $this->Auth->user('username')));
+                            $this->Thread->Subscription->updateAll(array('email' => "'".$this->Auth->user('email')."'"), 
+                            array('username' => $this->Auth->user('username')));
+                        }
                         $this->Session->setFlash("Successfully updated information.");
-                        $this->Session->write('Auth', $this->User->read(null, $id));
                     }
                     else {
                         $this->Session->setFlash("Error occured, please try again.");

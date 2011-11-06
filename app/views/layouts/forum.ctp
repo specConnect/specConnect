@@ -40,15 +40,12 @@
                     }
                 ?>
                 </div>
-				<div id="titleCrumb"> 
-                   <h2> SPEC - Inviting Innovation </h2>
-					<?php
-						//Breadcrumb
-						if($breadcrumb != NULL) {
-							echo "<h1>" . $breadcrumb . "</h1>";
-						}
-					?>
-				</div>
+                <?php
+                    //Breadcrumb
+                    if($breadcrumb != NULL) {
+                        echo "<div id=\"titleCrumb\"> <h1>" . $breadcrumb . "</h1></div>";
+                    }
+                ?>
                 <br />
 				<?php echo $session->flash('auth'); ?>
 				<?php echo $session->flash(); ?>				
