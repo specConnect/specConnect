@@ -14,6 +14,9 @@
     
     }
 ?>
+<?php 
+    if (($this->Paginator->hasNext() || $this->Paginator->hasPrev())):
+?>
 <div class="paginator">
     <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
@@ -21,6 +24,9 @@
     <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
+<?php
+    endif;
+?>
 <div align="left" class="postReply">
 <?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
 </div>
@@ -153,6 +159,9 @@
 <div align="left" class="postReply">
 <?php echo $html->link("+Reply", "/posts/add/".$thread['Thread']['id']."/"); ?>
 </div>
+<?php
+    if (($this->Paginator->hasNext() || $this->Paginator->hasPrev())):
+?>
 <div class="paginator" >
     <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
@@ -160,3 +169,6 @@
     <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
+<?php
+    endif;
+?>

@@ -40,7 +40,6 @@
                     }
                 ?>
                 </div>
-				<br /><br />
 				<div id="titleCrumb"> 
                    <h2> SPEC - Inviting Innovation </h2>
 					<?php
@@ -50,7 +49,7 @@
 						}
 					?>
 				</div>
-				<br />
+                <br />
 				<?php echo $session->flash('auth'); ?>
 				<?php echo $session->flash(); ?>				
 				<?php echo $content_for_layout; ?>

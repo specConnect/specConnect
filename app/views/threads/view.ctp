@@ -1,4 +1,7 @@
 <?php $html->addCrumb($title); ?>
+<?php
+    if (($this->Paginator->hasNext() || $this->Paginator->hasPrev())):
+?>
 <div class="paginator">
     <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
@@ -6,6 +9,9 @@
     <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
+<?php
+    endif;
+?>
 <div align="right" class="postReply">
     <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
 </div>
@@ -56,6 +62,7 @@
                 ?>
 			</h4> 
 			<h1>by <b><?php echo $row['Thread']['username']; ?></b> </h1>
+            <h3>
             <?php 
             if($loggedUser == $row['Thread']['username'] || $admin) :
                 echo $html->link('Delete', "delete/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/",
@@ -81,6 +88,7 @@
             }
             echo "<h1>+<b>" .$row['thumbUp'] . "</b></h1>";
             ?>
+            </h3>
 		</td>
 		<td><div class="modified" align="center"> 	
 		<?php 
@@ -164,6 +172,9 @@
 <div align="right" class="postReply">
     <?php echo $html->link("+Thread","/threads/add/".$forum['Forum']['id']."/"); ?>
 </div>
+<?php
+    if (($this->Paginator->hasNext() || $this->Paginator->hasPrev())):
+?>
 <div class="paginator" >
     <?php echo $this->Paginator->first("<< First ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->prev("< Previous ", null, " ", array('class' => 'disabled')); ?>
@@ -171,3 +182,6 @@
     <?php echo $this->Paginator->next(" Next >", null, " ", array('class' => 'disabled')); ?>
     <?php echo $this->Paginator->last(" Last >>", array('class' => 'disabled')); ?>
 </div>
+<?php
+    endif;
+?>

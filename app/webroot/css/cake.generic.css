@@ -164,11 +164,12 @@ h2 {
 h3 {
 	color:#fff;
 	padding: 2px 0px 2px 0px;
-	font-size: 75%;
+	font-size: 65%;
 }
 h4 {
 	color: #993;
 	font-weight: normal;
+    font-size:90%;
 }
 
 .post ol,ul,dl
@@ -199,7 +200,7 @@ h4 {
 .modified {
 	color:#000;
 	padding: 2px 0px 2px 0px;
-	font-size: 75%;
+	font-size: 70%;
 	font-weight: normal;
 	margin-bottom:0.5em;
 	background:none;
@@ -289,10 +290,12 @@ ul, li {
 	margin:0px;
     color:#fff;
     background: #111;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -khtml-border-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 }
 
