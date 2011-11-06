@@ -1,5 +1,4 @@
 <?php 
-    $html->css('profile_style', 'stylesheet', array('inline' => false));
     $html->addCrumb("Edit Profile"); 
     $javascript->link('ckeditor/ckeditor', false);
 ?>

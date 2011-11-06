@@ -72,8 +72,6 @@
                     $thread = NULL;
                     if(!empty($this->data)) { //IF USER POSTS DATA
                         //Save to database
-                        //User the below declaration if we are to use the cakePHP SAVE method
-                        //$this->data['Post']['id'] = $id
                         $this->set('id', $post['Post']['id']);
                         $this->set('content', NULL);
                         if($this->Post->query("UPDATE `posts` SET  `content` = '".$this->data['Post']['content']."' WHERE  `id` = $id;")) {

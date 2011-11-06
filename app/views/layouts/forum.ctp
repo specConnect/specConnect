@@ -3,6 +3,8 @@
 <head>
 <title><?php echo $title_for_layout; ?></title>
 <?php echo $javascript->link('jquery.js'); ?>
+<?php echo $javascript->link('custom.user.js'); ?>
+<?php echo $html->css('custom.style'); ?>
 <?php echo $html->css('cake.generic'); ?>
 <?php echo $scripts_for_layout; ?>
 </head>
@@ -22,21 +24,22 @@
 						}
 					?>
 				</h2>
-					<?php
-						if($online) { //When user is logged in
-                            echo $html->link('SPEC Forums', '/forums/view/');
-                            echo "&nbsp;&nbsp;&nbsp;";
-                            echo $html->link('Edit Profile', '/profiles/edit/');
-                            echo "&nbsp;&nbsp;&nbsp;";
-                            echo $html->link('Personal Info', '/users/personal/');
-                            echo "&nbsp;&nbsp;&nbsp;";
-							echo $html->link('Sign Out', '/users/logout/');
-						}
-						else {
-							echo $html->link('Sign In', '/users/login/') . " or " . $html->link('Register', '/users/register/');
-						}
-					?>
-
+                <div id="nav">
+                <?php
+                    if($online) { //When user is logged in
+                        echo $html->link('SPEC Forums', '/forums/view/');
+                        echo "&nbsp;&nbsp;&nbsp;";
+                        echo $html->link('Edit Profile', '/profiles/edit/');
+                        echo "&nbsp;&nbsp;&nbsp;";
+                        echo $html->link('Personal Info', '/users/personal/');
+                        echo "&nbsp;&nbsp;&nbsp;";
+                        echo $html->link('Sign Out', '/users/logout/');
+                    }
+                    else {
+                        echo $html->link('Sign In', '/users/login/') . " or " . $html->link('Register', '/users/register/');
+                    }
+                ?>
+                </div>
 				<br /><br />
 				<div id="titleCrumb"> 
                    <h2> SPEC - Inviting Innovation </h2>

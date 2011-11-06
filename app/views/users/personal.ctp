@@ -6,8 +6,8 @@
 <div id="inner">
     <div id="tabSelect">
     <ul> 
-        <li><a href="#tabs2">Change Password</a></li> 
-        <li><a href="#tabs3">Personal Info</a></li> 
+        <li><a href="#tabs2">Personal Info</a></li> 
+        <li><a href="#tabs3">Change Password</a></li> 
     </ul> 
     <br /><br />
         <div id="tabs3" style="display:none;">

@@ -58,7 +58,8 @@
 			<h1>by <b><?php echo $row['Thread']['username']; ?></b> </h1>
             <?php 
             if($loggedUser == $row['Thread']['username'] || $admin) :
-                echo $html->link('Delete', "delete/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/");
+                echo $html->link('Delete', "delete/".$row['Thread']['id']."/".$row['Thread']['forum_id']."/",
+                array('onclick' => "return deletechecked();"));
             ?>
                 &nbsp; &nbsp;
             <?php

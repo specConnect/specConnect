@@ -386,25 +386,25 @@ th a.desc:after {
 	content: ' ⇡';
 }
 table tr td {
-	padding: 20px;
+	padding:5px 10px 0px 10px;
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #bbb;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    -khtml-border-radius: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
 }
 table tr td ol {
     margin-left:20px;
 }
 table tr td{
     background: #FFFFFF;
-    background: -moz-linear-gradient(top, #FFFFFF, #AAAAAA);
+    background: -moz-linear-gradient(top, #E5E5E5, #D5D5D5);
     background: -webkit-gradient(linear,
-                left top, left bottom, from(#FFFFFF), to(#AAAAAA));
+                left top, left bottom, from(#E5E5E5), to(#D5D5D5));
     filter: progid:DXImageTransform.Microsoft.Gradient(
-                StartColorStr='#FFFFFF', EndColorStr='#AAAAAA', GradientType=0);
+                StartColorStr='#E5E5E5', EndColorStr='#D5D5D5', GradientType=0);
 }
 table .altrow td {
 	background: #f5f5f5;

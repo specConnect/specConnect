@@ -1,0 +1,42 @@
+#tabSelect ul {
+    display:inline;
+    list-style-type:none;
+    padding:0px;
+    margin:0px;
+}
+ 
+#tabSelect ul li{
+    display:inline;
+    padding-left:20px;
+}
+
+#nav {
+    padding:10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+    background-color:#222;
+}
+
+#nav a {
+    text-decoration:none;
+    padding:5px;
+    color:#eee;
+}
+
+#nav a:visited {
+    text-decoration:none;
+    padding:5px;
+    color:#eee;
+}
+
+#nav a:hover {
+    color:#222;
+    background:#AAA;
+    padding:5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -khtml-border-radius: 5px;
+}   

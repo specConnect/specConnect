@@ -72,7 +72,8 @@
                     <?php
                         echo "<br /><br />";
                         if($loggedUser == $thread['Thread']['username'] || $admin):
-                            echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/");
+                            echo $html->link('Delete Thread', "/threads/delete/".$thread['Thread']['id']."/".$thread['Thread']['forum_id']."/",
+                            array('onclick' => "return deletechecked();"));
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                             echo $html->link('Edit', "/threads/edit/".$thread['Thread']['id']."/");
                             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -132,7 +133,8 @@
                 <?php 
                     echo "<br /><br />";
                     if($loggedUser == $thread['Thread']['username'] || $admin):
-                        echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/");                        
+                        echo $html->link('Delete Post', "delete/".$row['Post']['id']."/".$row['Post']['thread_id']."/",
+                        array('onclick' => "return deletechecked();"));                        
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                         echo $html->link('Edit', "/posts/edit/".$row['Post']['id']."/");
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
