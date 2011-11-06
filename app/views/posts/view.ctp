@@ -49,7 +49,11 @@
                     <br /><br />
                     <div  style="padding:5px;" class="postUser">
                         <b><?php echo $thread_user['User']['username']; ?></b> <br />
-                        <div style="padding-left:20px;"><i><?php echo $thread_user['User']['email']; ?></i></div><br />
+                        <?php if ($thread_user['User']['roles'] == 'sadmin'): ?>
+                            <div style="padding-left:20px;"><i>SPEC Executive</i></div><br />
+                        <?php elseif($thread_user['User']['roles'] == 'admin'): ?>
+                            <div style="padding-left:20px;"><i>specConnect Moderator</i></div><br />
+                        <?php endif; ?>
                         <b><?php echo $thread_user['Profile']['university']; ?> </b> <br />
                         <div style="padding-left:20px;"><i><?php echo $thread_user['Profile']['university_program']; ?></i></div>
                         <?php
@@ -108,7 +112,11 @@
                 <?php echo $html->image($row['User']['avatar']); ?> <br /><br />
                 <div  style="padding:5px;" class="postUser" align="left">
                     <b><?php echo $row['User']['username']; ?></b> <br />
-                    <div style="padding-left:20px;"><i><?php echo $row['User']['email']; ?></i></div><br />
+                        <?php if ($row['User']['roles'] == 'sadmin'): ?>
+                            <div style="padding-left:20px;"><i>SPEC Executive</i></div><br />
+                        <?php elseif($row['User']['roles'] == 'admin'): ?>
+                            <div style="padding-left:20px;"><i>specConnect Moderator</i></div><br />
+                        <?php endif; ?>
                     <b><?php echo $row['Profile']['university']; ?> </b> <br />
                     <div style="padding-left:20px;"><i><?php echo $row['Profile']['university_program']; ?></i></div>
                     <?php
