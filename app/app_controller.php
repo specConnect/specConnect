@@ -61,6 +61,10 @@
 			$this->Auth->loginError = 'Incorrect username/password combination';
 			$this->Auth->loginRedirect = array('controller' => 'forums', 'action' => 'view');
 			$this->Auth->logoutRedirect = array('controller' => 'forums', 'action' => 'view');
+            
+            //Getting Gdata API imported for use in all controllers
+            App::import('Vendor', 'zend_include_path');
+            App::import('Vendor', 'Zend_Gdata', true, false, 'Zend/Gdata.php');
 		}
 	}
 ?>
