@@ -11,9 +11,9 @@ CKEDITOR.editorConfig = function( config )
     config.toolbar = 'Custom';    
 	config.toolbar_Custom =
 	[
-		{ name: 'document', items : [ 'Preview' ] },
 		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','-','Undo','Redo' ] },
 		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','Scayt' ] },
+        { name: 'links', items : [ 'Link','Unlink' ] },
         { name: 'styles', items : ['FontSize'] },
             '/',
 		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar'] },
