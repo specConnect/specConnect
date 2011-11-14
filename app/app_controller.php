@@ -54,6 +54,7 @@
                     return $row;
                 }
             }
+            return NULL;
         }
         
 		function beforeFilter() {

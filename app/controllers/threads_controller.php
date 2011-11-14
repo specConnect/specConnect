@@ -2,7 +2,7 @@
 	class ThreadsController extends AppController {
 		var $paginate; 
         var $name = 'Threads';
-		var $helpers = array('Form', 'Html', 'Javascript', 'Time');
+		var $helpers = array('Form', 'Html', 'Javascript', 'Time', 'Paging');
         
         function __getPage($posts) {
             if($posts > 10) {
@@ -24,6 +24,74 @@
 			}
 			$this->set('online', $online); 
 		}
+        
+        function myposts() {
+            $this->set('loggedUser', $this->Auth->user('username'));
+            $this->set('admin', $this->__isAdmin());
+            $this->set('sadmin', $this->__isSuperAdmin());
+            
+            //Load up Forum Model so that we can get some information about the forum
+            $this->loadModel('Forum');
+            $this->loadModel('User');
+            $this->loadModel('Post');
+            $this->loadModel('Thumb');
+            
+            //Set pagination parameters
+            $this->paginate = array(
+                        'Thread' => array(
+                            'limit' => 10, 
+                            'conditions' => array('username' => $this->Auth->user('username')),
+                            'recursive' => 1, 
+                            'order' => array('sticky DESC','modified DESC')
+                        )
+                    );
+                    
+            $this->layout = 'forum';
+            
+            $this->set('title_for_layout', 'specConnect - Threads');
+            
+            $thread = $this->paginate('Thread');
+                
+            $index = 0;
+            foreach ($thread as $row) {
+                $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
+                $thread[$index]['Post'] = $post['Post'];
+                $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
+                $thread[$index]['Thread']['view'] = count($thread[$index]['ThreadView']);
+                $x = 0;
+                $thread[$index]['voted'] = 0;
+                foreach ($thread[$index]['Thumb'] as $thumbs) {
+                    if($thread[$index]['Thumb'][$x]['username'] == $this->Auth->user('username')) {
+                        $thread[$index]['voted'] = 1;
+                        break;
+                    }
+                    $x++;
+                }
+                $index++;
+            }
+            
+            $threads = $this->Thread->find('all',array('conditions' => array('username <>' => $this->Auth->user('username')),'order' => array('modified DESC')));
+            $threadsIpost = null;
+            $index = 0;
+            foreach ($threads as $row) {
+                foreach($row['Post'] as $col) {
+                    if($col['username'] == $this->Auth->user('username')) {
+                        $threadsIpost[$index] = $row;
+                        $post = $this->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
+                        $threadsIpost[$index]['Post'] = $post['Post'];
+                        $threadsIpost[$index]['thumbUp'] = count($threadsIpost[$index]['Thumb']);
+                        $threadsIpost[$index]['Thread']['view'] = count($threadsIpost[$index]['ThreadView']);
+                        $index++;
+                        break;
+                    }
+                }
+            }
+           
+            //Title above Breadcrumb
+            $this->set('sadmin', $this->__isSuperAdmin());
+            $this->set('thread', $thread);
+            $this->set('threadsIpost', $threadsIpost);
+        }
         
         function thumb($id = NULL, $f_id = NULL) {
             $this->autoRender = false;

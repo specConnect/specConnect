@@ -92,7 +92,7 @@
 		</td>
 		<td><div class="modified" align="center"> 	
 		<?php 
-			echo $time->timeAgoInWords($row['Thread']['created']); 
+			echo $time->timeAgoInWords($row['Thread']['created'], array('format' => 'D M d, Y g:i a')); 
 		?> 
 		</div></td>
 		<td>
@@ -146,7 +146,6 @@
                     echo $html->link('View Now', "/posts/view/".$row['Thread']['id']."/"); 
                 ?>
                 <br />
-
             <?php
                 endif;
             ?>

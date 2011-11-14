@@ -133,7 +133,7 @@ hr {
 }
 
 a {
-	color: #003d4c;
+	color: #003D3F;
 	text-decoration: underline;
 	font-weight: bold;
 }
@@ -297,11 +297,15 @@ ul, li {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-}
 
 #titleCrumb a  {
     text-decoration:none;
-    color:#aaa;
+    color:#971;
+}
+
+#titleCrumb a:visited  {
+    text-decoration:none;
+    color:#971;
 }
 
 #titleCrumb a:hover  {

@@ -1,3 +1,6 @@
+#tabSelect {
+    margin-bottom:10px;
+}
 #tabSelect ul {
     display:inline;
     list-style-type:none;
@@ -8,4 +11,11 @@
 #tabSelect ul li{
     display:inline;
     padding-left:20px;
+}
+
+#tabSelect a.selected {
+    text-decoration:none;
+    padding:5px;
+    background:#222;
+    color:#FFF;
 }

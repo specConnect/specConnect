@@ -28,7 +28,7 @@
                         echo $html->link('Subscribe to Forum', "/forums/subscribe/".$row['Forum']['id']."");
                     }
                     else if($online){
-                        echo $html->link('Unsbuscribe from Forum', "/forums/subscribe/".$row['Forum']['id']."");
+                        echo $html->link('Unsubscribe from Forum', "/forums/subscribe/".$row['Forum']['id']."");
                     }
                 ?>
             </h3>
@@ -58,7 +58,7 @@
                         <h4>&nbsp;&nbsp;&nbsp;
                             <i>
                                 <?php 
-                                    echo $time->timeAgoInWords($row['Post']['modified']); 
+                                    echo $time->timeAgoInWords($row['Post']['modified'], array('format' => 'D M d, Y g:i a')); 
                                 ?> 
                                 <br />
                             </i>
@@ -75,7 +75,7 @@
                         <h4>&nbsp;&nbsp;&nbsp;
                             <i>
                                 <?php 
-                                    echo $time->timeAgoInWords($row['Thread']['modified']); 
+                                    echo $time->timeAgoInWords($row['Thread']['modified'], array('format' => 'D M d, Y g:i a')); 
                                 ?> 
                                 <br />
                             </i>

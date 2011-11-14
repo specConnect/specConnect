@@ -35,7 +35,7 @@
     if ($this->Paginator->current() == 1 || $this->Paginator->current() == 0): 
 ?>
         <tr>
-            <th><?php echo $time->timeAgoInWords($thread['Thread']['created']); ?></th>
+            <th><?php echo $time->timeAgoInWords($thread['Thread']['created'], array('format' => 'D M d, Y g:i a')); ?></th>
             <th>
                 <div align="left">
                     <?php echo $title[1]; ?>
@@ -102,7 +102,7 @@
     ?>
     <tr>
         <th>
-            <?php echo $time->timeAgoInWords($row['Post']['modified']); ?>
+            <?php echo $time->timeAgoInWords($row['Post']['modified'], array('format' => 'D M d, Y g:i a')); ?>
         </th>
         <th><div align="left"><?php echo "RE: " .$title[1]; ?></div></th>
     </tr>

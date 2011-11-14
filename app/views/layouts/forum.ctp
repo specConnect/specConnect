@@ -33,6 +33,8 @@
                         echo "&nbsp;&nbsp;&nbsp;";
                         echo $html->link('Personal Info', '/users/personal/');
                         echo "&nbsp;&nbsp;&nbsp;";
+                        echo $html->link('My Forum Posts', '/threads/myposts/');
+                        echo "&nbsp;&nbsp;&nbsp;";
                         echo $html->link('Sign Out', '/users/logout/');
                     }
                     else {
