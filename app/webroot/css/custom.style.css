@@ -10,15 +10,30 @@
     padding-left:20px;
 }
 
+#nav .welcome {
+    color:#993;
+    margin-right:20px;
+    text-align:left;
+	font-weight: bold;
+    font-size:100%;
+    text-align:left;
+    display:inline;
+    font-family: Verdana, Arial, sans-serif;
+}
+
 #nav {
-    padding:10px;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color:#222;
+    padding:10px 0px 10px 0px;
+    width:100%;
+    text-align:center;
+    position:fixed;
+    -webkit-border-bottom-right-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color:#111;
+    border-bottom:1px solid #888;
     color:#fff;
 }
 

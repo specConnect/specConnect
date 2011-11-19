@@ -235,7 +235,7 @@ ul, li {
 #header{
 	width:600px;
 	background-color:#000;
-	padding: 10px 20px 40px;
+	padding: 50px 20px 10px;
 	text-align:center;
 }
 #header h1 {
@@ -258,9 +258,9 @@ ul, li {
 #content{
 	clear: both;
 	color: #333;
-	padding: 10px 20px 30px 20px;
+	padding: 10px 20px 10px 20px;
 	overflow: auto;
-	width:1200px;
+	width:1000px;
 	background:#fff;
 	text-align:left;
     -moz-border-radius: 10px;
@@ -270,7 +270,7 @@ ul, li {
 }
 #footer {
 	clear: both;
-	margin-top: 20px;
+	margin-top: 5px;
 	padding: 6px 20px 0px 20px;
 	text-align: center;
 	overflow: auto;
@@ -286,16 +286,12 @@ ul, li {
 }
 
 #titleCrumb {
-	padding:15px;
+	padding:0;
 	margin:0px;
     color:#fff;
-    background: #111;
-    -webkit-border-bottom-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomright: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    background:none;
+    width:100%;
+    text-align:center;
 }
 
 #titleCrumb a  {
@@ -361,7 +357,8 @@ table {
 	border-right:0;
 	clear: both;
 	color: #333;
-	margin-bottom: 10px;
+	margin: 5px;
+    margin-left:0px;
 	width:100%;
 }
 th {
@@ -393,7 +390,7 @@ th a.desc:after {
 	content: ' ⇡';
 }
 table tr td {
-	padding:5px 10px 0px 10px;
+	padding:0px 10px 0px 10px;
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #bbb;

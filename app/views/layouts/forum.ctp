@@ -9,46 +9,42 @@
 <?php echo $scripts_for_layout; ?>
 </head>
 <body>
+
+    <div id="nav">
+    <div class="welcome">
+    <?php 
+        if($online) { //When user is logged in
+            echo $userInfo['User']['first_name']." ".$userInfo['User']['last_name'];
+        }        
+    ?>
+    </div>
+    <?php
+        if($online) { //When user is logged in
+            echo $html->link('SPEC Forums', '/forums/view/');
+            echo "&nbsp;&nbsp;&nbsp;";
+            echo $html->link('Edit Profile', '/profiles/edit/');
+            echo "&nbsp;&nbsp;&nbsp;";
+            echo $html->link('Personal Info', '/users/personal/');
+            echo "&nbsp;&nbsp;&nbsp;";
+            echo $html->link('My Forum Posts', '/threads/myposts/');
+            echo "&nbsp;&nbsp;&nbsp;";
+            echo $html->link('Sign Out', '/users/logout/');
+        }
+        else {
+            echo $html->link('Sign In', '/users/login/') . " or " . $html->link('Register', '/users/register/');
+        }
+    ?>
+    </div>
 	<div id="container">
 		<div align="center">
 			<div id="header"><?php echo $html->link($html->image('specLogo/logo.png'), '/forums/view/', array('escape' => false)); ?></div>
-			<div id="content">
-				<h2>
-					Welcome, 
-					<?php 
-						if($online) { //When user is logged in
-							echo $userInfo['User']['first_name'];
-						}
-						else {
-							echo "Guest";
-						}
-					?>
-				</h2>
-                <div id="nav">
-                <?php
-                    if($online) { //When user is logged in
-                        echo $html->link('SPEC Forums', '/forums/view/');
-                        echo "&nbsp;&nbsp;&nbsp;";
-                        echo $html->link('Edit Profile', '/profiles/edit/');
-                        echo "&nbsp;&nbsp;&nbsp;";
-                        echo $html->link('Personal Info', '/users/personal/');
-                        echo "&nbsp;&nbsp;&nbsp;";
-                        echo $html->link('My Forum Posts', '/threads/myposts/');
-                        echo "&nbsp;&nbsp;&nbsp;";
-                        echo $html->link('Sign Out', '/users/logout/');
-                    }
-                    else {
-                        echo $html->link('Sign In', '/users/login/') . " or " . $html->link('Register', '/users/register/');
-                    }
-                ?>
-                </div>
-                <?php
-                    //Breadcrumb
-                    if($breadcrumb != NULL) {
-                        echo "<div id=\"titleCrumb\"> <h1>" . $breadcrumb . "</h1></div>";
-                    }
-                ?>
-                <br />
+            <?php
+                //Breadcrumb
+                if($breadcrumb != NULL) {
+                    echo "<div id=\"titleCrumb\"> <h1>" . $breadcrumb . "</h1></div><br />";
+                }
+            ?>
+            <div id="content">
 				<?php echo $session->flash('auth'); ?>
 				<?php echo $session->flash(); ?>				
 				<?php echo $content_for_layout; ?>

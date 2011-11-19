@@ -3,15 +3,13 @@
     $html->addCrumb($title[1]); 
 ?>
 <?php
-    echo "<br />";
     if($online && ($sub == 1)) {
+        echo "<br />";
         echo $html->link('Subscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
     }
     else if($online && ($sub == 0)) {
+        echo "<br />";
         echo $html->link('Unsubscribe', "/posts/subscribe/".$thread['Thread']['id']."/");
-    }
-    else {
-    
     }
 ?>
 <?php 

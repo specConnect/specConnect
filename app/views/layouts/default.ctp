@@ -4,6 +4,12 @@
 <?php echo $javascript->link('jquery.js'); ?>
 <?php echo $html->css('cake.generic'); ?>
 <?php echo $scripts_for_layout; ?>
+<style>
+    #header {
+        margin:0px;
+        padding-top:10px;
+    }
+</style>
 </head>
 <body>
 	<div id="container">
