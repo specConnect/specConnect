@@ -1,8 +1,8 @@
 <?php 
     $html->css('profile_style', 'stylesheet', array('inline' => false));
     $html->addCrumb("My Forum Posts"); 
-    $javascript->link('jquery.cookie.js', false);
-    $javascript->link('jquery.idTabs.js', false);
+    $html->script('jquery.cookie.js', array('inline' => false));
+    $html->script('jquery.idTabs.js', array('inline' => false));
     $threadsIpost = $this->Paging->paging($threadsIpost, 10);
 ?>
 <div id="tabSelect">

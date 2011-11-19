@@ -2,7 +2,7 @@
     class TestsController extends AppController {
         var $name = "Tests";
         var $uses = null;
-        var $helpers = array('Form', 'Html', 'Javascript', 'Paging');	
+        var $helpers = array('Form', 'Html', 'Paging');	
         
         function beforeFilter() {
             parent::beforeFilter();

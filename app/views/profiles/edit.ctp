@@ -1,6 +1,6 @@
 <?php 
     $html->addCrumb("Edit Profile"); 
-    $javascript->link('ckeditor/ckeditor', false);
+    $html->script('ckeditor/ckeditor', array('inline' => false));
 ?>
 <div id="inner">
     <div id="tabs1" style="display:block;">

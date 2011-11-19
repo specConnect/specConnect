@@ -2,8 +2,8 @@
 	$html->addCrumb($title[0], $title['link0']);
     $html->addCrumb($title[1]);
     
-    $javascript->link('ckeditor/ckeditor', false);
-    $javascript->link('ckeditor/adapters/jquery', false);
+    $html->script('ckeditor/ckeditor', array('inline' => false));
+    $html->script('ckeditor/adapters/jquery', array('inline' => false));
 ?>
 <script type="text/javascript">
     $(document).ready( function() {

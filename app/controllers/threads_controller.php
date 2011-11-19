@@ -2,7 +2,7 @@
 	class ThreadsController extends AppController {
 		var $paginate; 
         var $name = 'Threads';
-		var $helpers = array('Form', 'Html', 'Javascript', 'Time', 'Paging');
+		var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging');
         
         function __getPage($posts) {
             if($posts > 10) {
@@ -24,6 +24,19 @@
 			}
 			$this->set('online', $online); 
 		}
+        
+        function search() {
+            $this->layout = "forum";
+            if($this->RequestHandler->isAjax()) {
+                $this->autoRender = false;
+                $this->set("hello", "AJAX");
+                $this->render("search");
+            }
+            else {
+                $this->set('title_for_layout', "specConnect - Search");
+                $this->set("hello", "BLARG");
+            }
+        }
         
         function myposts() {
             $this->set('loggedUser', $this->Auth->user('username'));

@@ -1,7 +1,7 @@
 <?php 
     $html->css('profile_style', 'stylesheet', array('inline' => false));
     $html->addCrumb("Personal Profile"); 
-    $javascript->link('jquery.idTabs.js', false);
+    $html->script('jquery.idTabs.js', false);
 ?>
 <div id="inner">
     <div id="tabSelect">

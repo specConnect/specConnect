@@ -1,7 +1,7 @@
 <?php 
 	class UsersController extends AppController {
 		var $name = "Users";
-		var $helpers = array('Form', 'Html', 'Javascript', 'Time');
+		var $helpers = array('Form', 'Html','Time');
 
 		function beforeFilter() {
 			parent::beforeFilter(); 
