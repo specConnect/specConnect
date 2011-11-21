@@ -42,7 +42,7 @@
                 //Set pagination parameters
                 $this->paginate = array(
                             'Thread' => array(
-                                'limit' => 1, 
+                                'limit' => 10, 
                                 'conditions' => array('thread_name LIKE' => "%".$sterm."%"),
                                 'recursive' => 1, 
                                 'order' => array('sticky DESC','modified DESC')
