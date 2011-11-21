@@ -1,7 +1,7 @@
 <?php 
     class ProfilesController extends AppController {
         var $name = "Profiles";
-		var $helpers = array('Form', 'Html', 'Time');	
+		var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging', 'Paginator');
 		
 		function beforeFilter() {
 			parent::beforeFilter(); 

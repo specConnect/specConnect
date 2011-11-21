@@ -1,14 +1,17 @@
 <?php 
     $html->addCrumb("Search"); 
-    echo $js->writeBuffer(array('cache' => true));
     
     echo $form->create('Thread');
     echo $form->input('search', array('id' => 'search', 'value' => 'Search Text Here', 'label' => ''));
-    echo $form->end('Search');
-    
-    echo $js->link("AJAX REQUEST", "/threads/search", array('update' => 'abcd'));
+    echo $js->submit('Search', array(
+        'update' => '#data', 
+        'before' => $this->Js->get('#waiting')->effect('fadeIn'),
+        'success' => $this->Js->get('#waiting')->effect('fadeOut')
+    )
+    );
 ?>
-
-<div id="abcd">
-    <?php echo $hello; ?>
+<div id="waiting" style="display:none;">
+    <?php echo $html->image("other/loading2.gif"); ?>
 </div>
+
+<div id="data"></div>

@@ -2,7 +2,7 @@
 	class ThreadsController extends AppController {
 		var $paginate; 
         var $name = 'Threads';
-		var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging');
+		var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging', 'Paginator');
         
         function __getPage($posts) {
             if($posts > 10) {
@@ -27,14 +27,47 @@
         
         function search() {
             $this->layout = "forum";
+            $this->set('title_for_layout', "specConnect - Search");
+            $this ->Session->write("search", $this->data['Thread']['search']);
             if($this->RequestHandler->isAjax()) {
-                $this->autoRender = false;
-                $this->set("hello", "AJAX");
-                $this->render("search");
-            }
-            else {
-                $this->set('title_for_layout', "specConnect - Search");
-                $this->set("hello", "BLARG");
+                $sterm = NULL;
+                if(empty($this->data)) {
+                    if(!($this->Session->read("search") == NULL)) {
+                        $sterm = $this->Session->read("search");
+                    }
+                }
+                else {
+                    $sterm = $this->data['Thread']['search'];
+                }
+                //Set pagination parameters
+                $this->paginate = array(
+                            'Thread' => array(
+                                'limit' => 1, 
+                                'conditions' => array('thread_name LIKE' => "%".$sterm."%"),
+                                'recursive' => 1, 
+                                'order' => array('sticky DESC','modified DESC')
+                            )
+                        );
+                $thread = $this->paginate('Thread');
+                $index = 0;
+                foreach ($thread as $row) {
+                    $post = $this->Thread->Post->find('first', array('conditions' => array('thread_id' => $row['Thread']['id']), 'order' => array('modified DESC')));
+                    $thread[$index]['Post'] = $post['Post'];
+                    $thread[$index]['thumbUp'] = count($thread[$index]['Thumb']);
+                    $thread[$index]['Thread']['view'] = count($thread[$index]['ThreadView']);
+                    $x = 0;
+                    $thread[$index]['voted'] = 0;
+                    foreach ($thread[$index]['Thumb'] as $thumbs) {
+                        if($thread[$index]['Thumb'][$x]['username'] == $this->Auth->user('username')) {
+                            $thread[$index]['voted'] = 1;
+                            break;
+                        }
+                        $x++;
+                    }
+                    $index++;
+                }
+                $this->set('data', $thread);
+                $this->render("data", "ajax");
             }
         }
         
@@ -49,7 +82,8 @@
             $this->loadModel('Post');
             $this->loadModel('Thumb');
             
-            //Set pagination parameters
+
+                        //Set pagination parameters
             $this->paginate = array(
                         'Thread' => array(
                             'limit' => 10, 

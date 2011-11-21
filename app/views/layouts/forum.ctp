@@ -7,6 +7,7 @@
 <?php echo $html->css('custom.style'); ?>
 <?php echo $html->css('cake.generic'); ?>
 <?php echo $scripts_for_layout; ?>
+<?php echo $js->writeBuffer(array('cache' => true)); ?>
 </head>
 <body>
 
@@ -28,8 +29,8 @@
             echo "&nbsp;&nbsp;&nbsp;";
             echo $html->link('My Forum Posts', '/threads/myposts/');
             echo "&nbsp;&nbsp;&nbsp;";
-            //echo $html->link('Search', '/threads/search/');
-            //echo "&nbsp;&nbsp;&nbsp;";
+            echo $html->link('Search', '/threads/search/');
+            echo "&nbsp;&nbsp;&nbsp;";
             echo $html->link('Sign Out', '/users/logout/');
         }
         else {

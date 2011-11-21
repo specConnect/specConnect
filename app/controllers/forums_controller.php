@@ -1,7 +1,7 @@
 <?php
 	class ForumsController extends AppController {
 		var $name = "Forums";
-		var $helpers = array('Form', 'Html', 'Time');	
+		var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging', 'Paginator');
 		
 		function beforeFilter() {
 			parent::beforeFilter(); 

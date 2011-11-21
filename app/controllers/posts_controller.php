@@ -2,7 +2,7 @@
     class PostsController extends AppController {
         var $paginate;
         var $name = 'Posts';
-        var $helpers = array('Form', 'Html', 'Time');
+        var $helpers = array('Form', 'Html', 'Js', 'Time', 'Paging', 'Paginator');
         
         function __getPage($posts) {
             if($posts > 10) {

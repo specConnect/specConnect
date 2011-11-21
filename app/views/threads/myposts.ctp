@@ -158,7 +158,6 @@
         endif;
     ?>
 </div>
-
 <div id="threadpost" style="display:block;">
  <?php
         if (($this->Paging->hasNext() || $this->Paging->hasPrev())):
