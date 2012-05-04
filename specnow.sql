@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 30, 2011 at 09:07 PM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
+-- Generation Time: May 04, 2012 at 08:11 PM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `forum_subscriptions` (
   `email` varchar(100) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `forum_subscriptions`
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `posts`
@@ -105,7 +105,10 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `user_id` int(11) NOT NULL,
   `university` varchar(60) NOT NULL DEFAULT 'Simon Fraser University',
   `university_program` varchar(60) NOT NULL DEFAULT 'Applied Science',
+  `job` varchar(60) NOT NULL,
+  `job_title` varchar(60) NOT NULL,
   `signature` text NOT NULL,
+  `rating` varchar(20) NOT NULL DEFAULT 'Freshman(level 1)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
@@ -113,9 +116,9 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `user_id`, `university`, `university_program`, `signature`) VALUES
-(1, 4, 'Simon Fraser University', 'Computer Engineering', '<p>&ldquo;Impossible is just a big word thrown around by small men who find it easier to live in the world they&#39;ve been given than to explore the power they have to change it. Impossible is not a fact. It&#39;s an opinion. Impossible is not a declaration. It&#39;s a dare. Impossible is potential. Impossible is temporary. Impossible is nothing.&quot;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>- Muhammad Ali</p>\r\n'),
-(9, 23, 'Simon Fraser University', 'Applied Science', 'SPEC - Invent Your Future');
+INSERT INTO `profiles` (`id`, `user_id`, `university`, `university_program`, `job`, `job_title`, `signature`, `rating`) VALUES
+(1, 4, 'Simon Fraser University', 'Computer Engineering', '', '', '<p>&ldquo;Impossible is just a big word thrown around by small men who find it easier to live in the world they&#39;ve been given than to explore the power they have to change it. Impossible is not a fact. It&#39;s an opinion. Impossible is not a declaration. It&#39;s a dare. Impossible is potential. Impossible is temporary. Impossible is nothing.&quot;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>- Muhammad Ali</p>\r\n', 'Freshman(level 1)'),
+(9, 23, 'Simon Fraser University', 'Applied Science', '', '', 'SPEC - Invent Your Future', 'Freshman(level 1)');
 
 -- --------------------------------------------------------
 
@@ -131,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
   `email` varchar(100) NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -151,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `threads` (
   `sticky` tinyint(1) NOT NULL DEFAULT '0',
   `private` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 --
 -- Dumping data for table `threads`
@@ -175,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `thread_views` (
   `thread_id` int(11) NOT NULL,
   `ip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `thread_views`
@@ -184,7 +187,8 @@ CREATE TABLE IF NOT EXISTS `thread_views` (
 INSERT INTO `thread_views` (`id`, `thread_id`, `ip`) VALUES
 (1, 1, '127.0.0.1'),
 (2, 10, '127.0.0.1'),
-(3, 8, '127.0.0.1');
+(3, 8, '127.0.0.1'),
+(4, 1, '::1');
 
 -- --------------------------------------------------------
 
