@@ -21,7 +21,7 @@
 			</div>
 			<div id="footer">
 				<?php echo $html->image('specLogo/spec.jpg'); ?>
-				<h3>© 2011 SPEC</h3>
+				<h3>© 2012 SPEC</h3>
 			</div>
 		</div>
 	</div>

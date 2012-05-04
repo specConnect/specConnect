@@ -195,10 +195,11 @@
         <?php
         else:
             $count = 0;
-            foreach ($threadsIpost as $row): 
-                if($row['Thread']['private'] && !$sadmin):
-                    continue;
-                endif;
+			if ($threadsIpost != NULL):
+				foreach ($threadsIpost as $row): 
+					if($row['Thread']['private'] && !$sadmin):
+						continue;
+					endif;
         ?> 
         <tr>
             <td title="<?php echo "".substr(strip_tags($row['Thread']['content']),0,100)."..."; ?>">
@@ -283,12 +284,13 @@
             <td><div class="modified" align="center"> <?php echo $row['Thread']['view']; ?> </div></td>
         </tr>
         <?php            
-            $count++;
-            endforeach;
+				$count++;
+				endforeach;
+			endif;
             if($count < 1):
         ?>
                 <tr>
-                <td colspan="5"><h4><b><div align="center">You have not created any threads.</div></b></h4></td>
+                <td colspan="5"><h4><b><div align="center">You have not posted to any threads other than your own.</div></b></h4></td>
                 </tr>   
         <?php
             endif;
