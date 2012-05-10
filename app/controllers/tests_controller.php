@@ -81,6 +81,7 @@
 		
 		function beforeFilter() {
             parent::beforeFilter();
+			Zend_Loader::loadClass('Zend_Gdata');
             Zend_Loader::loadClass('Zend_Gdata_Docs');
 			Zend_Loader::loadClass('Zend_Gdata_Calendar');
             Zend_Loader::loadClass('Zend_Gdata_AuthSub');
@@ -93,8 +94,39 @@
         }   
 		
 		function google_cal() {
+			$eventFeed = "";
 			$this->set('title_for_layout', "Zend Gdata Calendar Test");
+			
+			//AUTHENTICATE USER
 			$client = $this->__getAuthSubHttpClient();
+			
+			//NEW CALENDAR SERVICE
+			$service = new Zend_Gdata_Calendar($client);
+			
+			//GET LIST OF CALENDARS
+			$listFeed = $service->getCalendarListFeed();
+			
+			//GET LIST OF EVENTS
+			$index = 0;
+			foreach($listFeed as $list) {
+				$query = $service->newEventQuery($list->link[0]->href);
+				// Set different query parameters
+				$query->setUser('NULL');
+				$query->setVisibility('NULL');
+				$query->setProjection('NULL');
+				$query->setOrderby('starttime');
+				 
+				// Get the event list
+				try {
+					$eventFeed[$index] = $service->getCalendarEventFeed($query);
+				} catch (Zend_Gdata_App_Exception $e) {
+					echo "Error: " . $e->getMessage() . "<br />";
+				}
+				$index++;
+			}
+			
+			$this->set("list", $listFeed);
+			$this->set("event", $eventFeed);
 		}
 		function live_feed() {
 			$this->set('title_for_layout', "Live Feed");
