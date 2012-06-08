@@ -111,16 +111,16 @@
 			foreach($listFeed as $list) {
 				$query = $service->newEventQuery($list->link[0]->href);
 				// Set different query parameters
-				$query->setUser('NULL');
-				$query->setVisibility('NULL');
-				$query->setProjection('NULL');
+				$query->setUser('default');
+				$query->setVisibility('private');
+				$query->setProjection('full');
 				$query->setOrderby('starttime');
 				 
 				// Get the event list
 				try {
 					$eventFeed[$index] = $service->getCalendarEventFeed($query);
 				} catch (Zend_Gdata_App_Exception $e) {
-					echo "Error: " . $e->getMessage() . "<br />";
+					echo "Error: " . $e->getResponse() . "<br />";
 				}
 				$index++;
 			}
