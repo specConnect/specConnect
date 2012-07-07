@@ -7,6 +7,8 @@ class MailShell extends Shell {
 			$this->out($entry['Thread']['username']. " posted " .$entry['Thread']['thread_name'] . " on " .
 			$entry['Thread']['created'] . "\n");
 		}
+		
+		$this->Thread->save(array('username' => "edchand", 'forum_id' => 99, ''));
 	}
 }
 ?>
